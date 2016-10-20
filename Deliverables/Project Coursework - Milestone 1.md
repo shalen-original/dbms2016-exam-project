@@ -3,8 +3,7 @@
 ## Description
 The Makerspace Project Manager is a simple application database, which allows to easily manage projects, file requests and keep track of the stuff that happens at our makerspace.
 
-## What are the features?
-**Some key implementations:**
+## Sample queries
 * You want an overview of the makerspace's projects.
 * Which of the projects are active? Which are done?
 * Who are the people behind the projects?
@@ -15,15 +14,9 @@ The Makerspace Project Manager is a simple application database, which allows to
 * Collaboration and help requests.
 * Order some 3-D printed parts or file other material requests.
 * Inventory of the materials. 
-And many more... 
 
-*A full list of supported actions are listed in the documentation.*
-
-## Set up
-
-## Configuration
-
-## Supported actions
+## ER Model
+*See xyz.pdf*
 
 ## Contributors
 [Remo Scolati](mailto:remo_scolati@hotmail.com)
