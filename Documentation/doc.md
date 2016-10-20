@@ -4,7 +4,7 @@
 The Makerspace Project Manager is a simple application database, which allows to easily manage projects, file requests and keep track of the stuff that happens at our makerspace.
 
 ## What are the features?
-**Some key implementations:**
+__Some key implementations:__
 * You want an overview of the makerspace's projects.
 * Which of the projects are active? Which are done?
 * Who are the people behind the projects?
