@@ -1,7 +1,7 @@
-# Makerspace Project Manager
+# Makerspace Project Manager - MPM
 
 ## Description
-The Makerspace Project Manager is a simple application database, which allows to easily manage projects, file requests and keep track of the stuff that happens at our makerspace.
+The Makerspace Project Manager (MPM) is a simple application database that allows to easily manage a small-medium sized Makerspace laboratory.
 
 ## Sample queries
 * You want an overview of the makerspace's projects.
@@ -16,11 +16,11 @@ The Makerspace Project Manager is a simple application database, which allows to
 * Inventory of the materials. 
 
 ## ER Model
-*See xyz.pdf*
+See the attached file `mpm-db-er-schema.pdf`
 
-## Contributors
-[Remo Scolati](mailto:remo_scolati@hotmail.com)
+## Group members
+The members of the group working on this project are:
 
-Mikel Grabocka
-
-Matteo Nardini 
+*[Remo Scolati](mailto:remo_scolati@hotmail.com)
+*Mikel Grabocka
+*[Matteo Nardini](mailto:mnardini@unibz.it) 
