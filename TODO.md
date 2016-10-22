@@ -1,9 +1,8 @@
-# Makerspace Project Manager
-# TODO
+# MPM - TODO list
+Todo list of the Makerspace Project Manager (MPM) project.
 
 ## Extracurricular
-* name of project?
-* get coffee
+
 * find logo
 
 ## Milestone 1
@@ -16,5 +15,8 @@
 
 ## Milestone 2
 
-*TBD*
+*To Be Announced*
 
+## Milestone 3
+
+*To Be Announced*
