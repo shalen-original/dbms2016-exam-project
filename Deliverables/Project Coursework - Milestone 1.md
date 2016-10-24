@@ -7,13 +7,15 @@ The Makerspace Project Manager (MPM) is a simple application database that allow
 * Which projects were/are done in the makerspace?
 * Which of the projects are active? Which are terminated?
 * Who are the people behind the projects?
-* Who is the contact person to talk about a certain project?
-* Who is responsible for a project?
+* Who is the contact person to talk about a certain project? Who is responsible for a project?
 * How are the roles divided?
-* Check Schedule and reservations of the rooms and tools at the makerspace.
+* Is the room xyz free today? If not, which group booked it?
 * Which projects are open for collaboration?
-* What 3d printed parts are still to produce? Which have been produced in the past?
-* Inventory of the materials. 
+* From the staff point of view, which are the part still to print in 3D? Which have been produced in the past?
+* How many units of the material xyz are now in stock?
+* Which group bought that material?
+* How much do 10 units of material xyz cost?
+
 
 ## ER Model
 See the attached file `mpm-db-er-schema.pdf`
