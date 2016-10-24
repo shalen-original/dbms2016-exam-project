@@ -22,5 +22,5 @@ See the attached file `mpm-db-er-schema.pdf`
 The members of the group working on this project are:
 
 * [Remo Scolati](mailto:remo_scolati@hotmail.com)
-* Mikel Grabocka
+* [Mikel Grabocka](mailto:mgrabocka@unibz.it) 
 * [Matteo Nardini](mailto:mnardini@unibz.it) 
