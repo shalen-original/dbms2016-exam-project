@@ -3,9 +3,9 @@
 ## Description
 The Makerspace Project Manager (MPM) is a simple application database that allows to easily manage a small-medium sized Makerspace laboratory.
 
-This database allows to simplify the allocation of resources to current projects, review past projects and in general to provide an interaction platform between the different users and the makerspace staff for what concerns the various projects.
-For each existing project there is a list of participants, each of which has a clearly assigned role. For each project the general and infrastructure related requests, the reserved or requested infrastructure and the materials used are tracked.
-Infrastructures are divided between those which need only reservation (rooms, simple tools) and those handled by the staff (e.g. 3D printers) after a request for a specific task. Each request should be “atomic”, that is, they should contain a single task (e.g. 3D print this file), in order to allow for easier request handling/job queueing for a certain project. 
+This database allows to simplify the allocation of resources to current projects, review past projects and in general to provide an interaction platform between the different users and the makerspace staff for what concerns the various projects.     
+For each existing project there is a list of participants, each of which has a clearly assigned role. For each project the general and infrastructure related requests, the reserved or requested infrastructure and the materials used are tracked.    
+Infrastructures are divided between those which need only reservation (rooms, simple tools) and those handled by the staff (e.g. 3D printers) after a request for a specific task. Each request should be “atomic”, that is, they should contain a single task (e.g. 3D print this file), in order to allow for easier request handling/job queueing for a certain project.     
 Further we choose to provide a simple, request bound ticketing/messaging system for interaction between the technician handling a request and the team that issued it. Moreover, this database provides a simple list of available materials and a detailed listing of the materials purchased by each project.
 
 ## Sample queries
