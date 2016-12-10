@@ -1,6 +1,10 @@
-/* TITLE GOES HERE
- * DESCRIPTION?
- * AUTHORS (and stuff) 
+/* 
+ * File clean.sql
+ * Resets the database to an empty state.
+ * Group members: 
+ * 		Remo Scolati: 	remo_scolati@hotmail.com
+ * 		Mikel Grabocka: mgrabocka@unibz.it
+ * 		Matteo Nardini: mnardini@unibz.it
  */
 
 -- Should work as is 

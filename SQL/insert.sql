@@ -1,6 +1,10 @@
-/* TITLE GOES HERE
- * DESCRIPTION?
- * AUTHORS (and stuff) 
+/* 
+ * File insert.sql
+ * Inserts some dummy data into the Makerspace Project Manager database, to allow for easy testing.
+ * Group members: 
+ *    Remo Scolati:   remo_scolati@hotmail.com
+ *    Mikel Grabocka: mgrabocka@unibz.it
+ *    Matteo Nardini: mnardini@unibz.it
  */
  
 INSERT INTO PROJECT VALUES (100,'Board Game','Creating a board game for the managment course','ACTIVE');

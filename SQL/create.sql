@@ -1,6 +1,10 @@
-/* TITLE GOES HERE
- * DESCRIPTION?
- * AUTHORS (and stuff) 
+/* 
+ * File create.sql
+ * Creates the schema of the database for the Makerspace Project Manager
+ * Group members: 
+ *    Remo Scolati:   remo_scolati@hotmail.com
+ *    Mikel Grabocka: mgrabocka@unibz.it
+ *    Matteo Nardini: mnardini@unibz.it
  */
 
 -- Verify drop order
