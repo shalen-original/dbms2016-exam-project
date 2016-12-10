@@ -26,7 +26,7 @@ CREATE TABLE PROJECT(
   title VARCHAR(50) NOT NULL,
   description VARCHAR(500),
   status VARCHAR(50) NOT NULL,
-  seeking_collaboration BOOLEAN);
+  seeking_collaboration BOOLEAN DEFAULT FALSE);
 
 CREATE TABLE GENERAL_ROLE(
   role_id INTEGER PRIMARY KEY,
