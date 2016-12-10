@@ -7,19 +7,19 @@
  *    Matteo Nardini: mnardini@unibz.it
  */
  
-INSERT INTO PROJECT VALUES (100,'Board Game','Creating a board game for the managment course','ACTIVE','FALSE');
+INSERT INTO PROJECT VALUES (100,'Board Game','Creating a board game for the managment course','ACTIVE',FALSE);
 INSERT INTO GENERAL_ROLE VALUES (1000,'Staff','Technical support');
 INSERT INTO GENERAL_ROLE VALUES (1001,'Teacher','Theoretical support');
 INSERT INTO GENERAL_ROLE VALUES (1002,'Student','Output of the project');
 INSERT INTO MAKERSPACE_USER VALUES (10,'Remo Scolati',1000,'rscolati@unibz.it');
 INSERT INTO MAKERSPACE_USER VALUES (11,'Mikel Grabocka',1002,'mgrabocka@unibz.it');
 INSERT INTO MAKERSPACE_USER VALUES (12,'Matteo Nardini',1001,'mnardini@unibz.it');
-INSERT INTO MATERIAL VALUES (200,'Paper','',2,1000);
-INSERT INTO MATERIAL VALUES (201,'Red Raw Plastic','Input for 3D printer',3,2000);
-INSERT INTO FREE_INF VALUES (301,'Room 301');
-INSERT INTO FREE_INF VALUES (305,'Room 305');
-INSERT INTO TECHNICAL_INF VALUES (501,'3D printer 101');
-INSERT INTO TECHNICAL_INF VALUES (502,'3D printer 102');
+INSERT INTO MATERIAL VALUES (200,'Paper','',2,'Sheet',1000);
+INSERT INTO MATERIAL VALUES (201,'Red Raw Plastic','Input for 3D printer',3,'m',2000);
+INSERT INTO FREE_INF VALUES (301,TRUE,'Room 301');
+INSERT INTO FREE_INF VALUES (305,TRUE,'Room 305');
+INSERT INTO TECHNICAL_INF VALUES (501,TRUE,'3D printer 101');
+INSERT INTO TECHNICAL_INF VALUES (502,TRUE,'3D printer 102');
 INSERT INTO REQUEST VALUES (401,'Something to print',100,501,10);
 INSERT INTO REQUEST VALUES (402,'Something to print',100,502,11);
 INSERT INTO MESSAGE VALUES (601,'Need to print some more things',401,'2016-1-16 15:30:26');
@@ -33,19 +33,19 @@ INSERT INTO BOOKING VALUES (901,100,301,'2016-1-15','2016-1-16');
 INSERT INTO BOOKING VALUES (902,100,305,'2016-1-18','2016-1-20');
 
 
-INSERT INTO PROJECT VALUES (101,'Arduino Workshop','An one week workshop on what to use Arduino for','NON-ACTIVE','FALSE');
+INSERT INTO PROJECT VALUES (101,'Arduino Workshop','An one week workshop on what to use Arduino for','NON-ACTIVE',FALSE);
 INSERT INTO GENERAL_ROLE VALUES (1020,'Staff','Technical support');
 INSERT INTO GENERAL_ROLE VALUES (1021,'Teacher','Theoretical support');
 INSERT INTO GENERAL_ROLE VALUES (1022,'Student','Output of the project');
 INSERT INTO MAKERSPACE_USER VALUES (20,'Remo Scolati',1022,'rscolati@unibz.it');
 INSERT INTO MAKERSPACE_USER VALUES (21,'Mikel Grabocka',1021,'mgrabocka@unibz.it');
 INSERT INTO MAKERSPACE_USER VALUES (22,'Matteo Nardini',1020,'mnardini@unibz.it');
-INSERT INTO MATERIAL VALUES (202,'Thick Paper','',2,1200);
-INSERT INTO MATERIAL VALUES (203,'Blue Raw Plastic','Input for 3D printer',3,1650);
-INSERT INTO FREE_INF VALUES (321,'Room 321');
-INSERT INTO FREE_INF VALUES (322,'Room 322');
-INSERT INTO TECHNICAL_INF VALUES (503,'3D printer 103');
-INSERT INTO TECHNICAL_INF VALUES (504,'3D printer 104');
+INSERT INTO MATERIAL VALUES (202,'Thick Paper','',2,'Sheet',1200);
+INSERT INTO MATERIAL VALUES (203,'Blue Raw Plastic','Input for 3D printer',3,'m',1650);
+INSERT INTO FREE_INF VALUES (321,TRUE,'Room 321');
+INSERT INTO FREE_INF VALUES (322,TRUE,'Room 322');
+INSERT INTO TECHNICAL_INF VALUES (503,TRUE,'3D printer 103');
+INSERT INTO TECHNICAL_INF VALUES (504,TRUE,'3D printer 104');
 INSERT INTO REQUEST VALUES (403,'Something to print',101,503,21);
 INSERT INTO REQUEST VALUES (404,'Something to print',101,504,22);
 INSERT INTO MESSAGE VALUES (603,'Need to print some more things',403,'2016-1-12 10:35:55');
