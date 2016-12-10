@@ -201,7 +201,10 @@ CREATE TABLE TECHNICAL_INFRASTRUCTURE(
     for deletion if that infrastructure is or has been requested, so we did not add ON DELETE CASCADE.
 
     Foreign key handled_by_user:
-    TODO
+    If a user changes id, we want to update also all the associated requests, thus we added
+    ON UPDATE CASCADE. However, we do not want to allow the deletion of a user if it is involved
+    in some requests, in order to preserve a correct history of who worked in which project. Therefore,
+    we did not add ON DELETE CASCADE.
 */
 CREATE TABLE REQUEST(
   request_id INTEGER PRIMARY KEY,
@@ -215,8 +218,7 @@ CREATE TABLE REQUEST(
   FOREIGN KEY(technical_infrastructure_id) REFERENCES TECHNICAL_INFRASTRUCTURE(technical_infrastructure_id)
   ON UPDATE CASCADE,
   FOREIGN KEY(handled_by_user) REFERENCES MAKERSPACE_USER(user_id)
-  ON UPDATE CASCADE
-  ON DELETE CASCADE);
+  ON UPDATE CASCADE);
 
 /*
     This tables allows to implement a basic ticketing system for each request. Every message is linked
