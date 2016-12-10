@@ -77,15 +77,17 @@ CREATE TABLE MAKERSPACE_USER(
     done at a minimum.
   
     Foreign key user_id:
-    TODO
+    If a user changes id, we want to update also all the associated participations, thus we added
+    ON UPDATE CASCADE. However, we do not want to allow the deletion of a user if it is involved
+    in some project, in order to preserve a correct history of who worked in which project. Therefore,
+    we did not add ON DELETE CASCADE.
 */
 CREATE TABLE PARTICIPATION(
   project_id INTEGER REFERENCES PROJECT(project_id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
   user_id INTEGER REFERENCES MAKERSPACE_USER(user_id) 
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    ON UPDATE CASCADE,
   project_role VARCHAR(50) NOT NULL,
   PRIMARY KEY (project_id, user_id));
 
