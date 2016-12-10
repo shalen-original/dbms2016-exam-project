@@ -106,7 +106,9 @@ CREATE TABLE PARTICIPATION(
     table.
 
     The units_available field represents the quantity of a specific material that is available. It has to be
-    non negative, because it can be zero if that particular material stock is exhausted.
+    non negative, because it can be zero if that particular material stock is exhausted. The field
+    units_of_measure allows to store the measure unit of the quantity units_available. Examples are
+    kg, blocks, ...
 */
 CREATE TABLE MATERIAL(
   material_id INTEGER PRIMARY KEY,
@@ -144,6 +146,7 @@ CREATE TABLE PURCHASE(
 /*
     This table contains the list of the free infrastructures, that is, those that can be used
     directly by the groups, without the help of a technician. Examples are meeting rooms and similar.
+    If a free infrastructure is currently available for booking, the field available is TRUE.
 */
 CREATE TABLE FREE_INF(
   free_inf_id INTEGER PRIMARY KEY,
@@ -176,8 +179,9 @@ CREATE TABLE BOOKING(
   end_time DATE NOT NULL CHECK(end_time>start_time));
 
 /*
-    This table contains the list of the techincal infrastructures, that is, those that can only
+    This table contains the list of the technical infrastructures, that is, those that can only
     be used with the help of a technician. Examples are 3D printers, 3D scanners and so on.
+    If a technical infrastructure is currently available for booking, the field available is TRUE.
 */
 CREATE TABLE TECHNICAL_INF(
   technical_inf_id INTEGER PRIMARY KEY,
@@ -223,7 +227,8 @@ CREATE TABLE REQUEST(
 
 /*
     This tables allows to implement a basic ticketing system for each request. Every message is linked
-    to a single request and has a certain message associated to it.
+    to a single request and has a certain message associated to it. Each message is associated with the
+    timestamp in which it was issued, in order to be able to recostruct the correct sequence of messages.
 
     Foreign key request_id:
     When the id of a request is updated, we want to reflect the change on the associated messages. Therefore,
