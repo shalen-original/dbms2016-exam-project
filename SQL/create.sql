@@ -234,7 +234,7 @@ CREATE TABLE MESSAGE(
   message_id INTEGER PRIMARY KEY,
   message_text TEXT NOT NULL,
   request_id INTEGER NOT NULL,
-  message_time DATE NOT NULL,
+  message_time TIMESTAMP NOT NULL,
   FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
   ON UPDATE CASCADE
   ON DELETE CASCADE);
