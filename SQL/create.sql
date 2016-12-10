@@ -40,7 +40,7 @@ CREATE TABLE MAKERSPACE_USER(
 CREATE TABLE MATERIAL(
   material_id INTEGER PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  description VARCHAR(50),
+  description VARCHAR(500),
   unitary_price DECIMAL(9,2) NOT NULL CHECK(unitary_price>=0),
   units INTEGER NOT NULL CHECK(units>=0));
   
