@@ -22,6 +22,20 @@ DROP TABLE IF EXISTS REQUEST CASCADE;
 DROP TABLE IF EXISTS MESSAGE CASCADE;
 DROP TABLE IF EXISTS MATERIAL CASCADE;
 
+DROP TYPE IF EXISTS p_role;
+DROP TYPE IF EXISTS p_status;
+
+
+
+
+
+/*
+  Creates the enumerated types used in this database. They are p_role, which describes
+  the role a user has in a project, and p_status, which describes the status of a project.
+*/
+CREATE TYPE p_role AS ENUM ('administrator', 'collaborator', 'retired');
+CREATE TYPE p_status AS ENUM ('proposed', 'active', 'completed');
+
 /*
     The main unit of work in the Makerspace is a project.
 */
@@ -29,7 +43,7 @@ CREATE TABLE PROJECT(
   project_id INTEGER PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   description VARCHAR(500),
-  status VARCHAR(50) NOT NULL,
+  status p_status NOT NULL DEFAULT 'proposed',
   seeking_collaboration BOOLEAN DEFAULT FALSE);
 
 /*
@@ -88,7 +102,7 @@ CREATE TABLE PARTICIPATION(
     ON DELETE CASCADE,
   user_id INTEGER REFERENCES MAKERSPACE_USER(user_id) 
     ON UPDATE CASCADE,
-  project_role VARCHAR(50) NOT NULL,
+  project_role p_role NOT NULL DEFAULT 'collaborator',
   PRIMARY KEY (project_id, user_id));
 
 
