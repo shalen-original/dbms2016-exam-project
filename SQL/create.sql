@@ -16,18 +16,14 @@ DROP TABLE IF EXISTS PARTICIPATION CASCADE;
 DROP TABLE IF EXISTS PROJECT CASCADE;
 DROP TABLE IF EXISTS MAKERSPACE_USER CASCADE;
 DROP TABLE IF EXISTS GENERAL_ROLE CASCADE;
-DROP TABLE IF EXISTS FREE_INFRASTRUCTURE CASCADE;
-DROP TABLE IF EXISTS TECHNICAL_INFRASTRUCTURE CASCADE;
+DROP TABLE IF EXISTS FREE_INF CASCADE;
+DROP TABLE IF EXISTS TECHNICAL_INF CASCADE;
 DROP TABLE IF EXISTS REQUEST CASCADE;
 DROP TABLE IF EXISTS MESSAGE CASCADE;
 DROP TABLE IF EXISTS MATERIAL CASCADE;
 
 DROP TYPE IF EXISTS p_role;
 DROP TYPE IF EXISTS p_status;
-
-
-
-
 
 /*
   Creates the enumerated types used in this database. They are p_role, which describes
@@ -105,15 +101,11 @@ CREATE TABLE PARTICIPATION(
   project_role p_role NOT NULL DEFAULT 'collaborator',
   PRIMARY KEY (project_id, user_id));
 
-
-
-
-
 /*
     Every item available for purchase through the Makerspace infrastructure is listed in this
     table.
 
-    The units field represents the quantity of a specific material that is available. It has to be
+    The units_available field represents the quantity of a specific material that is available. It has to be
     non negative, because it can be zero if that particular material stock is exhausted.
 */
 CREATE TABLE MATERIAL(
@@ -121,7 +113,8 @@ CREATE TABLE MATERIAL(
   name VARCHAR(50) NOT NULL,
   description VARCHAR(500),
   unitary_price DECIMAL(9,2) NOT NULL CHECK(unitary_price>=0),
-  units INTEGER NOT NULL CHECK(units>=0));
+  units_of_measure VARCHAR(50) NOT NULL,
+  units_available INTEGER NOT NULL CHECK(units_available>=0));
 
 /*
     Each material can be purchased by a certain project. Each transaction regards a single
@@ -148,16 +141,13 @@ CREATE TABLE PURCHASE(
     ON UPDATE CASCADE,
   units INTEGER NOT NULL CHECK(units>0));
 
-
-
-
-
 /*
     This table contains the list of the free infrastructures, that is, those that can be used
     directly by the groups, without the help of a technician. Examples are meeting rooms and similar.
 */
-CREATE TABLE FREE_INFRASTRUCTURE(
-  free_infrastructure_id INTEGER PRIMARY KEY,
+CREATE TABLE FREE_INF(
+  free_inf_id INTEGER PRIMARY KEY,
+  available BOOLEAN DEFAULT TRUE,
   name VARCHAR(50) NOT NULL);
 
 /*
@@ -170,7 +160,7 @@ CREATE TABLE FREE_INFRASTRUCTURE(
     Each booking is associated with a single project. We added ON DELETE CASCADE and ON UPDATE CASCADE
     for the reasons already explained in the description of the table PARTICIPATION.
 
-    Foreign key free_infrastructure_id:
+    Foreign key free_inf_id:
     If a free infrastructure changes id, we want to update also all the bookings. Therefore, we added
     ON UPDATE CASCADE. However, we do not want to allow for deletion if that infrastructure is or
     has been reserved, so we did not add ON DELETE CASCADE.
@@ -180,21 +170,18 @@ CREATE TABLE BOOKING(
   project_id INTEGER REFERENCES PROJECT(project_id) 
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-  free_infrastructure_id INTEGER REFERENCES FREE_INFRASTRUCTURE(free_infrastructure_id) 
+  free_inf_id INTEGER REFERENCES FREE_INF(free_inf_id) 
     ON UPDATE CASCADE,
-  start_time date NOT NULL,
-  end_time date NOT NULL CHECK(end_time>start_time));
-
-
-
-
+  start_time DATE NOT NULL,
+  end_time DATE NOT NULL CHECK(end_time>start_time));
 
 /*
     This table contains the list of the techincal infrastructures, that is, those that can only
     be used with the help of a technician. Examples are 3D printers, 3D scanners and so on.
 */
-CREATE TABLE TECHNICAL_INFRASTRUCTURE(
-  technical_infrastructure_id INTEGER PRIMARY KEY,
+CREATE TABLE TECHNICAL_INF(
+  technical_inf_id INTEGER PRIMARY KEY,
+  available BOOLEAN DEFAULT TRUE,
   name VARCHAR(50) NOT NULL);
 
 /*
@@ -209,7 +196,7 @@ CREATE TABLE TECHNICAL_INFRASTRUCTURE(
     is not an action that can commonly be done by a user, but when it has to be performed, we want to keep
     the number of required steps at minimum, that is, simply deleting the project record.
 
-    Foreign key techincal_infrastructure_id:
+    Foreign key techincal_inf_id:
     If a technical infrastructure changes id, we want to update also all the requests for that
     infrastructure. Therefore, we added ON UPDATE CASCADE. However, we do not want to allow 
     for deletion if that infrastructure is or has been requested, so we did not add ON DELETE CASCADE.
@@ -224,12 +211,12 @@ CREATE TABLE REQUEST(
   request_id INTEGER PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   project_id INTEGER NOT NULL,
-  technical_infrastructure_id INTEGER NOT NULL,
+  technical_inf_id INTEGER NOT NULL,
   handled_by_user INTEGER NOT NULL,
   FOREIGN KEY(project_id) REFERENCES PROJECT(project_id)
   ON UPDATE CASCADE
   ON DELETE CASCADE,
-  FOREIGN KEY(technical_infrastructure_id) REFERENCES TECHNICAL_INFRASTRUCTURE(technical_infrastructure_id)
+  FOREIGN KEY(technical_inf_id) REFERENCES TECHNICAL_INF(technical_inf_id)
   ON UPDATE CASCADE,
   FOREIGN KEY(handled_by_user) REFERENCES MAKERSPACE_USER(user_id)
   ON UPDATE CASCADE);
@@ -245,8 +232,9 @@ CREATE TABLE REQUEST(
 */
 CREATE TABLE MESSAGE(
   message_id INTEGER PRIMARY KEY,
-  message_text TEXT,
+  message_text TEXT NOT NULL,
   request_id INTEGER NOT NULL,
+  message_time DATE NOT NULL,
   FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
   ON UPDATE CASCADE
   ON DELETE CASCADE);
