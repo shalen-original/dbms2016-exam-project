@@ -22,6 +22,8 @@ DROP TABLE IF EXISTS REQUEST CASCADE;
 DROP TABLE IF EXISTS MESSAGE CASCADE;
 DROP TABLE IF EXISTS MATERIAL CASCADE;
 
+DROP INDEX IF EXISTS unique_user_email;
+
 DROP TYPE IF EXISTS p_role;
 DROP TYPE IF EXISTS p_status;
 
@@ -69,6 +71,15 @@ CREATE TABLE MAKERSPACE_USER(
   email VARCHAR(50) NOT NULL,
   FOREIGN KEY(user_role) REFERENCES GENERAL_ROLE(role_id)
   ON UPDATE CASCADE);
+
+/*
+    This index allows for easy search on the email field (needed at each login).
+    Its also grants the uniqueness of the email field, case-insensitive. An alternative could
+    have been to use CITEXT from a Postgresql additional module, but we didn't want to start considering
+    also additional modules
+*/
+CREATE UNIQUE INDEX unique_user_email ON MAKERSPACE_USER((lower(email)));
+
 
 /*
     Each user participates in a certain project with a certain role. Each user can have only a single
