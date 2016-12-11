@@ -176,8 +176,8 @@ CREATE TABLE BOOKING(
     ON DELETE CASCADE,
   free_inf_id INTEGER REFERENCES FREE_INF(free_inf_id) 
     ON UPDATE CASCADE,
-  start_time DATE NOT NULL,
-  end_time DATE NOT NULL CHECK(end_time>start_time));
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL CHECK(end_time>start_time));
 
 /*
     This table contains the list of the technical infrastructures, that is, those that can only

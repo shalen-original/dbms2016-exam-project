@@ -135,13 +135,13 @@ VALUES (804,101,203,10,30);
 -- Data for table BOOKING
 
 INSERT INTO BOOKING (booking_id, project_id, free_inf_id, start_time, end_time)
-VALUES (901,100,301,'2016-1-15','2016-1-16');
+VALUES (901,100,301,'2016-1-16 15:00:00','2016-1-16 17:00:00');
 
 INSERT INTO BOOKING (booking_id, project_id, free_inf_id, start_time, end_time)
-VALUES (902,100,305,'2016-1-18','2016-1-20');
+VALUES (902,100,305,'2016-1-18 08:00:00','2016-1-18 17:00:00');
 
 INSERT INTO BOOKING (booking_id, project_id, free_inf_id, start_time, end_time)
-VALUES (903,101,321,'2016-2-17','2016-2-18');
+VALUES (903,101,321,'2016-2-17 08:00:00','2016-2-18 17:00:00');
 
 INSERT INTO BOOKING (booking_id, project_id, free_inf_id, start_time, end_time)
-VALUES (904,101,322,'2016-3-18','2016-3-19');
+VALUES (904,101,322,'2016-3-19 08:30:00','2016-3-19 13:30:00');
