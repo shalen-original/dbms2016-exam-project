@@ -89,14 +89,14 @@ VALUES (403,'Something else to print',101,503,10);
 
 -- Data for table MESSAGE
 
-INSERT INTO MESSAGE (message_id, message_text, request_id, message_time)
-VALUES (601,'Need to print some things',401,'2016-1-16 15:30:26');
+INSERT INTO MESSAGE (message_id, message_text, request_id, message_time, message_author)
+VALUES (601,'Need to print some things',401,'2016-1-16 15:30:26',12);
 
-INSERT INTO MESSAGE (message_id, message_text, request_id, message_time)
-VALUES (602,'Need to print some more things',402,'2016-1-16 16:45:16');
+INSERT INTO MESSAGE (message_id, message_text, request_id, message_time, message_author)
+VALUES (602,'Need to print some more things',402,'2016-1-16 16:45:16',12);
 
-INSERT INTO MESSAGE (message_id, message_text, request_id, message_time)
-VALUES (603,'Need to print even more things',403,'2016-1-17 10:35:55');
+INSERT INTO MESSAGE (message_id, message_text, request_id, message_time, message_author)
+VALUES (603,'Need to print even more things',403,'2016-1-17 10:35:55',10);
 
 -- Data for table PARTICIPATION
 
@@ -120,17 +120,17 @@ VALUES (100,12,'administrator');
 
 -- Data for table PURCHASE
 
-INSERT INTO PURCHASE (purchase_id, project_id, material_id, units)
-VALUES (801,100,200,5);
+INSERT INTO PURCHASE (purchase_id, project_id, material_id, units, total_price)
+VALUES (801,100,200,5,0.10);
 
-INSERT INTO PURCHASE (purchase_id, project_id, material_id, units)
-VALUES (802,100,201,10);
+INSERT INTO PURCHASE (purchase_id, project_id, material_id, units, total_price)
+VALUES (802,100,201,10,30);
 
-INSERT INTO PURCHASE (purchase_id, project_id, material_id, units)
-VALUES (803,101,201,6);
+INSERT INTO PURCHASE (purchase_id, project_id, material_id, units, total_price)
+VALUES (803,101,201,6,18);
 
-INSERT INTO PURCHASE (purchase_id, project_id, material_id, units)
-VALUES (804,101,203,10);
+INSERT INTO PURCHASE (purchase_id, project_id, material_id, units, total_price)
+VALUES (804,101,203,10,30);
 
 -- Data for table BOOKING
 

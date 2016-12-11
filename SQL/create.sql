@@ -141,7 +141,8 @@ CREATE TABLE PURCHASE(
     ON DELETE CASCADE,
   material_id INTEGER REFERENCES MATERIAL(material_id)
     ON UPDATE CASCADE,
-  units INTEGER NOT NULL CHECK(units>0));
+  units INTEGER NOT NULL CHECK(units>0),
+  total_price DECIMAL(9,2) NOT NULL CHECK(total_price>=0));
 
 /*
     This table contains the list of the free infrastructures, that is, those that can be used
@@ -240,6 +241,9 @@ CREATE TABLE MESSAGE(
   message_text TEXT NOT NULL,
   request_id INTEGER NOT NULL,
   message_time TIMESTAMP NOT NULL,
+  message_author INTEGER NOT NULL,
   FOREIGN KEY(request_id) REFERENCES REQUEST(request_id)
   ON UPDATE CASCADE
-  ON DELETE CASCADE);
+  ON DELETE CASCADE,
+  FOREIGN KEY(message_author) REFERENCES MAKERSPACE_USER(user_id)
+  ON UPDATE CASCADE);
