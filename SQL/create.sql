@@ -109,6 +109,10 @@ CREATE TABLE PARTICIPATION(
     non negative, because it can be zero if that particular material stock is exhausted. The field
     units_of_measure allows to store the measure unit of the quantity units_available. Examples are
     kg, blocks, ...
+    The unitary_price represents the current price of this material. If the price of the material is
+    updated, then this field will be changed and the new value will be used to compute the price
+    of the future transactions. The old transactions will still be ok, because each transaction also
+    stores its total costs when it is performed.
 */
 CREATE TABLE MATERIAL(
   material_id INTEGER PRIMARY KEY,
@@ -123,6 +127,8 @@ CREATE TABLE MATERIAL(
     material and a certain quantity greater than zero of that material. This project targets
     a small-medium sized Makerspace, therefore we did not want to implement a fully fledged transaction
     management system.
+    We also chose to store the total_price of the transaction in this table, in order to be able to change
+    the price of a material without breaking all the transactions' history.
 
     Foreign key project_id:
     The two clauses ON UPDATE CASCADE and ON DELETE CASCADE are added for reasons similar to those
@@ -230,6 +236,8 @@ CREATE TABLE REQUEST(
     This tables allows to implement a basic ticketing system for each request. Every message is linked
     to a single request and has a certain message associated to it. Each message is associated with the
     timestamp in which it was issued, in order to be able to recostruct the correct sequence of messages.
+    Each message is also linked to an author, which can be any user of the Makerspace. The project to
+    which the message is linked is available in the REQUEST record.
 
     Foreign key request_id:
     When the id of a request is updated, we want to reflect the change on the associated messages. Therefore,
