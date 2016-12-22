@@ -1,2 +1,5 @@
 # Sublime specific project files
 *.sublime-*
+/mpm/nbproject/private/
+/GUI/Makerspace_Project_Management/nbproject/private/
+/GUI/Makerspace_Project_Management/build/
