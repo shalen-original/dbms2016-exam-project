@@ -5,10 +5,10 @@
  */
 package mpm;
 
+import mpm.gui.LoginPanel;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import mpm_gui.*;
 
 /**
  *

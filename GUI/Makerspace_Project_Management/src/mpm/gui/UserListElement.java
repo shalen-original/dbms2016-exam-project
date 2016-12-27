@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mpm_gui;
+package mpm.gui;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;

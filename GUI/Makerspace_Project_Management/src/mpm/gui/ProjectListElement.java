@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mpm_gui;
+package mpm.gui;
 
 import java.awt.*;
 import javax.swing.*;
@@ -53,7 +53,6 @@ public class ProjectListElement extends javax.swing.JPanel {
 
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
-        jButton1.setOpaque(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
