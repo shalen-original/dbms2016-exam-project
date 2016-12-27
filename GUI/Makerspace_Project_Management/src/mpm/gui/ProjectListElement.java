@@ -5,9 +5,10 @@
  */
 package mpm.gui;
 
+import mpm.main.MPM;
+import mpm.main.TestObject;
 import java.awt.*;
 import javax.swing.*;
-import mpm.*;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ProjectListElement extends javax.swing.JPanel {
         this.test = test;
         
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(
-                getClass().getResource("/mpm.res/toolLogo.png")).getImage().getScaledInstance(
+                getClass().getResource("/mpm/res/toolLogo.png")).getImage().getScaledInstance(
                         76, 76, Image.SCALE_DEFAULT));
         
         imageLabel.setIcon(imageIcon);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mpm;
+package mpm.main;
 
 import mpm.gui.LoginPanel;
 import java.awt.*;

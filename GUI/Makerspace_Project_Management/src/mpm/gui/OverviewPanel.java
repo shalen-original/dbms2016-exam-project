@@ -5,11 +5,12 @@
  */
 package mpm.gui;
 
+import mpm.main.MPM;
+import mpm.main.TestObject;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import mpm.*;
 
 /**
  *
@@ -24,10 +25,10 @@ public class OverviewPanel extends javax.swing.JPanel {
         initComponents();
 
         
-        ImageIcon projectsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm.res/toolLogo.png")).getImage().getScaledInstance(
+        ImageIcon projectsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/toolLogo.png")).getImage().getScaledInstance(
             32, 32, Image.SCALE_DEFAULT));
             
-        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm.res/settingsLogo.png")).getImage().getScaledInstance(
+        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/settingsLogo.png")).getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));    
         
         overviewTabbedPane.setIconAt(0, projectsIcon);
