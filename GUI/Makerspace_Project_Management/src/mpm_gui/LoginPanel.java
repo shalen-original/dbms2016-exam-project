@@ -34,7 +34,7 @@ public class LoginPanel extends javax.swing.JPanel {
 
         logoLabel.setBackground(new java.awt.Color(253, 101, 8));
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoLabel.setIcon(new javax.swing.ImageIcon("/home/remo/Git/Exam_Project_16-17/GUI/Makerspace_Project_Management/data/images/makerspaceLogo.png")); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mpm.res/makerspaceLogo.png"))); // NOI18N
         logoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         logoLabel.setMaximumSize(new java.awt.Dimension(1380, 169));
         logoLabel.setOpaque(true);

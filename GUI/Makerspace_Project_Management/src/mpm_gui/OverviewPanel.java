@@ -22,11 +22,12 @@ public class OverviewPanel extends javax.swing.JPanel {
      */
     public OverviewPanel() {
         initComponents();
+
         
-        ImageIcon projectsIcon = new ImageIcon(new ImageIcon("data/images/toolLogo.png").getImage().getScaledInstance(
+        ImageIcon projectsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm.res/toolLogo.png")).getImage().getScaledInstance(
             32, 32, Image.SCALE_DEFAULT));
             
-        ImageIcon settingsIcon = new ImageIcon(new ImageIcon("data/images/settingsLogo.png").getImage().getScaledInstance(
+        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm.res/settingsLogo.png")).getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));    
         
         overviewTabbedPane.setIconAt(0, projectsIcon);

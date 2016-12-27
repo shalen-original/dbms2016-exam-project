@@ -50,7 +50,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/home/remo/Git/Exam_Project_16-17/GUI/Makerspace_Project_Management/data/images/makerspaceLogo.png"/>
+          <Image iconType="3" name="/mpm.res/makerspaceLogo.png"/>
         </Property>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

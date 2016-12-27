@@ -19,7 +19,7 @@ public class UserListElement extends javax.swing.JPanel {
      */
     public UserListElement() {
         initComponents();
-        ImageIcon userIcon = new ImageIcon(new ImageIcon("data/images/personLogo.png").getImage().getScaledInstance(
+        ImageIcon userIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm.res/personLogo.png")).getImage().getScaledInstance(
                 84, 80, Image.SCALE_DEFAULT));
         iconLabel.setIcon(userIcon);
     }

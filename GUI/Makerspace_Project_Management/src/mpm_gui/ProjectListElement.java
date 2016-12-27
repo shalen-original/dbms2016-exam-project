@@ -25,7 +25,7 @@ public class ProjectListElement extends javax.swing.JPanel {
         this.test = test;
         
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(
-                "data/images/toolLogo.png").getImage().getScaledInstance(
+                getClass().getResource("/mpm.res/toolLogo.png")).getImage().getScaledInstance(
                         76, 76, Image.SCALE_DEFAULT));
         
         imageLabel.setIcon(imageIcon);
