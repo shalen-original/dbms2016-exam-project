@@ -1,0 +1,10 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Makerspace Project Management
+${licensePrefix}Database Systems 2016-2017
+${licensePrefix}Copyright 2016 (C) Grabocka Mikel, Nardini Matteo, Scolati Remo.
+${licensePrefix}All rights reserved.
+<#if licenseLast??>
+${licenseLast}
+</#if>
