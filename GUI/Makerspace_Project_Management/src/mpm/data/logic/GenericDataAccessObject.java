@@ -44,6 +44,14 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
     }
     
     /**
+     * Inserts a new object of type T in the persistent storage
+     * @param objToInsert The new object to be inserted
+     */
+    public abstract void insert(T objToInsert);
+    
+    
+    
+    /**
      * Finds a single object in the persistent storage, searching by ID.
      * @param ID The ID of the object to be found in the persistent storage.
      * @return The object with id <i>ID</i> in the persistent storage. If no object
@@ -56,6 +64,8 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
      * @param ID The ID of the object to be deleted.
      */
     public abstract void deleteByID(int ID);
+    
+    
     
     /**
      * Analyzes a single row of a <i>ResultSet</i> and converts it to a object
