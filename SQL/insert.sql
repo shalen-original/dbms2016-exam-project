@@ -65,6 +65,9 @@ VALUES (321,TRUE,'Room 321');
 INSERT INTO FREE_INF (free_inf_id, available, name)
 VALUES (322,TRUE,'Room 322');
 
+INSERT INTO FREE_INF (free_inf_id, available, name)
+VALUES (323,TRUE,'Room 323 - Not booked');
+
 -- Data for table TECHNICAL_INF
 
 INSERT INTO TECHNICAL_INF (technical_inf_id, available, name)
