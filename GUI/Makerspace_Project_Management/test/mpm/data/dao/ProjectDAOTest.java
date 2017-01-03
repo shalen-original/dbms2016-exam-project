@@ -56,7 +56,7 @@ public class ProjectDAOTest {
         {
             if (!projectEquals(result.get(i),expected.get(i)))
             {
-                fail("Project " + result.get(i) + " is different from project " + expected.get(i));
+                fail(result.get(i) + " is different from " + expected.get(i));
             };
         }
     }
@@ -81,7 +81,7 @@ public class ProjectDAOTest {
         
         if (!projectEquals(res, objToWrite))
         {
-            fail("Project " + res + " is not equal to project " + objToWrite + 
+            fail(res + " is not equal to " + objToWrite + 
                  "\nRemember to fix database before testing again");
         }
         
@@ -120,7 +120,7 @@ public class ProjectDAOTest {
         
         if (!ok)
         {
-            fail("The new project " + newp + " was not inserted." + 
+            fail("The new " + newp + " was not inserted." + 
                  "Remember to fix the database before testing again");
         }
         
@@ -144,7 +144,7 @@ public class ProjectDAOTest {
        
         if (!projectEquals(res, expected))
         {
-            fail("Project " + res + " is different from project " + expected);
+            fail(res + " is different from " + expected);
         }
     }
 
@@ -169,7 +169,7 @@ public class ProjectDAOTest {
         for (Project p : a)
         {
             if (projectEquals(p, dp))
-                fail("Project " + p + " was not deleted." + 
+                fail(p + " was not deleted." + 
                     "Remember to fix the database before testing again");
         }
         
