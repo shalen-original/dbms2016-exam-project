@@ -1,3 +1,10 @@
+/*
+ * Makerspace Project Management
+ * Database Systems 2016-2017
+ * Copyright 2016 (C) Grabocka Mikel, Nardini Matteo, Scolati Remo.
+ * All rights reserved.
+ */
+
 package mpm.data.entities;
 
 import mpm.data.logic.IUniquelyIdentifiable;
