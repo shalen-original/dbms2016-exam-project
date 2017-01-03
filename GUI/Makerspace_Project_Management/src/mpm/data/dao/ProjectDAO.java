@@ -82,12 +82,12 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
             s.setInt(1, ID);
             ResultSet r = s.executeQuery();
             
-            r.next();
-            ans.add(parseSQLResult(r));
+            if (r.next())
+                ans.add(parseSQLResult(r));
             
         });
         
-        return ans.get(0);
+        return ans.size() >= 1 ? ans.get(0) : null;
     }
 
     @Override
