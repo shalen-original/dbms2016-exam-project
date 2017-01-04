@@ -73,10 +73,10 @@ public class ProjectPanel extends javax.swing.JPanel {
         userListPanel = new javax.swing.JPanel();
         settingsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BookFreeInfButton = new javax.swing.JButton();
+        BuyMatButton = new javax.swing.JButton();
+        MakeReqButton = new javax.swing.JButton();
+        AddPartButton = new javax.swing.JButton();
 
         projectTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -134,31 +134,31 @@ public class ProjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Book Free Inf");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BookFreeInfButton.setText("Book Free Inf");
+        BookFreeInfButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BookFreeInfButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Buy Material");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        BuyMatButton.setText("Buy Material");
+        BuyMatButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                BuyMatButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Make a Request");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        MakeReqButton.setText("Make a Request");
+        MakeReqButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                MakeReqButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Add Participant");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        AddPartButton.setText("Add Participant");
+        AddPartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                AddPartButtonActionPerformed(evt);
             }
         });
 
@@ -171,12 +171,12 @@ public class ProjectPanel extends javax.swing.JPanel {
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
+                            .addComponent(BookFreeInfButton)
+                            .addComponent(BuyMatButton))
                         .addGap(39, 39, 39)
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4)
-                            .addComponent(jButton3)))
+                            .addComponent(AddPartButton)
+                            .addComponent(MakeReqButton)))
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addComponent(backButton)))
@@ -187,12 +187,12 @@ public class ProjectPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsPanelLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(BookFreeInfButton)
+                    .addComponent(MakeReqButton))
                 .addGap(18, 18, 18)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                    .addComponent(BuyMatButton)
+                    .addComponent(AddPartButton))
                 .addGap(63, 63, 63)
                 .addComponent(backButton)
                 .addContainerGap(297, Short.MAX_VALUE))
@@ -223,36 +223,36 @@ public class ProjectPanel extends javax.swing.JPanel {
         MPM.setPanel(new OverviewPanel());
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BuyMatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyMatButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showOptionDialog(null, new BuyMatPanel(),"Buying", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_BuyMatButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void MakeReqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeReqButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showOptionDialog(null, new MakeReqPanel(),"Request", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_MakeReqButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void AddPartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPartButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showOptionDialog(null, new AddPartPanel(),"Participant", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_AddPartButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BookFreeInfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookFreeInfButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showOptionDialog(null, new BookInfPanel(),"Booking", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BookFreeInfButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddPartButton;
+    private javax.swing.JButton BookFreeInfButton;
+    private javax.swing.JButton BuyMatButton;
+    private javax.swing.JButton MakeReqButton;
     private javax.swing.JButton backButton;
     private javax.swing.JTextArea descriptionArea;
     private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel overViewPanel;
     private javax.swing.JTabbedPane projectTabbedPane;
