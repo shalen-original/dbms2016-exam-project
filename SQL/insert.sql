@@ -29,6 +29,9 @@ VALUES (1021,'Teacher','Academic staff of the University of Bolzano');
 INSERT INTO GENERAL_ROLE (role_id, name, description)
 VALUES (1022,'Student','Student of the University of Bolzano');
 
+INSERT INTO GENERAL_ROLE (role_id, name, description)
+VALUES (1023,'Dependecies Free','A role that none has. For test purposes');
+
 -- Data for table MAKERSPACE_USER
 
 INSERT INTO MAKERSPACE_USER (user_id, name, user_role, email)
