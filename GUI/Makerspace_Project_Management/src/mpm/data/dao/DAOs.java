@@ -16,5 +16,6 @@ public class DAOs {
     
     public static ProjectDAO project = new ProjectDAO();
     public static FreeInfDAO free_inf = new FreeInfDAO();
+    public static BookingDAO booking = new BookingDAO();
 
 }
