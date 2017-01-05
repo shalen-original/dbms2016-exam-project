@@ -15,6 +15,9 @@ VALUES (100,'Board Game','Creating a board game for the management course','acti
 INSERT INTO PROJECT (project_id, title, description, status, seeking_collaboration) 
 VALUES (101,'Arduino Workshop','A one week workshop on what to use Arduino for','completed',FALSE);
 
+INSERT INTO PROJECT (project_id, title, description, status, seeking_collaboration) 
+VALUES (102,'Dependecies free','A project without bookings, purchases and such. For test purposes','completed',FALSE);
+
 -- Data for table GENERAL_ROLE
 
 INSERT INTO GENERAL_ROLE (role_id, name, description) 

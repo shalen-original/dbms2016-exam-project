@@ -39,6 +39,12 @@ public class ProjectDAOTest {
         p.setStatus(ProjectStatus.COMPLETED);
         p.setSeekingCollaboration(false);
         expected.add(p);
+        p = new Project(102);
+        p.setTitle("Dependecies free");
+        p.setDescription("A project without bookings, purchases and such. For test purposes");
+        p.setStatus(ProjectStatus.COMPLETED);
+        p.setSeekingCollaboration(false);
+        expected.add(p);
         
         // Retriving the complete list
         ProjectDAO instance = new ProjectDAO();
@@ -150,10 +156,10 @@ public class ProjectDAOTest {
     public void testDeleteByID() {
        
         Project dp;
-        dp = new Project(100);
-        dp.setTitle("Board Game");
-        dp.setDescription("Creating a board game for the management course");
-        dp.setStatus(ProjectStatus.ACTIVE);
+        dp = new Project(102);
+        dp.setTitle("Dependecies free");
+        dp.setDescription("A project without bookings, purchases and such. For test purposes");
+        dp.setStatus(ProjectStatus.COMPLETED);
         dp.setSeekingCollaboration(false);
         
         ProjectDAO instance = new ProjectDAO();
