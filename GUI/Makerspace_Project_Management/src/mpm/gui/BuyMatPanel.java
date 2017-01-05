@@ -42,6 +42,8 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
         UnitsLabel.setText("Units :");
 
+        UnitsSpiner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+
         UnitPriceLabel.setText("Unitary Price:");
 
         ActualUnitPriceLabel.setText("10");
@@ -84,7 +86,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(MaterialChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ActualTotalPriceLabel)
-                                    .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(133, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
