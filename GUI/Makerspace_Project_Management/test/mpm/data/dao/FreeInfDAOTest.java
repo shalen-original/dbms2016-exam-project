@@ -6,14 +6,9 @@
  */
 package mpm.data.dao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.FreeInf;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
