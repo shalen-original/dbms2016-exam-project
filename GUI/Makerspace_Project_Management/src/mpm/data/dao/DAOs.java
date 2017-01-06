@@ -14,9 +14,10 @@ package mpm.data.dao;
  */
 public class DAOs {
     
-    public static ProjectDAO project = new ProjectDAO();
-    public static FreeInfDAO free_inf = new FreeInfDAO();
-    public static BookingDAO booking = new BookingDAO();
-    public static GeneralRoleDAO role = new GeneralRoleDAO();
+    public static ProjectDAO projects = new ProjectDAO();
+    public static FreeInfDAO free_infs = new FreeInfDAO();
+    public static BookingDAO bookings = new BookingDAO();
+    public static GeneralRoleDAO roles = new GeneralRoleDAO();
+    public static UserDAO users = new UserDAO();
 
 }

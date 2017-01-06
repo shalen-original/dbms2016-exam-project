@@ -43,6 +43,9 @@ VALUES (11,'Mikel Grabocka',1022,'mgrabocka@unibz.it');
 INSERT INTO MAKERSPACE_USER (user_id, name, user_role, email)
 VALUES (12,'Matteo Nardini',1021,'mnardini@unibz.it');
 
+INSERT INTO MAKERSPACE_USER (user_id, name, user_role, email)
+VALUES (13,'Dependecies Free',1021,'dep@free.it');
+
 -- Data for table MATERIAL
 
 INSERT INTO MATERIAL (material_id, name, description, unitary_price, units_of_measure, units_available)
