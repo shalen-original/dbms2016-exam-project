@@ -19,5 +19,6 @@ public class DAOs {
     public static BookingDAO bookings = new BookingDAO();
     public static GeneralRoleDAO roles = new GeneralRoleDAO();
     public static UserDAO users = new UserDAO();
+    public static MaterialDAO materials = new MaterialDAO();
 
 }

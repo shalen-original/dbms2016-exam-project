@@ -60,6 +60,9 @@ VALUES (203,'Blue Raw Plastic','Input for 3D printer',3,'m',1650);
 INSERT INTO MATERIAL (material_id, name, description, unitary_price, units_of_measure, units_available)
 VALUES (205,'Green Raw Plastic','Input for 3D printer',3,'m',905);
 
+INSERT INTO MATERIAL (material_id, name, description, unitary_price, units_of_measure, units_available)
+VALUES (206,'Dependecies free','Material never bought by any project. For test purposes',1.2,'test',10);
+
 -- Data for table FREE_INF
 
 INSERT INTO FREE_INF (free_inf_id, available, name)
