@@ -9,7 +9,11 @@ package mpm.data.logic;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import mpm.main.ProjectConstants;
 
 /**
@@ -38,6 +42,40 @@ public class DBUtils {
             //TODO
             throw new RuntimeException(ex.getMessage());
         }
+    }
+    
+    /**
+     * Performs a generic UID (Update, Insert or Delete) operation on the database.
+     * @param sql The string containing the sql of the query
+     * @param filler The functions that sets all the parameters of the prepared statement
+     */
+    public static void performUID(String sql, IPreparedStatementFiller filler)
+    {
+        performOperation(conn -> {
+            PreparedStatement s = conn.prepareStatement(sql);
+            filler.accept(s);
+            s.executeUpdate();    
+        });
+    }
+    
+    public static <T> List<T> performSelect(String sql, IPreparedStatementFiller filler,
+                                            ISQLResultParser<T> parser)
+    {
+        
+        List<T> ans = new ArrayList<>();
+        
+        DBUtils.performOperation(conn -> {
+            PreparedStatement s = conn.prepareStatement(sql);
+            filler.accept(s);
+            ResultSet r = s.executeQuery();
+            
+            while (r.next())
+            {
+                ans.add(parser.accept(r));
+            }
+        });
+        
+        return ans;
     }
 
 }

@@ -7,11 +7,8 @@
 
 package mpm.data.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import mpm.data.entities.FreeInf;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
@@ -22,25 +19,24 @@ import mpm.data.logic.GenericDataAccessObject;
  */
 public class FreeInfDAO extends GenericDataAccessObject<FreeInf> {
 
-    @Override
-    public List<FreeInf> getAll() {
-        return genericGetAll("free_inf");
+    public FreeInfDAO()
+    {
+        this.associatedTableName = "free_inf";
+        
+        this.findByIdQuery = "SELECT * FROM free_inf WHERE free_inf_id = ?";
+        this.deleteByIdQuery = "DELETE FROM free_inf WHERE free_inf_id = ?";
     }
 
     @Override
     public void update(FreeInf objToWrite) {
         
-        String updateQuery = "UPDATE free_inf SET name = ?, " +
+        String sql = "UPDATE free_inf SET name = ?, " +
                             "available = ? WHERE free_inf_id = ?";
         
-        DBUtils.performOperation(conn -> {
-        
-            PreparedStatement s = conn.prepareStatement(updateQuery);
+       DBUtils.performUID(sql, s -> {
             s.setString(1, objToWrite.getName());
             s.setBoolean(2, objToWrite.getAvailable());
-            s.setInt(3, objToWrite.getId());
-            s.executeUpdate();
-            
+            s.setInt(3, objToWrite.getId());  
         });
         
     }
@@ -48,52 +44,13 @@ public class FreeInfDAO extends GenericDataAccessObject<FreeInf> {
     @Override
     public void insert(FreeInf objToInsert) {
         
-        String insertQuery = "INSERT INTO free_inf(free_inf_id, " + 
+        String sql = "INSERT INTO free_inf(free_inf_id, " + 
                             "name, available) VALUES (?, ?, ?)";
         
-        DBUtils.performOperation(conn -> {
-        
-            PreparedStatement s = conn.prepareStatement(insertQuery);
+        DBUtils.performUID(sql, s -> {
             s.setInt(1, objToInsert.getId());
             s.setString(2, objToInsert.getName());
-            s.setBoolean(3, objToInsert.getAvailable());
-            s.executeUpdate();
-            
-        });
-        
-    }
-
-    @Override
-    public FreeInf findByID(int ID) {
-        ArrayList<FreeInf> ans = new ArrayList<>();
-        String findByIdQuery = "SELECT * FROM free_inf WHERE free_inf_id = ?";
-        
-        DBUtils.performOperation(conn -> {
-        
-            PreparedStatement s = conn.prepareStatement(findByIdQuery);
-            s.setInt(1, ID);
-            ResultSet r = s.executeQuery();
-            
-            if (r.next())
-                ans.add(parseSQLResult(r));
-            
-        });
-        
-        return ans.size() >= 1 ? ans.get(0) : null;
-        
-    }
-
-    @Override
-    public void deleteByID(int ID) {
-        
-        String deleteQuery = "DELETE FROM free_inf WHERE free_inf_id = ?";
-        
-        DBUtils.performOperation(conn -> {
-        
-            PreparedStatement s = conn.prepareStatement(deleteQuery);
-            s.setInt(1, ID);
-            s.executeUpdate();
-            
+            s.setBoolean(3, objToInsert.getAvailable()); 
         });
         
     }
