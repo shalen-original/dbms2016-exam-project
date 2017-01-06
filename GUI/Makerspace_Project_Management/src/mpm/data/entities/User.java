@@ -50,7 +50,7 @@ public class User implements IUniquelyIdentifiable{
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
     
     @Override
