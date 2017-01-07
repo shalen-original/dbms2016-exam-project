@@ -105,6 +105,10 @@ VALUES (402,'Something to print',100,502,11);
 INSERT INTO REQUEST (request_id, title, project_id, technical_inf_id, handled_by_user)
 VALUES (403,'Something else to print',101,503,10);
 
+INSERT INTO REQUEST (request_id, title, project_id, technical_inf_id, handled_by_user)
+VALUES (404,'Request without messages',101,501,12);
+
+
 -- Data for table MESSAGE
 
 INSERT INTO MESSAGE (message_id, message_text, request_id, message_time, message_author)

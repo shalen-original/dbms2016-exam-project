@@ -43,6 +43,13 @@ public class RequestDAOTest extends GenericDAOTestHelper<Request>{
         p.setAssignedUserId(10);
         this.fullTableList.add(p);
         
+        p = new Request(404);
+        p.setTitle("Request without messages");
+        p.setProjectId(101);
+        p.setTechInfId(501);
+        p.setAssignedUserId(12);
+        this.fullTableList.add(p);
+        
         // Setting up update test
         this.objectToUpdate = new Request(401);
         this.objectToUpdate.setTitle("NEW TITLE");
@@ -53,14 +60,14 @@ public class RequestDAOTest extends GenericDAOTestHelper<Request>{
         this.objectToRevertUpdate = this.fullTableList.get(0);
         
         // Setting up insert test
-        this.objectToInsert = new Request(404);
+        this.objectToInsert = new Request(400);
         this.objectToInsert.setTitle("INSERTED TITLE");
         this.objectToInsert.setProjectId(100);
         this.objectToInsert.setTechInfId(503);
         this.objectToInsert.setAssignedUserId(10);
         
         // Setting up delete test
-        this.objectToDelete = this.fullTableList.get(0);
+        this.objectToDelete = this.fullTableList.get(3);
     }
 
     @Override
