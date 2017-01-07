@@ -21,5 +21,6 @@ public class DAOs {
     public static UserDAO users = new UserDAO();
     public static MaterialDAO materials = new MaterialDAO();
     public static PurchaseDAO purchases = new PurchaseDAO();
+    public static ParticipationDAO participations = new ParticipationDAO();
 
 }
