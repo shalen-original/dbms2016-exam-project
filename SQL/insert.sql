@@ -115,23 +115,23 @@ VALUES (603,'Need to print even more things',403,'2016-1-17 10:35:55',10);
 
 -- Data for table PARTICIPATION
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (101,10,'administrator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (1, 101,10,'administrator');
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (101,11,'collaborator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (2, 101,11,'collaborator');
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (101,12,'collaborator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (3, 101,12,'collaborator');
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (100,10,'collaborator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (4, 100,10,'collaborator');
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (100,11,'collaborator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (5, 100,11,'collaborator');
 
-INSERT INTO PARTICIPATION (project_id, user_id, project_role)
-VALUES (100,12,'administrator');
+INSERT INTO PARTICIPATION (participation_id, project_id, user_id, project_role)
+VALUES (6, 100,12,'administrator');
 
 -- Data for table PURCHASE
 

@@ -104,13 +104,13 @@ CREATE UNIQUE INDEX unique_user_email ON MAKERSPACE_USER((lower(email)));
     we did not add ON DELETE CASCADE.
 */
 CREATE TABLE PARTICIPATION(
+  participation_id INTEGER PRIMARY KEY,
   project_id INTEGER REFERENCES PROJECT(project_id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
   user_id INTEGER REFERENCES MAKERSPACE_USER(user_id) 
     ON UPDATE CASCADE,
-  project_role p_role NOT NULL DEFAULT 'collaborator',
-  PRIMARY KEY (project_id, user_id));
+  project_role p_role NOT NULL DEFAULT 'collaborator');
 
 /*
     Every item available for purchase through the Makerspace infrastructure is listed in this
