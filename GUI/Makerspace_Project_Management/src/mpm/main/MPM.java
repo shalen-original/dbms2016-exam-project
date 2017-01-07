@@ -7,8 +7,11 @@ package mpm.main;
 
 import mpm.gui.LoginPanel;
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 import javax.swing.*;
+import mpm.data.dao.UserDAO;
+import mpm.data.entities.User;
 
 /**
  *
@@ -17,9 +20,10 @@ import javax.swing.*;
 public class MPM {
     
     public static ArrayList<TestObject> testList;
-    private static JFrame frame;
+    public static JFrame frame;
     public static String[] userList;
-    
+    public static User currentUser;
+
     /**
      * Main method of the program.
      * @param args unused.
@@ -63,5 +67,5 @@ public class MPM {
         contentPane.revalidate(); 
         contentPane.repaint();
         frame.pack();
-  }
+    }
 }

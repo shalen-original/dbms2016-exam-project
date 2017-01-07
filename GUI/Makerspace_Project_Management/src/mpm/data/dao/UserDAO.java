@@ -9,9 +9,11 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
+import mpm.data.logic.IPreparedStatementFiller;
 
 /**
  * Implements a DAO for the Makerspace_User table.
@@ -55,6 +57,16 @@ public class UserDAO extends GenericDataAccessObject<User>{
              s.setString(4, objToInsert.getEmail().toLowerCase());  
          });
         
+    }
+    
+    public List<User> findByMail(String email){
+        
+        String sql = "SELECT * FROM makerspace_user " +
+                    "WHERE email = ?";
+        
+        IPreparedStatementFiller f = s -> {s.setString(1, email);};
+
+        return DBUtils.performSelect(sql, f, this.defaultParser);
     }
 
     @Override

@@ -5,6 +5,10 @@
  */
 package mpm.gui;
 
+import java.awt.Color;
+import java.util.List;
+import mpm.data.dao.UserDAO;
+import mpm.data.entities.User;
 import mpm.main.MPM;
 
 /**
@@ -17,7 +21,10 @@ public class LoginPanel extends javax.swing.JPanel {
      * Creates new form LoginPanel
      */
     public LoginPanel() {
+        
         initComponents();
+        usernameInputField.setForeground(Color.GRAY);
+        usernameInputField.setText("name@example.com ");
     }
 
     /**
@@ -31,6 +38,9 @@ public class LoginPanel extends javax.swing.JPanel {
 
         logoLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
+        usernameInputField = new javax.swing.JTextField();
+        inputLabel = new javax.swing.JLabel();
+        errorLabel = new javax.swing.JLabel();
 
         logoLabel.setBackground(new java.awt.Color(253, 101, 8));
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -42,33 +52,67 @@ public class LoginPanel extends javax.swing.JPanel {
 
         loginButton.setToolTipText("Click to login");
         loginButton.setLabel("Login");
+        loginButton.setNextFocusableComponent(usernameInputField);
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
             }
         });
 
+        usernameInputField.setToolTipText("Enter your user name");
+        usernameInputField.setNextFocusableComponent(loginButton);
+        usernameInputField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usernameInputFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usernameInputFieldFocusLost(evt);
+            }
+        });
+        usernameInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameInputFieldKeyPressed(evt);
+            }
+        });
+
+        inputLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        inputLabel.setText("Username:");
+
+        errorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        errorLabel.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(loginButton)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(284, 284, 284)
+                .addComponent(loginButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(inputLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorLabel)
+                    .addComponent(usernameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(297, 297, 297))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(loginButton)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(64, 64, 64)
+                .addComponent(errorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputLabel))
+                .addGap(18, 18, 18)
+                .addComponent(loginButton)
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         loginButton.getAccessibleContext().setAccessibleName("loginButton");
@@ -76,12 +120,47 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         
-        MPM.setPanel(new OverviewPanel());
+        UserDAO uDAO = new UserDAO();
+        List<User> list = uDAO.findByMail(usernameInputField.getText());
+        if (list.isEmpty()) { 
+            errorLabel.setText("Username not valid");
+            usernameInputField.setForeground(Color.GRAY);
+            usernameInputField.setText("name@example.com");
+        } else {
+            MPM.currentUser = list.get(0);
+            MPM.setPanel(new OverviewPanel());
+            //System.out.println(MPM.currentUser.toString());
+        }
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    private void usernameInputFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFieldFocusGained
+        if (usernameInputField.getText().equals("name@example.com")) {
+            usernameInputField.setText("");
+            usernameInputField.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_usernameInputFieldFocusGained
+
+    private void usernameInputFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFieldFocusLost
+        if (usernameInputField.getText().isEmpty()) {
+            usernameInputField.setForeground(Color.GRAY);
+            usernameInputField.setText("name@example.com");
+        }
+    }//GEN-LAST:event_usernameInputFieldFocusLost
+
+    private void usernameInputFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameInputFieldKeyPressed
+        if (usernameInputField.getText().equals("name@example.com") 
+                || usernameInputField.getText().equals("name@example.com ")) {
+            usernameInputField.setText("");
+            usernameInputField.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_usernameInputFieldKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel errorLabel;
+    private javax.swing.JLabel inputLabel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel logoLabel;
+    private javax.swing.JTextField usernameInputField;
     // End of variables declaration//GEN-END:variables
 }
