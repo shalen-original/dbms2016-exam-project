@@ -23,5 +23,6 @@ public class DAOs {
     public static PurchaseDAO purchases = new PurchaseDAO();
     public static ParticipationDAO participations = new ParticipationDAO();
     public static TechInfDAO technical_infs = new TechInfDAO();
+    public static RequestDAO requests = new RequestDAO();
 
 }
