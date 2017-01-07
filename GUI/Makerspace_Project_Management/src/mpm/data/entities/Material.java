@@ -60,7 +60,7 @@ public class Material implements IUniquelyIdentifiable{
                     + "Given unitaryPrice: " + unitaryPrice);
         }
         
-        this.unitaryPrice = unitaryPrice.setScale(2);
+        this.unitaryPrice = unitaryPrice.setScale(2, BigDecimal.ROUND_HALF_DOWN);
     }
 
     public String getUnitsOfMeasure() {
@@ -79,7 +79,7 @@ public class Material implements IUniquelyIdentifiable{
         
         if (unitsAvailable < 0)
         {
-            throw new IllegalArgumentException("The unitaryPrice cannot be lower than zero. " 
+            throw new IllegalArgumentException("The number of available units cannot be lower than zero. " 
                     + "Given unitaryPrice: " + unitsAvailable);
         }
         
