@@ -91,6 +91,9 @@ VALUES (502,TRUE,'3D printer 102');
 INSERT INTO TECHNICAL_INF (technical_inf_id, available, name)
 VALUES (503,TRUE,'3D printer 103');
 
+INSERT INTO TECHNICAL_INF (technical_inf_id, available, name)
+VALUES (504,TRUE,'Not booked');
+
 -- Data for table REQUEST
 
 INSERT INTO REQUEST (request_id, title, project_id, technical_inf_id, handled_by_user)
