@@ -9,10 +9,12 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
+import mpm.data.logic.IPreparedStatementFiller;
 
 /**
  * Implements a DAO for the Project table.
@@ -60,6 +62,17 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
             s.setBoolean(5, objToInsert.getSeekingCollaboration());   
         });
         
+    }
+    
+    public List<Project> findByUserID(int userId){
+        
+        String sql = "SELECT * " +
+                "FROM participation NATURAL JOIN project " +     
+                "WHERE user_id = ?";
+        
+        IPreparedStatementFiller f = s -> {s.setInt(1, userId);};
+        
+        return DBUtils.performSelect(sql, f, this.defaultParser);
     }
 
     @Override

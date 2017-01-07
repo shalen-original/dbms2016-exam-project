@@ -6,7 +6,6 @@
 package mpm.gui;
 
 import mpm.main.MPM;
-import mpm.main.TestObject;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -19,30 +18,37 @@ import javax.swing.JOptionPane;
  */
 public class ProjectPanel extends javax.swing.JPanel {
     
-    private TestObject test;
     /**
      * Creates new form projectPanel
      */
-    public ProjectPanel(TestObject test) {
+    public ProjectPanel() {
         initComponents();
         
-        ImageIcon overviewIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/overviewLogo.png")).getImage().getScaledInstance(
+        ImageIcon overviewIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/overviewLogo.png"))
+                .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
-        ImageIcon personsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/personLogo.png")).getImage().getScaledInstance(
+        ImageIcon personsIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/personLogo.png"))
+                .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
-        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/settingsLogo.png")).getImage().getScaledInstance(
+        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/settingsLogo.png"))
+                .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
                 
         projectTabbedPane.setIconAt(0, overviewIcon);
         projectTabbedPane.setIconAt(1, personsIcon);
         projectTabbedPane.setIconAt(2, settingsIcon);
         
-        this.test = test;
-        titleLabel.setText(test.title);
-        descriptionArea.setText(test.description);
-        ArrayList<UserListElement> list = new ArrayList<>();
+        titleLabel.setText(MPM.currentProject.getTitle());
+        descriptionArea.setText(MPM.currentProject.getDescription());
+        
+        
+        // TODO: add list of users for current project
+        /*ArrayList<UserListElement> list = new ArrayList<>();
         for(String user : test.userList){
             
             UserListElement el = new UserListElement();
@@ -52,7 +58,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         for(UserListElement el : list){
             userListPanel.add(el);
-        }
+        }*/
     }
 
     /**
@@ -225,23 +231,31 @@ public class ProjectPanel extends javax.swing.JPanel {
 
     private void BuyMatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyMatButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new BuyMatPanel(),"Buying", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+        JOptionPane.showOptionDialog(null, new BuyMatPanel(),"Buying", 
+                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
+                null, new Object[]{}, null);
 
     }//GEN-LAST:event_BuyMatButtonActionPerformed
 
     private void MakeReqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeReqButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new MakeReqPanel(),"Request", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+        JOptionPane.showOptionDialog(null, new MakeReqPanel(),"Request", 
+                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
+                null, new Object[]{}, null);
     }//GEN-LAST:event_MakeReqButtonActionPerformed
 
     private void AddPartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPartButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new AddPartPanel(),"Participant", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+        JOptionPane.showOptionDialog(null, new AddPartPanel(),"Participant", 
+                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
+                null, new Object[]{}, null);
     }//GEN-LAST:event_AddPartButtonActionPerformed
 
     private void BookFreeInfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookFreeInfButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new BookInfPanel(),"Booking", JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+        JOptionPane.showOptionDialog(null, new BookInfPanel(),"Booking", 
+                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
+                null, new Object[]{}, null);
     }//GEN-LAST:event_BookFreeInfButtonActionPerformed
 
 

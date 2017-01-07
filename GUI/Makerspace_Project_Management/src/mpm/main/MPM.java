@@ -10,8 +10,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.*;
-import mpm.data.dao.UserDAO;
-import mpm.data.entities.User;
+import mpm.data.entities.*;
 
 /**
  *
@@ -23,6 +22,7 @@ public class MPM {
     public static JFrame frame;
     public static String[] userList;
     public static User currentUser;
+    public static Project currentProject;
 
     /**
      * Main method of the program.

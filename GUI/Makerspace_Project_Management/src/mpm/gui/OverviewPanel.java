@@ -6,11 +6,12 @@
 package mpm.gui;
 
 import mpm.main.MPM;
-import mpm.main.TestObject;
 import java.awt.Image;
 import java.util.ArrayList;
-import javax.swing.Icon;
+import java.util.List;
 import javax.swing.ImageIcon;
+import mpm.data.dao.DAOs;
+import mpm.data.entities.Project;
 
 /**
  *
@@ -25,23 +26,32 @@ public class OverviewPanel extends javax.swing.JPanel {
         initComponents();
 
         
-        ImageIcon projectsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/toolLogo.png")).getImage().getScaledInstance(
-            32, 32, Image.SCALE_DEFAULT));
+        ImageIcon projectsIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/toolLogo.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
             
-        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/settingsLogo.png")).getImage().getScaledInstance(
+        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/settingsLogo.png"))
+                .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));    
         
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
         
+        // Get List of Projects for current User
+        List<Project> projectList = DAOs.projects.findByUserID(
+                MPM.currentUser.getId());
+        
+        System.out.print(projectList);
         ArrayList<ProjectListElement> list = new ArrayList<>();
-        for(TestObject test : MPM.testList) {
-            
-            ProjectListElement e = new ProjectListElement(test);
-            //e.titleLabel.setText(test.title);
-            //e.descriptionLabel.setText(test.description);
+        
+        // Add each Project to the displayed list
+        for(Project p : projectList){
+            ProjectListElement e = new ProjectListElement(p);
             list.add(e);
         }
+        
         for(ProjectListElement el : list){
             projectListPanel.add(el);
         }

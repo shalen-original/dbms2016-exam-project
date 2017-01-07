@@ -7,7 +7,7 @@ package mpm.gui;
 
 import java.awt.Color;
 import java.util.List;
-import mpm.data.dao.UserDAO;
+import mpm.data.dao.DAOs;
 import mpm.data.entities.User;
 import mpm.main.MPM;
 
@@ -120,14 +120,14 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         
-        UserDAO uDAO = new UserDAO();
-        List<User> list = uDAO.findByMail(usernameInputField.getText());
-        if (list.isEmpty()) { 
+        List<User> userList = DAOs.users
+                .findByMail(usernameInputField.getText());
+        if (userList.isEmpty()) { 
             errorLabel.setText("Username not valid");
             usernameInputField.setForeground(Color.GRAY);
             usernameInputField.setText("name@example.com");
         } else {
-            MPM.currentUser = list.get(0);
+            MPM.currentUser = userList.get(0);
             MPM.setPanel(new OverviewPanel());
             //System.out.println(MPM.currentUser.toString());
         }

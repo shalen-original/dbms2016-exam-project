@@ -5,10 +5,10 @@
  */
 package mpm.gui;
 
-import mpm.main.MPM;
-import mpm.main.TestObject;
 import java.awt.*;
 import javax.swing.*;
+import mpm.data.entities.Project;
+import mpm.main.MPM;
 
 /**
  *
@@ -16,22 +16,23 @@ import javax.swing.*;
  */
 public class ProjectListElement extends javax.swing.JPanel {
     
-    private TestObject test;
+    private Project project;
     /**
      * Creates new form ProjectListElement
      */
-    public ProjectListElement(TestObject test) {
+    public ProjectListElement(Project project) {
         initComponents();
         
-        this.test = test;
+        this.project = project;
         
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(
-                getClass().getResource("/mpm/res/toolLogo.png")).getImage().getScaledInstance(
+                getClass().getResource("/mpm/res/toolLogo.png"))
+                .getImage().getScaledInstance(
                         76, 76, Image.SCALE_DEFAULT));
         
         imageLabel.setIcon(imageIcon);
-        titleLabel.setText(test.title);
-        descriptionLabel.setText(test.description);
+        titleLabel.setText(project.getTitle());
+        descriptionLabel.setText(project.getDescription());
 
     }
 
@@ -108,7 +109,8 @@ public class ProjectListElement extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        MPM.setPanel(new ProjectPanel(test));
+        MPM.currentProject = project;
+        MPM.setPanel(new ProjectPanel());
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
