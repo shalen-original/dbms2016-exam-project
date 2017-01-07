@@ -20,5 +20,6 @@ public class DAOs {
     public static GeneralRoleDAO roles = new GeneralRoleDAO();
     public static UserDAO users = new UserDAO();
     public static MaterialDAO materials = new MaterialDAO();
+    public static PurchaseDAO purchases = new PurchaseDAO();
 
 }
