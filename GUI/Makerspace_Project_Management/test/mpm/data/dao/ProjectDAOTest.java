@@ -7,8 +7,10 @@
 package mpm.data.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
+import org.junit.Test;
 
 /**
  * Tests for the ProjectDAO.java class
@@ -64,6 +66,18 @@ public class ProjectDAOTest extends GenericDAOTestHelper<Project>{
         this.objectToDelete = this.fullTableList.get(2);
     }
 
+    @Test
+    public void testFindByProjectID() 
+    {
+        ArrayList<Project> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        expected.add(this.fullTableList.get(1));
+ 
+        List<Project> result = ((ProjectDAO)dao).findByUserID(12);
+        
+        this.listEquals(expected, result);    
+    }
+    
     @Override
     protected boolean testEquals(Project a, Project b)
     {

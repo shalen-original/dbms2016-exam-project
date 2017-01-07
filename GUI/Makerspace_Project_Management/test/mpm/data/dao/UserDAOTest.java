@@ -7,7 +7,9 @@
 package mpm.data.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.User;
+import org.junit.Test;
 
 /**
  * Tests for the UserDAO.java class.
@@ -64,6 +66,17 @@ public class UserDAOTest extends GenericDAOTestHelper<User>{
         this.objectToDelete = this.fullTableList.get(3);
     }
 
+    @Test
+    public void findByEmailTest()
+    {
+        ArrayList<User> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(2));
+ 
+        List<User> result = ((UserDAO)dao).findByMail("mnardini@unibz.it");
+        
+        this.listEquals(expected, result);  
+    }
+    
     @Override
     protected boolean testEquals(User a, User b) 
     {
