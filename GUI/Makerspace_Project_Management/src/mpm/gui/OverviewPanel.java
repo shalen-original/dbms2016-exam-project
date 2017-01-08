@@ -5,6 +5,7 @@
  */
 package mpm.gui;
 
+import java.awt.GridLayout;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -34,10 +35,17 @@ public class OverviewPanel extends javax.swing.JPanel {
         ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass()
                 .getResource("/mpm/res/settingsLogo.png"))
                 .getImage().getScaledInstance(
-                32, 32, Image.SCALE_DEFAULT));    
+                32, 32, Image.SCALE_DEFAULT));
+        
+        ImageIcon addIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/addLogo.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT)); 
         
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
+        overviewTabbedPane.setIconAt(2, addIcon);
+        //projectListPanel.setLayout(new GridLayout(0, 1));
         
         // Get List of Projects for current User
         List<Project> projectList = DAOs.projects.findByUserID(
@@ -55,7 +63,7 @@ public class OverviewPanel extends javax.swing.JPanel {
         for(ProjectListElement el : list){
             projectListPanel.add(el);
         }
-        
+        projectScrollPane.setViewportView (projectListPanel); 
     }
 
     /**
@@ -72,67 +80,99 @@ public class OverviewPanel extends javax.swing.JPanel {
         projectScrollPane = new javax.swing.JScrollPane();
         projectListPanel = new javax.swing.JPanel();
         settingsTab = new javax.swing.JPanel();
+        addProjectPanel = new javax.swing.JPanel();
         logoutButton = new javax.swing.JButton();
 
+        setMaximumSize(new java.awt.Dimension(640, 480));
+        setMinimumSize(new java.awt.Dimension(640, 480));
         setPreferredSize(new java.awt.Dimension(640, 480));
 
         overviewTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        overviewTabbedPane.setMaximumSize(new java.awt.Dimension(635, 400));
+        overviewTabbedPane.setMinimumSize(new java.awt.Dimension(600, 400));
+        overviewTabbedPane.setPreferredSize(new java.awt.Dimension(600, 400));
+
+        projectTab.setMaximumSize(new java.awt.Dimension(526, 433));
 
         projectScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        projectScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        projectScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        projectScrollPane.setMaximumSize(new java.awt.Dimension(526, 433));
+        projectScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
 
-        projectListPanel.setLayout(new javax.swing.BoxLayout(projectListPanel, javax.swing.BoxLayout.Y_AXIS));
+        projectListPanel.setMaximumSize(new java.awt.Dimension(510, 433));
+        projectListPanel.setPreferredSize(new java.awt.Dimension(510, 433));
+        projectListPanel.setLayout(new javax.swing.BoxLayout(projectListPanel, javax.swing.BoxLayout.PAGE_AXIS));
         projectScrollPane.setViewportView(projectListPanel);
 
         javax.swing.GroupLayout projectTabLayout = new javax.swing.GroupLayout(projectTab);
         projectTab.setLayout(projectTabLayout);
         projectTabLayout.setHorizontalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+            .addComponent(projectScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
         );
         projectTabLayout.setVerticalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(projectScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
         );
 
         overviewTabbedPane.addTab("Projects", null, projectTab, "");
 
-        settingsTab.setPreferredSize(new java.awt.Dimension(547, 473));
+        settingsTab.setPreferredSize(new java.awt.Dimension(526, 433));
 
-        logoutButton.setText("leave");
+        javax.swing.GroupLayout settingsTabLayout = new javax.swing.GroupLayout(settingsTab);
+        settingsTab.setLayout(settingsTabLayout);
+        settingsTabLayout.setHorizontalGroup(
+            settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 521, Short.MAX_VALUE)
+        );
+        settingsTabLayout.setVerticalGroup(
+            settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        overviewTabbedPane.addTab("Preferences", settingsTab);
+
+        javax.swing.GroupLayout addProjectPanelLayout = new javax.swing.GroupLayout(addProjectPanel);
+        addProjectPanel.setLayout(addProjectPanelLayout);
+        addProjectPanelLayout.setHorizontalGroup(
+            addProjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 521, Short.MAX_VALUE)
+        );
+        addProjectPanelLayout.setVerticalGroup(
+            addProjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        overviewTabbedPane.addTab("New Project", addProjectPanel);
+
+        logoutButton.setText("logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout settingsTabLayout = new javax.swing.GroupLayout(settingsTab);
-        settingsTab.setLayout(settingsTabLayout);
-        settingsTabLayout.setHorizontalGroup(
-            settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        settingsTabLayout.setVerticalGroup(
-            settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logoutButton)
-                .addContainerGap(436, Short.MAX_VALUE))
-        );
-
-        overviewTabbedPane.addTab("Preferences", settingsTab);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(overviewTabbedPane)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(overviewTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logoutButton)
+                .addContainerGap())
         );
 
         overviewTabbedPane.getAccessibleContext().setAccessibleName("Projects");
@@ -145,6 +185,7 @@ public class OverviewPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addProjectPanel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JTabbedPane overviewTabbedPane;
     private javax.swing.JPanel projectListPanel;

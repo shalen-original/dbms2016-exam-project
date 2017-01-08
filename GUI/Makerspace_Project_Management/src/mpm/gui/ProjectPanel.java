@@ -78,11 +78,15 @@ public class ProjectPanel extends javax.swing.JPanel {
         descriptionLabel = new javax.swing.JLabel();
         userListPanel = new javax.swing.JPanel();
         settingsPanel = new javax.swing.JPanel();
-        backButton = new javax.swing.JButton();
         BookFreeInfButton = new javax.swing.JButton();
         BuyMatButton = new javax.swing.JButton();
         MakeReqButton = new javax.swing.JButton();
         AddPartButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(640, 480));
+        setMinimumSize(new java.awt.Dimension(640, 480));
+        setPreferredSize(new java.awt.Dimension(640, 480));
 
         projectTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -108,7 +112,7 @@ public class ProjectPanel extends javax.swing.JPanel {
             .addGroup(overViewPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(overViewPanelLayout.createSequentialGroup()
                         .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleLabel)
@@ -125,20 +129,13 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addComponent(descriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         projectTabbedPane.addTab("Overview", overViewPanel);
 
         userListPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         projectTabbedPane.addTab("Persons", userListPanel);
-
-        backButton.setText("back");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
 
         BookFreeInfButton.setText("Book Free Inf");
         BookFreeInfButton.addActionListener(new java.awt.event.ActionListener() {
@@ -173,20 +170,15 @@ public class ProjectPanel extends javax.swing.JPanel {
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(settingsPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BookFreeInfButton)
-                            .addComponent(BuyMatButton))
-                        .addGap(39, 39, 39)
-                        .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AddPartButton)
-                            .addComponent(MakeReqButton)))
-                    .addGroup(settingsPanelLayout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(backButton)))
-                .addContainerGap(264, Short.MAX_VALUE))
+                    .addComponent(BookFreeInfButton)
+                    .addComponent(BuyMatButton))
+                .addGap(39, 39, 39)
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(AddPartButton)
+                    .addComponent(MakeReqButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,26 +191,38 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BuyMatButton)
                     .addComponent(AddPartButton))
-                .addGap(63, 63, 63)
-                .addComponent(backButton)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         projectTabbedPane.addTab("Settings", settingsPanel);
+
+        backButton.setText("back to overview");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(projectTabbedPane))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(backButton))
+                    .addComponent(projectTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(projectTabbedPane))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(projectTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backButton)
+                .addContainerGap())
         );
 
         projectTabbedPane.getAccessibleContext().setAccessibleName("");

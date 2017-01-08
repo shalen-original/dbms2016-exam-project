@@ -42,6 +42,9 @@ public class LoginPanel extends javax.swing.JPanel {
         inputLabel = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
 
+        setMaximumSize(new java.awt.Dimension(640, 480));
+        setMinimumSize(new java.awt.Dimension(640, 480));
+
         logoLabel.setBackground(new java.awt.Color(253, 101, 8));
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mpm/res/makerspaceLogo.png"))); // NOI18N
@@ -112,7 +115,7 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(inputLabel))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addGap(164, 164, 164))
         );
 
         loginButton.getAccessibleContext().setAccessibleName("loginButton");
