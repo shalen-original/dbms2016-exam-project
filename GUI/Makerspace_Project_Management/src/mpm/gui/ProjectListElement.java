@@ -33,6 +33,8 @@ public class ProjectListElement extends javax.swing.JPanel {
         imageLabel.setIcon(imageIcon);
         titleLabel.setText(project.getTitle());
         descriptionLabel.setText(project.getDescription());
+        statusLabel.setText(project.getStatus().toString());
+        collaborationCheckBox.setSelected(project.getSeekingCollaboration());
 
     }
 
@@ -47,15 +49,29 @@ public class ProjectListElement extends javax.swing.JPanel {
 
         imageLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        collaborationCheckBox = new javax.swing.JCheckBox();
+        statusLabel = new javax.swing.JLabel();
+        collaborationLabel = new javax.swing.JLabel();
         projectButton = new javax.swing.JButton();
-        descriptionScrollPane = new javax.swing.JScrollPane();
-        descriptionLabel = new javax.swing.JTextArea();
 
         setMaximumSize(new java.awt.Dimension(450, 100));
         setMinimumSize(new java.awt.Dimension(450, 100));
         setPreferredSize(new java.awt.Dimension(450, 100));
 
         titleLabel.setText("jLabel1");
+
+        descriptionLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        descriptionLabel.setText("jLabel1");
+
+        collaborationCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        collaborationCheckBox.setEnabled(false);
+
+        statusLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        statusLabel.setText("jLabel1");
+
+        collaborationLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        collaborationLabel.setText("Open for Collaboration:");
 
         projectButton.setBorderPainted(false);
         projectButton.setContentAreaFilled(false);
@@ -64,19 +80,6 @@ public class ProjectListElement extends javax.swing.JPanel {
                 projectButtonActionPerformed(evt);
             }
         });
-
-        descriptionScrollPane.setBorder(null);
-        descriptionScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        descriptionLabel.setEditable(false);
-        descriptionLabel.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        descriptionLabel.setColumns(20);
-        descriptionLabel.setLineWrap(true);
-        descriptionLabel.setRows(3);
-        descriptionLabel.setWrapStyleWord(true);
-        descriptionLabel.setBorder(null);
-        descriptionLabel.setOpaque(false);
-        descriptionScrollPane.setViewportView(descriptionLabel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -87,8 +90,14 @@ public class ProjectListElement extends javax.swing.JPanel {
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(descriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(collaborationLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(collaborationCheckBox)
+                        .addGap(54, 54, 54)
+                        .addComponent(statusLabel)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(projectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
@@ -98,16 +107,19 @@ public class ProjectListElement extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titleLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                        .addGap(2, 2, 2))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(descriptionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(collaborationCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(collaborationLabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(projectButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addComponent(projectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
         );
 
         projectButton.getAccessibleContext().setAccessibleName("projectButton");
@@ -121,10 +133,12 @@ public class ProjectListElement extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextArea descriptionLabel;
-    private javax.swing.JScrollPane descriptionScrollPane;
+    private javax.swing.JCheckBox collaborationCheckBox;
+    private javax.swing.JLabel collaborationLabel;
+    private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JButton projectButton;
+    private javax.swing.JLabel statusLabel;
     public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
