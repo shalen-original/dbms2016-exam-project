@@ -18,9 +18,7 @@ import mpm.data.entities.*;
  */
 public class MPM {
     
-    public static ArrayList<TestObject> testList;
     public static JFrame frame;
-    public static String[] userList;
     public static User currentUser;
     public static Project currentProject;
 
@@ -38,16 +36,6 @@ public class MPM {
         frame.pack();
         frame.setVisible (true);
         
-        testList = new ArrayList<TestObject>();
-        
-        for(int i=0; i<6; i++){
-            userList = new String[2];
-            userList[0] = "user"+i+"a";
-            userList[1] = "user"+i+"b";
-            testList.add(new TestObject("Projectname"+i, "some very descriptive "
-                    +"stuff describing in a very descriptive way Project "+i, 
-                    userList)); 
-        }
     }
     
     /**
