@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
+import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
@@ -64,7 +65,7 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
         
     }
     
-    public List<Project> findByUserID(int userId){
+    public List<Project> getUserProjects(int userId){
         
         String sql = "SELECT * " +
                 "FROM participation NATURAL JOIN project " +     
@@ -73,6 +74,10 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
         IPreparedStatementFiller f = s -> {s.setInt(1, userId);};
         
         return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
+    public List<Project> getUserProjects(User user){
+        return getUserProjects(user.getId());
     }
 
     @Override

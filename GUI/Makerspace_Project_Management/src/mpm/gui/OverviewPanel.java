@@ -48,20 +48,13 @@ public class OverviewPanel extends javax.swing.JPanel {
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
         // Get List of Projects for current User
-        List<Project> projectList = DAOs.projects.findByUserID(
-                MPM.currentUser.getId());
-        
-        ArrayList<ProjectListElement> list = new ArrayList<>();
+        List<Project> projectList = DAOs.projects.getUserProjects(MPM.currentUser);
         
         // Add each Project to the displayed list
         for(Project p : projectList){
-            ProjectListElement e = new ProjectListElement(p);
-            list.add(e);
+            projectListPanel.add(new ProjectListElement(p));
         }
         
-        for(ProjectListElement el : list){
-            projectListPanel.add(el);
-        }
         projectScrollPane.setViewportView (projectListPanel); 
     }
 

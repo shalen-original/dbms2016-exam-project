@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
+import mpm.data.entities.User;
 import org.junit.Test;
 
 /**
@@ -67,15 +68,27 @@ public class ProjectDAOTest extends GenericDAOTestHelper<Project>{
     }
 
     @Test
-    public void testFindByProjectID() 
+    public void testGetUserProjectsInt() 
     {
         ArrayList<Project> expected = new ArrayList<>();
         expected.add(this.fullTableList.get(0));
         expected.add(this.fullTableList.get(1));
  
-        List<Project> result = ((ProjectDAO)dao).findByUserID(12);
+        List<Project> result = ((ProjectDAO)dao).getUserProjects(12);
         
         this.listEquals(expected, result);    
+    }
+    
+    @Test
+    public void testGetUserProjectsUser()
+    {
+        ArrayList<Project> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        expected.add(this.fullTableList.get(1));
+ 
+        List<Project> result = ((ProjectDAO)dao).getUserProjects(new User(12));
+        
+        this.listEquals(expected, result);   
     }
     
     @Override
