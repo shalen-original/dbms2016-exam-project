@@ -8,9 +8,13 @@ package mpm.gui;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import mpm.data.dao.DAOs;
+import mpm.data.entities.Participation;
+import mpm.data.entities.User;
 
 /**
  *
@@ -50,18 +54,24 @@ public class ProjectPanel extends javax.swing.JPanel {
             projectTabbedPane.remove(settingsPanel);
         }
         
-        // TODO: add list of users for current project
-        /*ArrayList<UserListElement> list = new ArrayList<>();
-        for(String user : test.userList){
+        // TODO get Role from role ID
+        ArrayList<UserListElement> list = new ArrayList<>();
+        
+        List<Participation> pList = DAOs.participations
+                .findByProjectID(MPM.currentProject.getId());
+        
+        for(Participation p : pList){
             
-            UserListElement el = new UserListElement();
-            el.nameLabel.setText(user);
+            User user = DAOs.users.findByID(p.getUserId());
+            
+            UserListElement el = new UserListElement(user.getName(), 
+            Integer.toString(user.getGeneralRoleId()), user.getEmail(), p.getRole().toString());
             list.add(el);
         }
         
         for(UserListElement el : list){
             userListPanel.add(el);
-        }*/
+        }
     }
 
     /**
@@ -79,6 +89,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         descriptionArea = new javax.swing.JTextArea();
         descriptionLabel = new javax.swing.JLabel();
+        userPanel = new javax.swing.JPanel();
+        userScrollPane = new javax.swing.JScrollPane();
         userListPanel = new javax.swing.JPanel();
         settingsPanel = new javax.swing.JPanel();
         BookFreeInfButton = new javax.swing.JButton();
@@ -137,8 +149,29 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         projectTabbedPane.addTab("Overview", overViewPanel);
 
-        userListPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        projectTabbedPane.addTab("Persons", userListPanel);
+        userScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        userScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        userScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        userScrollPane.setMaximumSize(new java.awt.Dimension(526, 433));
+        userScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
+
+        userListPanel.setMaximumSize(new java.awt.Dimension(510, 433));
+        userListPanel.setPreferredSize(new java.awt.Dimension(510, 433));
+        userListPanel.setLayout(new javax.swing.BoxLayout(userListPanel, javax.swing.BoxLayout.PAGE_AXIS));
+        userScrollPane.setViewportView(userListPanel);
+
+        javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
+        userPanel.setLayout(userPanelLayout);
+        userPanelLayout.setHorizontalGroup(
+            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+        );
+        userPanelLayout.setVerticalGroup(
+            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+        );
+
+        projectTabbedPane.addTab("Persons", userPanel);
 
         BookFreeInfButton.setText("Book Free Inf");
         BookFreeInfButton.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +248,7 @@ public class ProjectPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(backButton))
-                    .addComponent(projectTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
+                    .addComponent(projectTabbedPane))
                 .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
@@ -280,5 +313,7 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel userListPanel;
+    private javax.swing.JPanel userPanel;
+    private javax.swing.JScrollPane userScrollPane;
     // End of variables declaration//GEN-END:variables
 }

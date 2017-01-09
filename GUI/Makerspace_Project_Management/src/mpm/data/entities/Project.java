@@ -77,7 +77,7 @@ public class Project implements IUniquelyIdentifiable
         System.out.println(participation.toString());
         return (participation.getRole().toString().equals("ADMINISTRATOR"));
     }
-    
+        
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();

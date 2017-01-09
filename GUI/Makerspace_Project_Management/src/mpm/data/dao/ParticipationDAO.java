@@ -73,6 +73,18 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
         return DBUtils.performSelect(sql, f, this.defaultParser);
     }
     
+    public List<Participation> findByProjectID(int projectID){
+        
+        String sql = "SELECT * FROM participation " +
+                    "WHERE project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, projectID);        
+        };
+
+        return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
     @Override
     protected Participation parseSQLResult(ResultSet r) throws SQLException 
     {

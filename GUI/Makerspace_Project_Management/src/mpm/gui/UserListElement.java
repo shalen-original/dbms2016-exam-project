@@ -5,23 +5,41 @@
  */
 package mpm.gui;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.*;
+import javax.swing.*;
+import mpm.data.entities.Project;
+import mpm.main.MPM;
 
 /**
  *
  * @author remo
  */
 public class UserListElement extends javax.swing.JPanel {
-
+    
     /**
-     * Creates new form userListElement
+     * Creates new form ProjectListElement
      */
-    public UserListElement() {
+    public UserListElement(String userName, String userGeneralRole, 
+            String userEmail, String userRole) {
         initComponents();
-        ImageIcon userIcon = new ImageIcon(new ImageIcon(getClass().getResource("/mpm/res/personLogo.png")).getImage().getScaledInstance(
-                84, 80, Image.SCALE_DEFAULT));
-        iconLabel.setIcon(userIcon);
+        
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(
+                getClass().getResource("/mpm/res/personLogo.png"))
+                .getImage().getScaledInstance(
+                        76, 76, Image.SCALE_DEFAULT));
+        
+        imageLabel.setIcon(imageIcon);
+        emailLabel.setText(userEmail);
+        userNameLabel.setText(userName);
+        generalRoleLabel.setText(userGeneralRole);
+        if(userRole.equals("ADMINISTRATOR")){
+            roleLabel.setForeground(Color.green);
+            roleLabel.setText("Administrator");
+        }else{
+            roleLabel.setText("Collaborator");
+        }
+        
+
     }
 
     /**
@@ -33,37 +51,89 @@ public class UserListElement extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        nameLabel = new javax.swing.JLabel();
-        iconLabel = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
+        userNameLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
+        roleLabel = new javax.swing.JLabel();
+        roleTitleLabel = new javax.swing.JLabel();
+        emailTitleLabel = new javax.swing.JLabel();
+        generalRoleLabel = new javax.swing.JLabel();
 
-        nameLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameLabel.setText("jLabel1");
+        setMaximumSize(new java.awt.Dimension(450, 100));
+        setMinimumSize(new java.awt.Dimension(450, 100));
+        setPreferredSize(new java.awt.Dimension(450, 100));
 
-        iconLabel.setOpaque(true);
+        userNameLabel.setText("jLabel1");
+
+        emailLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        emailLabel.setText("jLabel1");
+
+        roleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        roleLabel.setText("jLabel1");
+
+        roleTitleLabel.setText("Role");
+
+        emailTitleLabel.setText("Email");
+
+        generalRoleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        generalRoleLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(iconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(roleTitleLabel)
+                                .addGap(33, 33, 33)
+                                .addComponent(roleLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(emailTitleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(emailLabel)))
+                        .addGap(281, 281, 281))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(userNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(generalRoleLabel)
+                        .addGap(107, 107, 107))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(nameLabel))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(userNameLabel)
+                            .addComponent(generalRoleLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(emailLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(emailTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(roleLabel)
+                            .addComponent(roleTitleLabel))))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JLabel iconLabel;
-    javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JLabel emailTitleLabel;
+    private javax.swing.JLabel generalRoleLabel;
+    private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel roleLabel;
+    private javax.swing.JLabel roleTitleLabel;
+    public javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }
