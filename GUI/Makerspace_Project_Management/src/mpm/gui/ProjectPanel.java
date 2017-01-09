@@ -46,6 +46,9 @@ public class ProjectPanel extends javax.swing.JPanel {
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
         
+        if(!MPM.currentProject.isCurrentUserAdmin()) {
+            projectTabbedPane.remove(settingsPanel);
+        }
         
         // TODO: add list of users for current project
         /*ArrayList<UserListElement> list = new ArrayList<>();

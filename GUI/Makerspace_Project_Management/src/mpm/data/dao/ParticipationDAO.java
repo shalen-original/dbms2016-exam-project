@@ -9,10 +9,12 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mpm.data.entities.Participation;
 import mpm.data.entities.ProjectRole;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
+import mpm.data.logic.IPreparedStatementFiller;
 
 /**
  * Implements a DAO for the Participation table.
@@ -56,7 +58,21 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
              s.setString(4, objToInsert.getRole().toString().toLowerCase()); 
          });
     }
+    
+    public List<Participation> findByUserIDProjectID(int userID, int projectID){
+        
+        String sql = "SELECT * FROM participation " +
+                    "WHERE user_id = ? " +
+                    "AND project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, userID);
+            s.setInt(2, projectID);        
+        };
 
+        return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
     @Override
     protected Participation parseSQLResult(ResultSet r) throws SQLException 
     {

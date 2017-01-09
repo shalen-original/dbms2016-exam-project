@@ -51,7 +51,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         List<Project> projectList = DAOs.projects.findByUserID(
                 MPM.currentUser.getId());
         
-        System.out.print(projectList);
         ArrayList<ProjectListElement> list = new ArrayList<>();
         
         // Add each Project to the displayed list
