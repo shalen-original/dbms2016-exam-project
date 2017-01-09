@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
@@ -50,7 +49,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
         
-        if(!MPM.currentProject.isCurrentUserAdmin()) {
+        if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
             projectTabbedPane.remove(settingsPanel);
         }
         

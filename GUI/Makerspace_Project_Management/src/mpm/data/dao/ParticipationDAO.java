@@ -11,10 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import mpm.data.entities.Participation;
+import mpm.data.entities.Project;
 import mpm.data.entities.ProjectRole;
+import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
+import mpm.data.logic.ISQLResultParser;
 
 /**
  * Implements a DAO for the Participation table.
@@ -59,20 +62,6 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
          });
     }
     
-    public List<Participation> findByUserIDProjectID(int userID, int projectID){
-        
-        String sql = "SELECT * FROM participation " +
-                    "WHERE user_id = ? " +
-                    "AND project_id = ?";
-        
-        IPreparedStatementFiller f = s -> {
-            s.setInt(1, userID);
-            s.setInt(2, projectID);        
-        };
-
-        return DBUtils.performSelect(sql, f, this.defaultParser);
-    }
-    
     public List<Participation> findByProjectID(int projectID){
         
         String sql = "SELECT * FROM participation " +
@@ -83,6 +72,37 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
         };
 
         return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
+    public List<ProjectRole> getUserRolesInProject(int userID, int projectID){
+        
+        String sql = "SELECT * FROM participation " +
+                    "WHERE user_id = ? " +
+                    "AND project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, userID);
+            s.setInt(2, projectID);        
+        };
+        
+        ISQLResultParser<ProjectRole> p = r -> {
+            return ProjectRole.fromString(r.getString("project_role"));
+        };
+
+        return DBUtils.performSelect(sql, f, p);
+    }
+    
+    public List<ProjectRole> getUserRolesInProject(User user, Project project){
+        return getUserRolesInProject(user.getId(), project.getId());
+    }
+    
+    public boolean isUserAdminInProject(int userID, int projectID){
+        return getUserRolesInProject(userID, projectID).contains(ProjectRole.ADMINISTRATOR);
+    }
+    
+    public boolean isUserAdminInProject(User user, Project project){
+        return getUserRolesInProject(user.getId(), project.getId())
+                .contains(ProjectRole.ADMINISTRATOR);
     }
     
     @Override

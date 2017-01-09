@@ -65,18 +65,6 @@ public class Project implements IUniquelyIdentifiable
     public void setSeekingCollaboration(Boolean seekingCollaboration) {
         this.seekingCollaboration = seekingCollaboration;
     }
-    
-    public Boolean isCurrentUserAdmin(){
-        
-        int userID = MPM.currentUser.getId();
-        
-        List<Participation> list = DAOs.participations
-                .findByUserIDProjectID(userID, this.id);
-        
-        Participation participation = list.get(0);
-        System.out.println(participation.toString());
-        return (participation.getRole().toString().equals("ADMINISTRATOR"));
-    }
         
     @Override
     public String toString() {

@@ -7,6 +7,7 @@ package mpm.gui;
 
 import java.awt.*;
 import javax.swing.*;
+import mpm.data.dao.DAOs;
 import mpm.data.entities.Project;
 import mpm.main.MPM;
 
@@ -35,7 +36,7 @@ public class ProjectListElement extends javax.swing.JPanel {
         descriptionLabel.setText(project.getDescription());
         statusLabel.setText(project.getStatus().toString());
         
-        if(project.isCurrentUserAdmin()){
+        if(DAOs.participations.isUserAdminInProject(MPM.currentUser, project)){
             roleLabel.setForeground(Color.green);
             roleLabel.setText("Administrator");
         }else{

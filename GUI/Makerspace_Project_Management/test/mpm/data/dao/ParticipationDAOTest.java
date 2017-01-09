@@ -9,7 +9,10 @@ package mpm.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.Participation;
+import mpm.data.entities.Project;
 import mpm.data.entities.ProjectRole;
+import mpm.data.entities.User;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -80,26 +83,76 @@ public class ParticipationDAOTest extends GenericDAOTestHelper<Participation>{
     }
     
     @Test
-    public void findByUserIDProjectIDTest()
-    {
-        ArrayList<Participation> expected = new ArrayList<>();
-        expected.add(this.fullTableList.get(1));
- 
-        List<Participation> result = ((ParticipationDAO)dao).findByUserIDProjectID(11, 101);
-        
-        this.listEquals(expected, result);  
-    }
-
-    @Test
     public void findByProjectIDTest()
     {
         ArrayList<Participation> expected = new ArrayList<>();
         expected.add(this.fullTableList.get(1));
         
-        ArrayList<Participation> result = new ArrayList<>();
-        result.add(((ParticipationDAO)dao).findByProjectID(101).get(0));
+        List<Participation> result = ((ParticipationDAO)dao).findByProjectID(101);
         
         this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void getUserRolesInProjectTestIntInt()
+    {
+        ArrayList<ProjectRole> expected = new ArrayList<>();
+        expected.add(ProjectRole.COLLABORATOR);
+ 
+        List<ProjectRole> result = ((ParticipationDAO)dao).getUserRolesInProject(11, 101);
+        
+        if (expected.size() != result.size())
+            fail("The number of roles is different");
+        
+        for (ProjectRole r : expected)
+        {
+            if (!result.contains(r))
+                fail("Role " + r + " was not contained in the result");
+        }
+    }
+    
+    @Test
+    public void getUserRolesInProjectTestUserProject()
+    {
+        ArrayList<ProjectRole> expected = new ArrayList<>();
+        expected.add(ProjectRole.COLLABORATOR);
+ 
+        List<ProjectRole> result = ((ParticipationDAO)dao).getUserRolesInProject(new User(11), new Project(101));
+        
+        if (expected.size() != result.size())
+            fail("The number of roles is different");
+        
+        for (ProjectRole r : expected)
+        {
+            if (!result.contains(r))
+                fail("Role " + r + " was not contained in the result");
+        }
+    }
+    
+    @Test
+    public void isUserAdminInProjectTestIntInt()
+    {
+        ParticipationDAO a = (ParticipationDAO) dao;
+        
+        if (!a.isUserAdminInProject(12, 100))
+            fail("User id 12 should be admin for project id 100");
+        
+        if (a.isUserAdminInProject(11, 100))
+            fail("User id 11 should NOT be admin for project id 100");
+        
+    }
+    
+    @Test
+    public void isUserAdminInProjectTestUserProject()
+    {
+        ParticipationDAO a = (ParticipationDAO) dao;
+        
+        if (!a.isUserAdminInProject(new User(12), new Project(100)))
+            fail("User id 12 should be admin for project id 100");
+        
+        if (a.isUserAdminInProject(new User(11), new Project(100)))
+            fail("User id 11 should NOT be admin for project id 100");
+        
     }
     
     @Override
