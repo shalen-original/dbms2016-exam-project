@@ -7,8 +7,6 @@ package mpm.main;
 
 import mpm.gui.LoginPanel;
 import java.awt.*;
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.*;
 import mpm.data.entities.*;
 
@@ -25,7 +23,6 @@ public class MPM {
     /**
      * Main method of the program.
      * @param args unused.
-     * @return Nothing.
      */
     public static void main(String[] args) {
        
@@ -40,11 +37,10 @@ public class MPM {
     
     /**
      * Used to refresh the content of the main frame, with the Panel passed to 
-     * the method repainted on the frame. <p>
+     * the method repainted on the frame.
      * Depending on whether the PAnel is of type {@link NewsPanel} or not, the
      * menu entries to export or show dataset properties are enabled/disabled.
-     * @param JPanel New Panel to display on main frame, which is passed to the method.
-     * @return Nothing.
+     * @param panel New Panel to display on main frame, which is passed to the method.
      */
     public static void setPanel (JPanel panel)
     {
