@@ -7,8 +7,10 @@
 package mpm.data.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.Participation;
 import mpm.data.entities.ProjectRole;
+import org.junit.Test;
 
 /**
  * Tests for the ParticipationDAO.java class
@@ -75,6 +77,17 @@ public class ParticipationDAOTest extends GenericDAOTestHelper<Participation>{
         
         // Setting up delete test
         this.objectToDelete = this.fullTableList.get(0);  
+    }
+    
+    @Test
+    public void findByUserIDProjectIDTest()
+    {
+        ArrayList<Participation> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(1));
+ 
+        List<Participation> result = ((ParticipationDAO)dao).findByUserIDProjectID(11, 101);
+        
+        this.listEquals(expected, result);  
     }
 
     @Override
