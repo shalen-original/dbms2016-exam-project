@@ -90,6 +90,18 @@ public class ParticipationDAOTest extends GenericDAOTestHelper<Participation>{
         this.listEquals(expected, result);  
     }
 
+    @Test
+    public void findByProjectIDTest()
+    {
+        ArrayList<Participation> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(1));
+        
+        ArrayList<Participation> result = new ArrayList<>();
+        result.add(((ParticipationDAO)dao).findByProjectID(101).get(0));
+        
+        this.listEquals(expected, result);  
+    }
+    
     @Override
     protected boolean testEquals(Participation a, Participation b) 
     {
