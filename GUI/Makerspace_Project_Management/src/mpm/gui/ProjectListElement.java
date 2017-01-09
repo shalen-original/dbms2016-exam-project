@@ -34,7 +34,13 @@ public class ProjectListElement extends javax.swing.JPanel {
         titleLabel.setText(project.getTitle());
         descriptionLabel.setText(project.getDescription());
         statusLabel.setText(project.getStatus().toString());
-        collaborationCheckBox.setSelected(project.getSeekingCollaboration());
+        
+        if(project.isCurrentUserAdmin()){
+            roleLabel.setForeground(Color.green);
+            roleLabel.setText("Administrator");
+        }else{
+            roleLabel.setText("Collaborator");
+        }
 
     }
 
@@ -50,9 +56,10 @@ public class ProjectListElement extends javax.swing.JPanel {
         imageLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
         descriptionLabel = new javax.swing.JLabel();
-        collaborationCheckBox = new javax.swing.JCheckBox();
         statusLabel = new javax.swing.JLabel();
-        collaborationLabel = new javax.swing.JLabel();
+        roleLabel = new javax.swing.JLabel();
+        roleTitleLabel = new javax.swing.JLabel();
+        statusTitleLabel = new javax.swing.JLabel();
         projectButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(450, 100));
@@ -64,14 +71,15 @@ public class ProjectListElement extends javax.swing.JPanel {
         descriptionLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         descriptionLabel.setText("jLabel1");
 
-        collaborationCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        collaborationCheckBox.setEnabled(false);
-
         statusLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         statusLabel.setText("jLabel1");
 
-        collaborationLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        collaborationLabel.setText("Open for Collaboration:");
+        roleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        roleLabel.setText("jLabel1");
+
+        roleTitleLabel.setText("Role");
+
+        statusTitleLabel.setText("Status");
 
         projectButton.setBorderPainted(false);
         projectButton.setContentAreaFilled(false);
@@ -86,18 +94,21 @@ public class ProjectListElement extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                     .addComponent(descriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(collaborationLabel)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(roleTitleLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(collaborationCheckBox)
-                        .addGap(54, 54, 54)
-                        .addComponent(statusLabel)))
+                        .addComponent(roleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(statusTitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statusLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(projectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
@@ -112,11 +123,12 @@ public class ProjectListElement extends javax.swing.JPanel {
                         .addComponent(titleLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(descriptionLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(collaborationCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(collaborationLabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(roleLabel)
+                            .addComponent(statusLabel)
+                            .addComponent(roleTitleLabel)
+                            .addComponent(statusTitleLabel))))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(projectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
@@ -133,12 +145,13 @@ public class ProjectListElement extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox collaborationCheckBox;
-    private javax.swing.JLabel collaborationLabel;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JButton projectButton;
+    private javax.swing.JLabel roleLabel;
+    private javax.swing.JLabel roleTitleLabel;
     private javax.swing.JLabel statusLabel;
+    private javax.swing.JLabel statusTitleLabel;
     public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
