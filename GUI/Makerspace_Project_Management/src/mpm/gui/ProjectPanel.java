@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
 import mpm.data.entities.User;
+import mpm.data.logic.Pair;
 
 /**
  *
@@ -81,25 +82,16 @@ public class ProjectPanel extends javax.swing.JPanel {
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
         }
+          
+        List<Pair<Participation, User>> list = 
+            DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId());
         
-        // TODO get Role from role ID
-        ArrayList<UserListElement> list = new ArrayList<>();
-        
-        List<Participation> pList = DAOs.participations
-                .findByProjectID(MPM.currentProject.getId());
-        
-        for(Participation p : pList){
-            
-            User user = DAOs.users.findByID(p.getUserId());
-            
-            UserListElement el = new UserListElement(user.getName(), 
-            Integer.toString(user.getGeneralRoleId()), user.getEmail(), p.getRole().toString());
-            list.add(el);
-        }
-        
-        for(UserListElement el : list){
+        for(Pair<Participation, User> p : list)
+        {
+            UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
             userListPanel.add(el);
         }
+        
     }
 
     /**

@@ -7,8 +7,8 @@ package mpm.gui;
 
 import java.awt.*;
 import javax.swing.*;
-import mpm.data.entities.Project;
-import mpm.main.MPM;
+import mpm.data.entities.ProjectRole;
+import mpm.data.entities.User;
 
 /**
  *
@@ -16,11 +16,8 @@ import mpm.main.MPM;
  */
 public class UserListElement extends javax.swing.JPanel {
     
-    /**
-     * Creates new form ProjectListElement
-     */
-    public UserListElement(String userName, String userGeneralRole, 
-            String userEmail, String userRole) {
+    
+    public UserListElement(User u, ProjectRole r) {
         initComponents();
         
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(
@@ -29,15 +26,15 @@ public class UserListElement extends javax.swing.JPanel {
                         76, 76, Image.SCALE_DEFAULT));
         
         imageLabel.setIcon(imageIcon);
-        emailLabel.setText(userEmail);
-        userNameLabel.setText(userName);
-        generalRoleLabel.setText(userGeneralRole);
-        if(userRole.equals("ADMINISTRATOR")){
+        emailLabel.setText(u.getEmail());
+        userNameLabel.setText(u.getName());
+        // TODO get Role from role ID
+        generalRoleLabel.setText(u.getGeneralRoleId() + "");
+        if(r == ProjectRole.ADMINISTRATOR){
             roleLabel.setForeground(Color.green);
-            roleLabel.setText("Administrator");
-        }else{
-            roleLabel.setText("Collaborator");
         }
+        
+        roleLabel.setText(r.toString());
         
 
     }
