@@ -5,10 +5,12 @@
  */
 package mpm.gui;
 
+import java.awt.BorderLayout;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.Border;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import mpm.data.dao.DAOs;
@@ -65,15 +67,19 @@ public class ProjectPanel extends javax.swing.JPanel {
                 
         projectTabbedPane.setIconAt(0, overviewIcon);
         projectTabbedPane.setIconAt(1, personsIcon);
-        projectTabbedPane.setIconAt(2, settingsIcon);
-        projectTabbedPane.setIconAt(3, bookingIcon);
-        projectTabbedPane.setIconAt(4, reqIcon);
-        projectTabbedPane.setIconAt(5, addUserIcon);
-        projectTabbedPane.setIconAt(6, buyIcon);
+        projectTabbedPane.setIconAt(2, bookingIcon);
+        projectTabbedPane.setIconAt(3, reqIcon);
+        projectTabbedPane.setIconAt(4, addUserIcon);
+        projectTabbedPane.setIconAt(5, buyIcon);
+        projectTabbedPane.setIconAt(6, settingsIcon);
         
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
         
+        bookingPanel.add(new BookInfPanel(),BorderLayout.CENTER);
+        requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
+        addUserPanel.add(new AddPartPanel(),BorderLayout.CENTER);
+        materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
         if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
             // TODO choose which panels to keep visualized for non-admin users
             projectTabbedPane.remove(settingsPanel);
@@ -90,8 +96,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         {
             UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
             userListPanel.add(el);
-        }
-        
+        }       
     }
 
     /**
@@ -112,15 +117,11 @@ public class ProjectPanel extends javax.swing.JPanel {
         userPanel = new javax.swing.JPanel();
         userScrollPane = new javax.swing.JScrollPane();
         userListPanel = new javax.swing.JPanel();
-        settingsPanel = new javax.swing.JPanel();
-        BookFreeInfButton = new javax.swing.JButton();
-        BuyMatButton = new javax.swing.JButton();
-        MakeReqButton = new javax.swing.JButton();
-        AddPartButton = new javax.swing.JButton();
         bookingPanel = new javax.swing.JPanel();
         requestPanel = new javax.swing.JPanel();
         addUserPanel = new javax.swing.JPanel();
         materialsPanel = new javax.swing.JPanel();
+        settingsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -188,7 +189,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,116 +198,30 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         projectTabbedPane.addTab("Persons", userPanel);
 
-        BookFreeInfButton.setText("Book Free Inf");
-        BookFreeInfButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookFreeInfButtonActionPerformed(evt);
-            }
-        });
+        bookingPanel.setLayout(new java.awt.BorderLayout());
+        projectTabbedPane.addTab("Booking", bookingPanel);
 
-        BuyMatButton.setText("Buy Material");
-        BuyMatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuyMatButtonActionPerformed(evt);
-            }
-        });
+        requestPanel.setLayout(new java.awt.BorderLayout());
+        projectTabbedPane.addTab("Request", requestPanel);
 
-        MakeReqButton.setText("Make a Request");
-        MakeReqButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MakeReqButtonActionPerformed(evt);
-            }
-        });
+        addUserPanel.setLayout(new java.awt.BorderLayout());
+        projectTabbedPane.addTab("Add User", addUserPanel);
 
-        AddPartButton.setText("Add Participant");
-        AddPartButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddPartButtonActionPerformed(evt);
-            }
-        });
+        materialsPanel.setLayout(new java.awt.BorderLayout());
+        projectTabbedPane.addTab("Materials", materialsPanel);
 
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BookFreeInfButton)
-                    .addComponent(BuyMatButton))
-                .addGap(39, 39, 39)
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AddPartButton)
-                    .addComponent(MakeReqButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 554, Short.MAX_VALUE)
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, settingsPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookFreeInfButton)
-                    .addComponent(MakeReqButton))
-                .addGap(18, 18, 18)
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BuyMatButton)
-                    .addComponent(AddPartButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 393, Short.MAX_VALUE)
         );
 
         projectTabbedPane.addTab("Settings", settingsPanel);
-
-        javax.swing.GroupLayout bookingPanelLayout = new javax.swing.GroupLayout(bookingPanel);
-        bookingPanel.setLayout(bookingPanelLayout);
-        bookingPanelLayout.setHorizontalGroup(
-            bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        bookingPanelLayout.setVerticalGroup(
-            bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        projectTabbedPane.addTab("Booking", bookingPanel);
-
-        javax.swing.GroupLayout requestPanelLayout = new javax.swing.GroupLayout(requestPanel);
-        requestPanel.setLayout(requestPanelLayout);
-        requestPanelLayout.setHorizontalGroup(
-            requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        requestPanelLayout.setVerticalGroup(
-            requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        projectTabbedPane.addTab("Request", requestPanel);
-
-        javax.swing.GroupLayout addUserPanelLayout = new javax.swing.GroupLayout(addUserPanel);
-        addUserPanel.setLayout(addUserPanelLayout);
-        addUserPanelLayout.setHorizontalGroup(
-            addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        addUserPanelLayout.setVerticalGroup(
-            addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        projectTabbedPane.addTab("Add User", addUserPanel);
-
-        javax.swing.GroupLayout materialsPanelLayout = new javax.swing.GroupLayout(materialsPanel);
-        materialsPanel.setLayout(materialsPanelLayout);
-        materialsPanelLayout.setHorizontalGroup(
-            materialsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        materialsPanelLayout.setVerticalGroup(
-            materialsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        projectTabbedPane.addTab("Materials", materialsPanel);
 
         backButton.setText("back to overview");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -345,41 +260,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         MPM.setPanel(new OverviewPanel());
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void BuyMatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyMatButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new BuyMatPanel(),"Buying", 
-                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
-                null, new Object[]{}, null);
-
-    }//GEN-LAST:event_BuyMatButtonActionPerformed
-
-    private void MakeReqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeReqButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new MakeReqPanel(),"Request", 
-                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
-                null, new Object[]{}, null);
-    }//GEN-LAST:event_MakeReqButtonActionPerformed
-
-    private void AddPartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPartButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new AddPartPanel(),"Participant", 
-                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
-                null, new Object[]{}, null);
-    }//GEN-LAST:event_AddPartButtonActionPerformed
-
-    private void BookFreeInfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookFreeInfButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showOptionDialog(null, new BookInfPanel(),"Booking", 
-                JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE, 
-                null, new Object[]{}, null);
-    }//GEN-LAST:event_BookFreeInfButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddPartButton;
-    private javax.swing.JButton BookFreeInfButton;
-    private javax.swing.JButton BuyMatButton;
-    private javax.swing.JButton MakeReqButton;
     private javax.swing.JPanel addUserPanel;
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bookingPanel;
