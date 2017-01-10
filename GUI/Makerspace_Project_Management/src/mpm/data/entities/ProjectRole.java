@@ -31,4 +31,19 @@ public enum ProjectRole
                 throw new IllegalArgumentException("The string \"" + s + "\" is not a valid ProjectRole string");
         }
     }
+    
+    @Override
+    public String toString()
+    {
+        if (this == ADMINISTRATOR)
+            return "Administrator";
+        
+        if (this == COLLABORATOR)
+            return "Collaborator";
+        
+        if (this == RETIRED)
+            return "Retired";
+        
+        return "Error: ProjectRole.toString() should not print this line";
+    }
 }
