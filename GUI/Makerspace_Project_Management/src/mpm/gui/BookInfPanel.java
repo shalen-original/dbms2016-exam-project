@@ -5,6 +5,8 @@
  * All rights reserved.
  */
 package mpm.gui;
+import mpm.data.dao.* ;
+import mpm.data.entities.*;
 
 import java.awt.event.ActionEvent;
 import java.util.Date;
@@ -38,7 +40,6 @@ public class BookInfPanel extends javax.swing.JPanel {
         FreeInfLabel = new javax.swing.JLabel();
         StartLabel = new javax.swing.JLabel();
         EndLabel = new javax.swing.JLabel();
-        FreeInfChoice = new java.awt.Choice();
         BookButton = new javax.swing.JButton();
         StartDatePicker = new org.jdesktop.swingx.JXDatePicker();
         EndDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
@@ -48,6 +49,7 @@ public class BookInfPanel extends javax.swing.JPanel {
         Date date1 = new Date();
         SpinnerDateModel sm1 = new SpinnerDateModel(date1,null,null,Calendar.HOUR_OF_DAY);
         jSpinner2 = new javax.swing.JSpinner(sm1);
+        FreeInfChoice = new java.awt.Choice();
 
         FreeInfLabel.setText("Free Inf :");
 
@@ -55,13 +57,12 @@ public class BookInfPanel extends javax.swing.JPanel {
 
         EndLabel.setText("End time:");
 
-        FreeInfChoice.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                FreeInfChoiceItemStateChanged(evt);
+        BookButton.setText("Book");
+        BookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookButtonActionPerformed(evt);
             }
         });
-
-        BookButton.setText("Book");
 
         StartDatePicker.setLinkPanel(null);
         StartDatePicker.setDate(new Date() );
@@ -73,12 +74,22 @@ public class BookInfPanel extends javax.swing.JPanel {
 
         EndDatePicker1.setLinkPanel(null);
         EndDatePicker1.setDate(new Date() );
+        EndDatePicker1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EndDatePicker1ActionPerformed(evt);
+            }
+        });
 
         JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm:ss");
         jSpinner1.setEditor(de);
 
         JSpinner.DateEditor de1 = new JSpinner.DateEditor(jSpinner2, "HH:mm:ss");
         jSpinner2.setEditor(de1);
+
+        for(FreeInf freeinf: DAOs.free_infs.getAll())
+        {
+            FreeInfChoice.add(freeinf.getName());
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -88,62 +99,64 @@ public class BookInfPanel extends javax.swing.JPanel {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(BookButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(FreeInfLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(StartLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(EndLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSpinner2))
+                                .addGap(12, 12, 12)
+                                .addComponent(StartDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(FreeInfLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(StartLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(StartDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(FreeInfChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(FreeInfChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(EndLabel)
+                        .addGap(19, 19, 19)
+                        .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                            .addComponent(jSpinner2))
                         .addGap(41, 41, 41))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(BookButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(FreeInfLabel)
                     .addComponent(FreeInfChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StartLabel)
-                    .addComponent(StartDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StartDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EndLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(30, 30, 30)
+                    .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(BookButton)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void FreeInfChoiceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_FreeInfChoiceItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FreeInfChoiceItemStateChanged
 
     private void StartDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartDatePickerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_StartDatePickerActionPerformed
+
+    private void BookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BookButtonActionPerformed
+
+    private void EndDatePicker1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDatePicker1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EndDatePicker1ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

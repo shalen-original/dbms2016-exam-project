@@ -5,7 +5,8 @@
  * All rights reserved.
  */
 package mpm.gui;
-
+import mpm.data.dao.* ;
+import mpm.data.entities.*;
 /**
  *
  * @author Mikel
@@ -39,6 +40,25 @@ public class BuyMatPanel extends javax.swing.JPanel {
         BuyButton = new javax.swing.JButton();
 
         MaterialLabel.setText("Material:");
+
+        for (Material material : DAOs.materials.getAll())
+        { MaterialChoice.addItem(material.getName());
+        }
+        MaterialChoice.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                MaterialChoiceComponentShown(evt);
+            }
+        });
+        MaterialChoice.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                MaterialChoiceItemStateChanged(evt);
+            }
+        });
+        MaterialChoice.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                MaterialChoicePropertyChange(evt);
+            }
+        });
 
         UnitsLabel.setText("Units :");
 
@@ -84,10 +104,10 @@ public class BuyMatPanel extends javax.swing.JPanel {
                                         .addComponent(UnitsLabel, javax.swing.GroupLayout.Alignment.TRAILING)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(MaterialChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ActualTotalPriceLabel)
-                                    .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(133, Short.MAX_VALUE))
+                                    .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(MaterialChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,6 +137,20 @@ public class BuyMatPanel extends javax.swing.JPanel {
     private void BuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BuyButtonActionPerformed
+
+    private void MaterialChoicePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_MaterialChoicePropertyChange
+
+    }//GEN-LAST:event_MaterialChoicePropertyChange
+
+    private void MaterialChoiceComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_MaterialChoiceComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MaterialChoiceComponentShown
+
+    private void MaterialChoiceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_MaterialChoiceItemStateChanged
+        System.out.println(evt.getItem().toString());
+        //DAOs.materials.
+        
+    }//GEN-LAST:event_MaterialChoiceItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

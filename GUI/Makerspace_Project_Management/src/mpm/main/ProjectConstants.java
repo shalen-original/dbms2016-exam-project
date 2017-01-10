@@ -16,5 +16,5 @@ public class ProjectConstants
 {
     public static String DB_URL = "jdbc:postgresql://localhost:5432/dbs-16-17";
     public static String DB_USERNAME = "postgres";
-    public static String DB_PASSWORD = "anothertmp";
+    public static String DB_PASSWORD = "sappat";
 }

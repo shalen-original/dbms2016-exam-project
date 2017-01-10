@@ -66,6 +66,9 @@
       </Properties>
     </Component>
     <Component class="java.awt.Choice" name="ParticipantChoice">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for (User user : DAOs.users.getAll())&#xa;{&#xa;    ParticipantChoice.add(user.getName());&#xa;}"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="RoleLabel">
       <Properties>
@@ -73,6 +76,9 @@
       </Properties>
     </Component>
     <Component class="java.awt.Choice" name="RoleChoice">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for (GeneralRole role : DAOs.roles.getAll())&#xa;{&#xa;    RoleChoice.add(role.getName());&#xa;}"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="AddButton">
       <Properties>

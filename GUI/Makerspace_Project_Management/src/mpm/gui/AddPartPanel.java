@@ -5,6 +5,8 @@
  * All rights reserved.
  */
 package mpm.gui;
+import mpm.data.dao.* ;
+import mpm.data.entities.*;
 
 /**
  *
@@ -36,7 +38,17 @@ public class AddPartPanel extends javax.swing.JPanel {
 
         ParticipantLabel.setText("Participant :");
 
+        for (User user : DAOs.users.getAll())
+        {
+            ParticipantChoice.add(user.getName());
+        }
+
         RoleLabel.setText("Project Role :");
+
+        for (GeneralRole role : DAOs.roles.getAll())
+        {
+            RoleChoice.add(role.getName());
+        }
 
         AddButton.setText("Add");
         AddButton.addActionListener(new java.awt.event.ActionListener() {

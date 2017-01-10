@@ -5,6 +5,8 @@
  * All rights reserved.
  */
 package mpm.gui;
+import mpm.data.dao.* ;
+import mpm.data.entities.*;
 
 /**
  *
@@ -30,6 +32,7 @@ public class MakeReqPanel extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        choice1 = new java.awt.Choice();
         TitleLabel = new javax.swing.JLabel();
         TitleText = new javax.swing.JTextField();
         RelatedInfLabel = new javax.swing.JLabel();
@@ -55,9 +58,19 @@ public class MakeReqPanel extends javax.swing.JPanel {
 
         RelatedInfLabel.setText("Related to Inf:");
 
+        for(TechInf techinf : DAOs.technical_infs.getAll())
+        {
+            RelatedInfChoice.add(techinf.getName());
+        }
+
         MessageLabel.setText("Message:");
 
         SenderLabel.setText("Sender:");
+
+        for(User user : DAOs.users.getAll())
+        {
+            SenderChoice.add(user.getName());
+        }
 
         SendButton.setText("Send");
         SendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +160,7 @@ public class MakeReqPanel extends javax.swing.JPanel {
     private javax.swing.JLabel SenderLabel;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JTextField TitleText;
+    private java.awt.Choice choice1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
