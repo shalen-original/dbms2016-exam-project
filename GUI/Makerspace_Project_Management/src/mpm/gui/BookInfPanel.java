@@ -89,7 +89,6 @@ public class BookInfPanel extends javax.swing.JPanel {
         for(FreeInf freeinf: DAOs.free_infs.getAll())
         {
             FreeInfChoice.add(freeinf.getName());
-            System.out.println(freeinf.getName());
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
