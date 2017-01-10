@@ -9,6 +9,7 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.Participation;
 import mpm.data.entities.Project;
@@ -18,6 +19,7 @@ import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
 import mpm.data.logic.ISQLResultParser;
+import mpm.data.logic.Pair;
 
 /**
  * Implements a DAO for the Participation table.
@@ -61,7 +63,7 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
              s.setString(4, objToInsert.getRole().toString().toLowerCase()); 
          });
     }
-    
+
     public List<Participation> findByProjectID(int projectID){
         
         String sql = "SELECT * FROM participation " +
@@ -72,6 +74,30 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
         };
 
         return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
+    public List<Pair<Participation, User>> getUserParticipatingToProjectWithRole(int projectID)
+    {
+        String sql = "SELECT * FROM participation NATURAL JOIN makerspace_user"
+                    + " WHERE project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, projectID);        
+        };
+        
+        ISQLResultParser<Pair<Participation, User>> p = r -> {
+            
+            Participation pa = parseSQLResult(r);
+            
+            User u = new User(r.getInt("user_id"));
+            u.setName(r.getString("name"));
+            u.setGeneralRoleId(r.getInt("user_role"));
+            u.setEmail(r.getString("email"));
+
+            return new Pair(pa, u);
+        };
+        
+        return DBUtils.performSelect(sql, f, p);
     }
     
     public List<ProjectRole> getUserRolesInProject(int userID, int projectID){

@@ -12,6 +12,7 @@ import mpm.data.entities.Participation;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectRole;
 import mpm.data.entities.User;
+import mpm.data.logic.Pair;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -91,6 +92,57 @@ public class ParticipationDAOTest extends GenericDAOTestHelper<Participation>{
         List<Participation> result = ((ParticipationDAO)dao).findByProjectID(101);
         
         this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void getUserParticipatingToProjectWithRoleTest()
+    {
+        ArrayList<Pair<Participation, User>> expected = new ArrayList<>();
+        User u = new User(10);
+        u.setName("Remo Scolati");
+        u.setGeneralRoleId(1020);
+        u.setEmail("rscolati@unibz.it");
+        expected.add(new Pair(this.fullTableList.get(3), u));
+        u = new User(11);
+        u.setName("Mikel Grabocka");
+        u.setGeneralRoleId(1022);
+        u.setEmail("mgrabocka@unibz.it");
+        expected.add(new Pair(this.fullTableList.get(4), u));
+        u = new User(12);
+        u.setName("Matteo Nardini");
+        u.setGeneralRoleId(1021);
+        u.setEmail("mnardini@unibz.it");
+        expected.add(new Pair(this.fullTableList.get(5), u));
+        
+        List<Pair<Participation, User>> result = ((ParticipationDAO)dao).getUserParticipatingToProjectWithRole(100);
+         
+        if (expected.size() != result.size())
+            fail("The number of roles is different");
+        
+        result.sort((Pair<Participation, User> a, Pair<Participation, User> b) -> {     
+            return Integer.compare(a.getFirst().getId(), b.getFirst().getId());    
+        });
+        
+        for (int i = 0; i < expected.size(); i++)
+        {
+            if (!testEquals(expected.get(i).getFirst(), result.get(i).getFirst()))
+                fail(expected.get(i).getFirst() + " is not equal to " + result.get(i).getFirst());
+            
+            User a = expected.get(i).getSecond();
+            User b = result.get(i).getSecond();
+            
+            if (a.getId() != b.getId())
+                fail(a + " is not equal to " + b);
+        
+            if (!a.getName().equals(b.getName()))
+                fail(a + " is not equal to " + b);
+
+            if (!a.getEmail().equals(b.getEmail()))
+                fail(a + " is not equal to " + b);
+
+            if (a.getGeneralRoleId() != b.getGeneralRoleId())
+                fail(a + " is not equal to " + b);
+        }
     }
     
     @Test
