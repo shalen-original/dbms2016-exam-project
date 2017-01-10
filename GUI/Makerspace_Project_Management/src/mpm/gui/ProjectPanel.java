@@ -41,10 +41,34 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .getResource("/mpm/res/settingsLogo.png"))
                 .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
+        
+        ImageIcon buyIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/buy.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
+        
+        ImageIcon reqIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/request.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
+        
+        ImageIcon addUserIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/addPersonLogo.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
+        
+        ImageIcon bookingIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/booking.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
                 
         projectTabbedPane.setIconAt(0, overviewIcon);
         projectTabbedPane.setIconAt(1, personsIcon);
         projectTabbedPane.setIconAt(2, settingsIcon);
+        projectTabbedPane.setIconAt(3, bookingIcon);
+        projectTabbedPane.setIconAt(4, reqIcon);
+        projectTabbedPane.setIconAt(5, addUserIcon);
+        projectTabbedPane.setIconAt(6, buyIcon);
         
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
@@ -96,6 +120,10 @@ public class ProjectPanel extends javax.swing.JPanel {
         BuyMatButton = new javax.swing.JButton();
         MakeReqButton = new javax.swing.JButton();
         AddPartButton = new javax.swing.JButton();
+        bookingPanel = new javax.swing.JPanel();
+        requestPanel = new javax.swing.JPanel();
+        addUserPanel = new javax.swing.JPanel();
+        materialsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -163,7 +191,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         userPanel.setLayout(userPanelLayout);
         userPanelLayout.setHorizontalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+            .addComponent(userScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,6 +258,58 @@ public class ProjectPanel extends javax.swing.JPanel {
         );
 
         projectTabbedPane.addTab("Settings", settingsPanel);
+
+        javax.swing.GroupLayout bookingPanelLayout = new javax.swing.GroupLayout(bookingPanel);
+        bookingPanel.setLayout(bookingPanelLayout);
+        bookingPanelLayout.setHorizontalGroup(
+            bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+        bookingPanelLayout.setVerticalGroup(
+            bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        projectTabbedPane.addTab("Booking", bookingPanel);
+
+        javax.swing.GroupLayout requestPanelLayout = new javax.swing.GroupLayout(requestPanel);
+        requestPanel.setLayout(requestPanelLayout);
+        requestPanelLayout.setHorizontalGroup(
+            requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+        requestPanelLayout.setVerticalGroup(
+            requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        projectTabbedPane.addTab("Request", requestPanel);
+
+        javax.swing.GroupLayout addUserPanelLayout = new javax.swing.GroupLayout(addUserPanel);
+        addUserPanel.setLayout(addUserPanelLayout);
+        addUserPanelLayout.setHorizontalGroup(
+            addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+        addUserPanelLayout.setVerticalGroup(
+            addUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        projectTabbedPane.addTab("Add User", addUserPanel);
+
+        javax.swing.GroupLayout materialsPanelLayout = new javax.swing.GroupLayout(materialsPanel);
+        materialsPanel.setLayout(materialsPanelLayout);
+        materialsPanelLayout.setHorizontalGroup(
+            materialsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+        materialsPanelLayout.setVerticalGroup(
+            materialsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 393, Short.MAX_VALUE)
+        );
+
+        projectTabbedPane.addTab("Materials", materialsPanel);
 
         backButton.setText("back to overview");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -303,12 +383,16 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JButton BookFreeInfButton;
     private javax.swing.JButton BuyMatButton;
     private javax.swing.JButton MakeReqButton;
+    private javax.swing.JPanel addUserPanel;
     private javax.swing.JButton backButton;
+    private javax.swing.JPanel bookingPanel;
     private javax.swing.JTextArea descriptionArea;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel materialsPanel;
     private javax.swing.JPanel overViewPanel;
     private javax.swing.JTabbedPane projectTabbedPane;
+    private javax.swing.JPanel requestPanel;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel userListPanel;
