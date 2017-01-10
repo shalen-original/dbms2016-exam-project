@@ -9,8 +9,10 @@ import mpm.data.dao.* ;
 import mpm.data.entities.*;
 
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Locale;
 import javafx.scene.control.DatePicker;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -31,7 +33,11 @@ public class BookInfPanel extends javax.swing.JPanel {
         FreeInfChoice.add(freeinf.getName());
         }
         StartDatePicker.setDate(new Date() );
+        StartDatePicker.setFormats("E DD/MM/yyyy");
+        StartDatePicker.getMonthView().setLowerBound(new Date());
         EndDatePicker.setDate(new Date() );
+        EndDatePicker.setFormats("E DD/MM/yyyy");
+        EndDatePicker.getMonthView().setLowerBound(StartDatePicker.getDate());
     }
 
     /**
@@ -148,7 +154,7 @@ public class BookInfPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartDatePickerActionPerformed
-        // TODO add your handling code here:
+        EndDatePicker.getMonthView().setLowerBound(StartDatePicker.getDate());
     }//GEN-LAST:event_StartDatePickerActionPerformed
 
     private void BookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookButtonActionPerformed
