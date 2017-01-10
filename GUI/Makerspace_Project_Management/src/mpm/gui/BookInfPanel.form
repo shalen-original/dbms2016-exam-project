@@ -144,7 +144,7 @@
     </Component>
     <Component class="java.awt.Choice" name="FreeInfChoice">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(FreeInf freeinf: DAOs.free_infs.getAll())&#xa;{&#xa;FreeInfChoice.add(freeinf.getName());&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(FreeInf freeinf: DAOs.free_infs.getAll())&#xa;{&#xa;FreeInfChoice.add(freeinf.getName());&#xa;System.out.println(freeinf.getName());&#xa;}"/>
       </AuxValues>
     </Component>
   </SubComponents>

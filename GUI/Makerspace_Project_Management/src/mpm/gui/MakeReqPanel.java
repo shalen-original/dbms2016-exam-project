@@ -39,10 +39,10 @@ public class MakeReqPanel extends javax.swing.JPanel {
         RelatedInfChoice = new java.awt.Choice();
         MessageLabel = new javax.swing.JLabel();
         SenderLabel = new javax.swing.JLabel();
-        SenderChoice = new java.awt.Choice();
         SendButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         MessageTextArea = new javax.swing.JTextArea();
+        SenderNameLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -67,11 +67,6 @@ public class MakeReqPanel extends javax.swing.JPanel {
 
         SenderLabel.setText("Sender:");
 
-        for(User user : DAOs.users.getAll())
-        {
-            SenderChoice.add(user.getName());
-        }
-
         SendButton.setText("Send");
         SendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +77,9 @@ public class MakeReqPanel extends javax.swing.JPanel {
         MessageTextArea.setColumns(20);
         MessageTextArea.setRows(5);
         jScrollPane3.setViewportView(MessageTextArea);
+
+        SenderNameLabel.setText("   ");
+        SenderNameLabel.setText(mpm.main.MPM.currentUser.getName());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,12 +99,12 @@ public class MakeReqPanel extends javax.swing.JPanel {
                                 .addGap(78, 78, 78)
                                 .addComponent(SenderLabel)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(RelatedInfChoice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                                 .addComponent(TitleText))
-                            .addComponent(SenderChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3)
+                            .addComponent(SenderNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(SendButton)))
@@ -132,10 +130,10 @@ public class MakeReqPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SenderLabel)
-                    .addComponent(SenderChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                    .addComponent(SenderNameLabel))
+                .addGap(44, 44, 44)
                 .addComponent(SendButton)
                 .addContainerGap())
         );
@@ -156,8 +154,8 @@ public class MakeReqPanel extends javax.swing.JPanel {
     private java.awt.Choice RelatedInfChoice;
     private javax.swing.JLabel RelatedInfLabel;
     private javax.swing.JButton SendButton;
-    private java.awt.Choice SenderChoice;
     private javax.swing.JLabel SenderLabel;
+    private javax.swing.JLabel SenderNameLabel;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JTextField TitleText;
     private java.awt.Choice choice1;
