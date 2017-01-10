@@ -23,12 +23,10 @@
                   <Component id="ParticipantLabel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="AddButton" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="ParticipantChoice" max="32767" attributes="0"/>
-                      <Component id="RoleChoice" min="-2" pref="110" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="ParticipantChoice" pref="110" max="32767" attributes="0"/>
+                  <Component id="RoleChoice" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -61,9 +59,6 @@
       </Properties>
     </Component>
     <Component class="java.awt.Choice" name="ParticipantChoice">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for (User user : DAOs.users.getAll())&#xa;{&#xa;    ParticipantChoice.add(user.getName());&#xa;}"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="RoleLabel">
       <Properties>
@@ -71,9 +66,6 @@
       </Properties>
     </Component>
     <Component class="java.awt.Choice" name="RoleChoice">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for (GeneralRole role : DAOs.roles.getAll())&#xa;{&#xa;    RoleChoice.add(role.getName());&#xa;}"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="AddButton">
       <Properties>

@@ -26,6 +26,12 @@ public class BookInfPanel extends javax.swing.JPanel {
      */
     public BookInfPanel() {
         initComponents();
+        for(FreeInf freeinf: DAOs.free_infs.getAll())
+        {
+        FreeInfChoice.add(freeinf.getName());
+        }
+        StartDatePicker.setDate(new Date() );
+        EndDatePicker.setDate(new Date() );
     }
 
     /**
@@ -42,7 +48,7 @@ public class BookInfPanel extends javax.swing.JPanel {
         EndLabel = new javax.swing.JLabel();
         BookButton = new javax.swing.JButton();
         StartDatePicker = new org.jdesktop.swingx.JXDatePicker();
-        EndDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
+        EndDatePicker = new org.jdesktop.swingx.JXDatePicker();
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date,null,null,Calendar.HOUR_OF_DAY);
         jSpinner1 = new javax.swing.JSpinner(sm);
@@ -65,18 +71,16 @@ public class BookInfPanel extends javax.swing.JPanel {
         });
 
         StartDatePicker.setLinkPanel(null);
-        StartDatePicker.setDate(new Date() );
         StartDatePicker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StartDatePickerActionPerformed(evt);
             }
         });
 
-        EndDatePicker1.setLinkPanel(null);
-        EndDatePicker1.setDate(new Date() );
-        EndDatePicker1.addActionListener(new java.awt.event.ActionListener() {
+        EndDatePicker.setLinkPanel(null);
+        EndDatePicker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EndDatePicker1ActionPerformed(evt);
+                EndDatePickerActionPerformed(evt);
             }
         });
 
@@ -85,11 +89,6 @@ public class BookInfPanel extends javax.swing.JPanel {
 
         JSpinner.DateEditor de1 = new JSpinner.DateEditor(jSpinner2, "HH:mm:ss");
         jSpinner2.setEditor(de1);
-
-        for(FreeInf freeinf: DAOs.free_infs.getAll())
-        {
-            FreeInfChoice.add(freeinf.getName());
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,7 +113,7 @@ public class BookInfPanel extends javax.swing.JPanel {
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BookButton)
-                            .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(EndDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSpinner1)
@@ -137,7 +136,7 @@ public class BookInfPanel extends javax.swing.JPanel {
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(EndLabel)
-                            .addComponent(EndDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(EndDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
@@ -156,14 +155,14 @@ public class BookInfPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BookButtonActionPerformed
 
-    private void EndDatePicker1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDatePicker1ActionPerformed
+    private void EndDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDatePickerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EndDatePicker1ActionPerformed
+    }//GEN-LAST:event_EndDatePickerActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BookButton;
-    private org.jdesktop.swingx.JXDatePicker EndDatePicker1;
+    private org.jdesktop.swingx.JXDatePicker EndDatePicker;
     private javax.swing.JLabel EndLabel;
     private java.awt.Choice FreeInfChoice;
     private javax.swing.JLabel FreeInfLabel;

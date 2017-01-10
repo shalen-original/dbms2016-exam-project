@@ -104,9 +104,6 @@
       </Properties>
     </Component>
     <Component class="java.awt.Choice" name="RelatedInfChoice">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(TechInf techinf : DAOs.technical_infs.getAll())&#xa;{&#xa;    RelatedInfChoice.add(techinf.getName());&#xa;}"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="MessageLabel">
       <Properties>

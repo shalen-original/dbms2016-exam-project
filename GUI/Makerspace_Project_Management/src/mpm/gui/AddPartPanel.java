@@ -19,6 +19,13 @@ public class AddPartPanel extends javax.swing.JPanel {
      */
     public AddPartPanel() {
         initComponents();
+        for (User user : DAOs.users.getAll())
+        {
+            ParticipantChoice.add(user.getName());
+        }
+            RoleChoice.add("ADMINISTRATOR");
+            RoleChoice.add("COLLABORATOR");
+            RoleChoice.add("RETIRED");
     }
 
     /**
@@ -38,17 +45,7 @@ public class AddPartPanel extends javax.swing.JPanel {
 
         ParticipantLabel.setText("Participant :");
 
-        for (User user : DAOs.users.getAll())
-        {
-            ParticipantChoice.add(user.getName());
-        }
-
         RoleLabel.setText("Project Role :");
-
-        for (GeneralRole role : DAOs.roles.getAll())
-        {
-            RoleChoice.add(role.getName());
-        }
 
         AddButton.setText("Add");
         AddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -67,11 +64,10 @@ public class AddPartPanel extends javax.swing.JPanel {
                     .addComponent(RoleLabel)
                     .addComponent(ParticipantLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(AddButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ParticipantChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RoleChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(ParticipantChoice, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(RoleChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

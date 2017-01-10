@@ -19,6 +19,10 @@ public class MakeReqPanel extends javax.swing.JPanel {
      */
     public MakeReqPanel() {
         initComponents();
+        for(TechInf techinf : DAOs.technical_infs.getAll())
+        {
+            RelatedInfChoice.add(techinf.getName());
+        }
     }
 
     /**
@@ -57,11 +61,6 @@ public class MakeReqPanel extends javax.swing.JPanel {
         });
 
         RelatedInfLabel.setText("Related to Inf:");
-
-        for(TechInf techinf : DAOs.technical_infs.getAll())
-        {
-            RelatedInfChoice.add(techinf.getName());
-        }
 
         MessageLabel.setText("Message:");
 

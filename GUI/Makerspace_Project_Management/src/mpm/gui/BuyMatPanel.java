@@ -18,6 +18,10 @@ public class BuyMatPanel extends javax.swing.JPanel {
      */
     public BuyMatPanel() {
         initComponents();
+        for (Material material : DAOs.materials.getAll())
+        { 
+            MaterialChoice.addItem(material.getName());
+        }
     }
 
     /**
@@ -41,9 +45,6 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
         MaterialLabel.setText("Material:");
 
-        for (Material material : DAOs.materials.getAll())
-        { MaterialChoice.addItem(material.getName());
-        }
         MaterialChoice.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 MaterialChoiceComponentShown(evt);

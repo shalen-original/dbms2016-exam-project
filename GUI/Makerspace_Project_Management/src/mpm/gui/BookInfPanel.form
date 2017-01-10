@@ -40,7 +40,7 @@
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="BookButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="EndDatePicker1" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="EndDatePicker" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -71,7 +71,7 @@
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="EndLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="EndDatePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="EndDatePicker" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -120,17 +120,14 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StartDatePickerActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="StartDatePicker.setDate(new Date() );"/>
-      </AuxValues>
     </Component>
-    <Component class="org.jdesktop.swingx.JXDatePicker" name="EndDatePicker1">
+    <Component class="org.jdesktop.swingx.JXDatePicker" name="EndDatePicker">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EndDatePicker1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EndDatePickerActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new org.jdesktop.swingx.JXDatePicker()"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="EndDatePicker1.setLinkPanel(null);&#xa;EndDatePicker1.setDate(new Date() );"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="EndDatePicker.setLinkPanel(null);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinner1">
@@ -148,9 +145,6 @@
       </AuxValues>
     </Component>
     <Component class="java.awt.Choice" name="FreeInfChoice">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="for(FreeInf freeinf: DAOs.free_infs.getAll())&#xa;{&#xa;FreeInfChoice.add(freeinf.getName());&#xa;}"/>
-      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
