@@ -7,6 +7,7 @@
 package mpm.gui;
 import java.math.BigDecimal;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import mpm.data.dao.* ;
@@ -166,7 +167,16 @@ public class BuyMatPanel extends javax.swing.JPanel {
         p.setTotalPrice(a.getUnitaryPrice().multiply(
                 BigDecimal.valueOf((int)sNumberOfUnits.getValue())));
         
-        DAOs.purchases.insert(p);
+        try
+        {
+            DAOs.purchases.insert(p);
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Operation successful!");
         
     }//GEN-LAST:event_BuyButtonActionPerformed
 

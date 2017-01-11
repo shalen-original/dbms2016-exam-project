@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -151,7 +152,16 @@ public class BookInfPanel extends javax.swing.JPanel {
         b.setStartTime(new Timestamp(((Date)dtpTimeStart.getValue()).getTime()));
         b.setEndTime(new Timestamp(((Date)dtpTimeEnd.getValue()).getTime()));
         
-        DAOs.bookings.insert(b);
+        try
+        {
+            DAOs.bookings.insert(b);
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Operation successful!");
         
     }//GEN-LAST:event_BookButtonActionPerformed
 
