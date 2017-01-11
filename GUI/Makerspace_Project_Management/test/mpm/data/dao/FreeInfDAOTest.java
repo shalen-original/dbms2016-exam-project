@@ -7,7 +7,9 @@
 package mpm.data.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.FreeInf;
+import org.junit.Test;
 
 /**
  * Tests for the FreeInfDAO.java class
@@ -60,6 +62,16 @@ public class FreeInfDAOTest extends GenericDAOTestHelper<FreeInf>{
         
         // Setting up delete test
         this.objectToDelete = this.fullTableList.get(4);
+    }
+    
+    @Test
+    public void getAvailableTest()
+    {
+        List<FreeInf> expected = this.fullTableList;
+        List<FreeInf> result = ((FreeInfDAO)dao).getAvailable();
+        
+        this.listEquals(result, expected);
+        
     }
     
     @Override

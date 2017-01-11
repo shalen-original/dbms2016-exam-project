@@ -9,6 +9,9 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.FreeInf;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
@@ -55,6 +58,25 @@ public class FreeInfDAO extends GenericDataAccessObject<FreeInf> {
         
     }
 
+    public List<FreeInf> getAvailable()
+    {
+        ArrayList<FreeInf> ans = new ArrayList<>();
+        
+        DBUtils.performOperation(conn -> {
+        
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM free_inf WHERE available = true");
+            
+            while (r.next())
+            {
+                ans.add(parseSQLResult(r));
+            }
+        
+        });
+
+        return ans;
+    }
+    
     @Override
     protected FreeInf parseSQLResult(ResultSet r) throws SQLException {
         
