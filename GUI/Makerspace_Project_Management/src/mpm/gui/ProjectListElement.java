@@ -36,12 +36,16 @@ public class ProjectListElement extends javax.swing.JPanel {
         descriptionLabel.setText(project.getDescription());
         statusLabel.setText(project.getStatus().toString());
         
-        //TODO BUG @Remo: role can also be "retired"
-        if(DAOs.participations.isUserAdminInProject(MPM.currentUser, project)){
+        
+        
+        String role = DAOs.participations.getUserRolesInProject(
+                MPM.currentUser.getId(), project.getId()).get(0).toString(); 
+        
+        if(role.equals("Administrator")){
             roleLabel.setForeground(Color.green);
-            roleLabel.setText("Administrator");
+            roleLabel.setText(role);
         }else{
-            roleLabel.setText("Collaborator");
+            roleLabel.setText(role);
         }
 
     }
