@@ -173,7 +173,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         projectTabbedPane.addTab("Overview", overViewPanel);
 
         userScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        userScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         userScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         userScrollPane.setMaximumSize(new java.awt.Dimension(526, 433));
         userScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
