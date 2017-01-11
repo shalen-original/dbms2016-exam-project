@@ -23,9 +23,11 @@ public class AddPartPanel extends javax.swing.JPanel {
         {
             ParticipantChoice.add(user.getName());
         }
-            RoleChoice.add("ADMINISTRATOR");
-            RoleChoice.add("COLLABORATOR");
-            RoleChoice.add("RETIRED");
+        
+        for (ProjectRole r : ProjectRole.values())
+        {
+            RoleChoice.add(r.toString());
+        }
     }
 
     /**
