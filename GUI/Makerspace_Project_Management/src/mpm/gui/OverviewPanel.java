@@ -5,6 +5,7 @@
  */
 package mpm.gui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import mpm.main.MPM;
 import java.awt.Image;
@@ -55,6 +56,7 @@ public class OverviewPanel extends javax.swing.JPanel {
             projectListPanel.add(new ProjectListElement(p));
         }
         
+        addProjectPanel.add(new createProjectPanel(),BorderLayout.CENTER);
         projectScrollPane.setViewportView (projectListPanel); 
     }
 
@@ -125,17 +127,7 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         overviewTabbedPane.addTab("Preferences", settingsTab);
 
-        javax.swing.GroupLayout addProjectPanelLayout = new javax.swing.GroupLayout(addProjectPanel);
-        addProjectPanel.setLayout(addProjectPanelLayout);
-        addProjectPanelLayout.setHorizontalGroup(
-            addProjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-        addProjectPanelLayout.setVerticalGroup(
-            addProjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
+        addProjectPanel.setLayout(new java.awt.BorderLayout());
         overviewTabbedPane.addTab("New Project", addProjectPanel);
 
         logoutButton.setText("logout");

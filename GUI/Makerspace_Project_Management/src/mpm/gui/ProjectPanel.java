@@ -80,6 +80,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
         addUserPanel.add(new AddPartPanel(),BorderLayout.CENTER);
         materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
+        
         if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
             // TODO choose which panels to keep visualized for non-admin users
             projectTabbedPane.remove(settingsPanel);
