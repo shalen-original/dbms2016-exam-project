@@ -5,8 +5,13 @@
  * All rights reserved.
  */
 package mpm.gui;
+import java.math.BigDecimal;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import mpm.data.dao.* ;
 import mpm.data.entities.*;
+import mpm.main.MPM;
 /**
  *
  * @author Mikel
@@ -18,9 +23,24 @@ public class BuyMatPanel extends javax.swing.JPanel {
      */
     public BuyMatPanel() {
         initComponents();
+        
+        DefaultComboBoxModel<Material> m = new DefaultComboBoxModel<>();
         for (Material material : DAOs.materials.getAll())
         { 
-            MaterialChoice.addItem(material.getName());
+            m.addElement(material);
+        }
+        cmbMaterials.setModel(m);
+        cmbMaterials.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            w.setText(value.getName());
+            return w;
+        });
+        
+        if (cmbMaterials.getItemCount() > 0)
+        {
+            cmbMaterials.setSelectedIndex(0);
+            cmbMaterialsItemStateChanged(null); // Forcing GUI update
         }
     }
 
@@ -34,44 +54,34 @@ public class BuyMatPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         MaterialLabel = new javax.swing.JLabel();
-        MaterialChoice = new java.awt.Choice();
         UnitsLabel = new javax.swing.JLabel();
-        UnitsSpiner = new javax.swing.JSpinner();
+        sNumberOfUnits = new javax.swing.JSpinner();
         UnitPriceLabel = new javax.swing.JLabel();
-        ActualUnitPriceLabel = new javax.swing.JLabel();
+        lblUnitaryPrice = new javax.swing.JLabel();
         TotalLabel = new javax.swing.JLabel();
-        ActualTotalPriceLabel = new javax.swing.JLabel();
+        lblTotalPrice = new javax.swing.JLabel();
         BuyButton = new javax.swing.JButton();
+        lblUnitsOfMeasure = new javax.swing.JLabel();
+        cmbMaterials = new javax.swing.JComboBox<>();
 
         MaterialLabel.setText("Material:");
 
-        MaterialChoice.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                MaterialChoiceComponentShown(evt);
-            }
-        });
-        MaterialChoice.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                MaterialChoiceItemStateChanged(evt);
-            }
-        });
-        MaterialChoice.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                MaterialChoicePropertyChange(evt);
-            }
-        });
-
         UnitsLabel.setText("Units :");
 
-        UnitsSpiner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        sNumberOfUnits.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sNumberOfUnits.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sNumberOfUnitsStateChanged(evt);
+            }
+        });
 
         UnitPriceLabel.setText("Unitary Price:");
 
-        ActualUnitPriceLabel.setText("10");
+        lblUnitaryPrice.setText("10");
 
         TotalLabel.setText("Total Price:");
 
-        ActualTotalPriceLabel.setText("20");
+        lblTotalPrice.setText("20");
 
         BuyButton.setText("Buy");
         BuyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -80,85 +90,120 @@ public class BuyMatPanel extends javax.swing.JPanel {
             }
         });
 
+        lblUnitsOfMeasure.setText("unit_of_measure");
+
+        cmbMaterials.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMaterialsItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(115, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MaterialLabel)
+                            .addComponent(UnitsLabel)
+                            .addComponent(TotalLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(cmbMaterials, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(lblTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(UnitPriceLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(ActualUnitPriceLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(TotalLabel)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(MaterialLabel)
-                                .addComponent(UnitsLabel, javax.swing.GroupLayout.Alignment.TRAILING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ActualTotalPriceLabel)
-                            .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(MaterialChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BuyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(93, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(sNumberOfUnits, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblUnitsOfMeasure))
+                            .addComponent(lblUnitaryPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(BuyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MaterialChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(MaterialLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MaterialLabel)
+                    .addComponent(cmbMaterials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UnitPriceLabel)
-                    .addComponent(ActualUnitPriceLabel))
-                .addGap(18, 18, 18)
+                    .addComponent(lblUnitaryPrice))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UnitsSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UnitsLabel))
-                .addGap(18, 18, 18)
+                    .addComponent(sNumberOfUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UnitsLabel)
+                    .addComponent(lblUnitsOfMeasure))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TotalLabel)
-                    .addComponent(ActualTotalPriceLabel))
-                .addGap(18, 18, 18)
+                    .addComponent(lblTotalPrice))
+                .addGap(30, 30, 30)
                 .addComponent(BuyButton)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyButtonActionPerformed
-        // TODO add your handling code here:
+        
+        Material a = (Material)cmbMaterials.getSelectedItem();
+        
+        Purchase p = new Purchase(DAOs.purchases.getNextValidId());
+        p.setMaterialId(a.getId());
+        p.setProjectId(MPM.currentProject.getId());
+        p.setUnits((int)sNumberOfUnits.getValue());
+        p.setTotalPrice(a.getUnitaryPrice().multiply(
+                BigDecimal.valueOf((int)sNumberOfUnits.getValue())));
+        
+        DAOs.purchases.insert(p);
+        
     }//GEN-LAST:event_BuyButtonActionPerformed
 
-    private void MaterialChoicePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_MaterialChoicePropertyChange
-
-    }//GEN-LAST:event_MaterialChoicePropertyChange
-
-    private void MaterialChoiceComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_MaterialChoiceComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MaterialChoiceComponentShown
-
-    private void MaterialChoiceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_MaterialChoiceItemStateChanged
-
-        //UnitPriceLabel.setText((((Material)evt.getItem()).getUnitaryPrice())+"");
+    private void cmbMaterialsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaterialsItemStateChanged
+        Material a = (Material)cmbMaterials.getSelectedItem();
         
-    }//GEN-LAST:event_MaterialChoiceItemStateChanged
+        lblUnitaryPrice.setText(a.getUnitaryPrice().toString() + " € / " + a.getUnitsOfMeasure());
+        lblUnitsOfMeasure.setText(a.getUnitsOfMeasure());
+        ((SpinnerNumberModel)sNumberOfUnits.getModel()).setMinimum(0);
+        ((SpinnerNumberModel)sNumberOfUnits.getModel()).setMaximum(a.getUnitsAvailable());
+        sNumberOfUnits.setValue(0);
+        
+        lblTotalPrice.setText("0 €"); 
+    }//GEN-LAST:event_cmbMaterialsItemStateChanged
+
+    private void sNumberOfUnitsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sNumberOfUnitsStateChanged
+        
+        Material a = (Material)cmbMaterials.getSelectedItem();
+        
+        BigDecimal total = a.getUnitaryPrice().multiply(
+                BigDecimal.valueOf((int)sNumberOfUnits.getValue()));
+        total = total.setScale(2);
+        lblTotalPrice.setText(total + " €");
+        
+    }//GEN-LAST:event_sNumberOfUnitsStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ActualTotalPriceLabel;
-    private javax.swing.JLabel ActualUnitPriceLabel;
     private javax.swing.JButton BuyButton;
-    private java.awt.Choice MaterialChoice;
     private javax.swing.JLabel MaterialLabel;
     private javax.swing.JLabel TotalLabel;
     private javax.swing.JLabel UnitPriceLabel;
     private javax.swing.JLabel UnitsLabel;
-    private javax.swing.JSpinner UnitsSpiner;
+    private javax.swing.JComboBox<Material> cmbMaterials;
+    private javax.swing.JLabel lblTotalPrice;
+    private javax.swing.JLabel lblUnitaryPrice;
+    private javax.swing.JLabel lblUnitsOfMeasure;
+    private javax.swing.JSpinner sNumberOfUnits;
     // End of variables declaration//GEN-END:variables
 }
