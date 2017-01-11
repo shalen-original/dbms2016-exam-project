@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a generic Data Access Object (DAO) for a uniquely identifiable object.
@@ -27,6 +29,8 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
     private String associatedTablePrimaryKeyName;
     private String findByIdQuery;
     private String deleteByIdQuery;
+    
+    private static Random rand = new Random((new Date()).getTime());
     
     protected ISQLResultParser<T> defaultParser = r -> {return parseSQLResult(r);};
     
@@ -127,7 +131,20 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
         });
     }
     
-    
+    /**
+     * Generates a new random valid ID for the data type T
+     * @return A valid, non serial ID for a new object of type T
+     */
+    public int getNextValidId()
+    {
+        int ans = rand.nextInt(Integer.MAX_VALUE);
+        
+        while (findByID(ans) != null)
+            ans = rand.nextInt(Integer.MAX_VALUE);
+
+        return ans;
+        
+    }
     
     /**
      * Analyzes a single row of a <i>ResultSet</i> and converts it to a object
