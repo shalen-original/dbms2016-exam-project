@@ -18,10 +18,7 @@ public class GeneralRoleDAO extends GenericDataAccessObject<GeneralRole>{
 
     public GeneralRoleDAO()
     {
-        this.associatedTableName = "general_role";
-        
-        this.findByIdQuery = "SELECT * FROM general_role WHERE role_id = ?";
-        this.deleteByIdQuery = "DELETE FROM general_role WHERE role_id = ?";
+        super("general_role", "role_id");
     }
 
     @Override

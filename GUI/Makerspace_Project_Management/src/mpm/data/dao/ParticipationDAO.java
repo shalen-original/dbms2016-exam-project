@@ -29,10 +29,7 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
 
     public ParticipationDAO()
     {
-        this.associatedTableName = "participation";
-        
-        this.findByIdQuery = "SELECT * FROM participation WHERE participation_id = ?";
-        this.deleteByIdQuery = "DELETE FROM participation WHERE participation_id = ?";
+        super("participation", "participation_id");
     }
     
     @Override

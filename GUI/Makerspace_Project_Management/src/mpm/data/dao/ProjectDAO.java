@@ -25,10 +25,7 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
 {
     public ProjectDAO()
     {
-        this.associatedTableName = "project";
-        
-        this.findByIdQuery = "SELECT * FROM project WHERE project_id = ?";
-        this.deleteByIdQuery = "DELETE FROM project WHERE project_id = ?";
+        super("project", "project_id");
     }
 
     @Override

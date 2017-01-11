@@ -21,10 +21,7 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
 
     public RequestDAO()
     {
-        this.associatedTableName = "request";
-        
-        this.findByIdQuery = "SELECT * FROM request WHERE request_id = ?";
-        this.deleteByIdQuery = "DELETE FROM request WHERE request_id = ?";
+        super("request", "request_id");
     }
     
     @Override

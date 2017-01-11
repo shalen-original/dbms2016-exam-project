@@ -21,10 +21,7 @@ public class PurchaseDAO extends GenericDataAccessObject<Purchase>{
 
     public PurchaseDAO()
     {
-        this.associatedTableName = "purchase";
-        
-        this.findByIdQuery = "SELECT * FROM purchase WHERE purchase_id = ?";
-        this.deleteByIdQuery = "DELETE FROM purchase WHERE purchase_id = ?";
+        super("purchase", "purchase_id");
     }
     
     @Override

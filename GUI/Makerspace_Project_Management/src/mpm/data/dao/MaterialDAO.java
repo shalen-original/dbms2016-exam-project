@@ -21,10 +21,7 @@ public class MaterialDAO extends GenericDataAccessObject<Material>{
 
     public MaterialDAO()
     {
-        this.associatedTableName = "material";
-        
-        this.findByIdQuery = "SELECT * FROM material WHERE material_id = ?";
-        this.deleteByIdQuery = "DELETE FROM material WHERE material_id = ?";
+        super("material" , "material_id");
     }
 
     @Override

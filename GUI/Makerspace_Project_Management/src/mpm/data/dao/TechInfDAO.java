@@ -21,10 +21,7 @@ public class TechInfDAO extends GenericDataAccessObject<TechInf>{
 
     public TechInfDAO()
     {
-        this.associatedTableName = "technical_inf";
-        
-        this.findByIdQuery = "SELECT * FROM technical_inf WHERE technical_inf_id = ?";
-        this.deleteByIdQuery = "DELETE FROM technical_inf WHERE technical_inf_id = ?";
+        super("technical_inf", "technical_inf_id");
     }
     
     @Override

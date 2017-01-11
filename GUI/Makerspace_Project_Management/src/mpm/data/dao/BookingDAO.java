@@ -24,10 +24,7 @@ public class BookingDAO extends GenericDataAccessObject<FreeInfBooking>{
 
     public BookingDAO()
     {
-        this.associatedTableName = "booking";
-        
-        this.findByIdQuery = "SELECT * FROM booking WHERE booking_id = ?";
-        this.deleteByIdQuery = "DELETE FROM booking WHERE booking_id = ?";
+        super("booking", "booking_id");
     }
 
     @Override

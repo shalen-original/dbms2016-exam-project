@@ -23,10 +23,7 @@ public class UserDAO extends GenericDataAccessObject<User>{
 
     public UserDAO()
     {
-        this.associatedTableName = "makerspace_user";
-        
-        this.findByIdQuery = "SELECT * FROM makerspace_user WHERE user_id = ?";
-        this.deleteByIdQuery = "DELETE FROM makerspace_user WHERE user_id = ?";
+        super("makerspace_user", "user_id");
     }
     
     @Override

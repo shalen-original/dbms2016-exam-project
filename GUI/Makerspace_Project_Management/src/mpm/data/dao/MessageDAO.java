@@ -21,10 +21,7 @@ public class MessageDAO extends GenericDataAccessObject<Message>{
 
     public MessageDAO()
     {
-        this.associatedTableName = "message";
-        
-        this.findByIdQuery = "SELECT * FROM message WHERE message_id = ?";
-        this.deleteByIdQuery = "DELETE FROM message WHERE message_id = ?";
+        super("message", "message_id");
     }
     
     @Override

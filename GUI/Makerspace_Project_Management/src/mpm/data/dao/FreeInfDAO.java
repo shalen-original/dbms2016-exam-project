@@ -24,10 +24,7 @@ public class FreeInfDAO extends GenericDataAccessObject<FreeInf> {
 
     public FreeInfDAO()
     {
-        this.associatedTableName = "free_inf";
-        
-        this.findByIdQuery = "SELECT * FROM free_inf WHERE free_inf_id = ?";
-        this.deleteByIdQuery = "DELETE FROM free_inf WHERE free_inf_id = ?";
+        super("free_inf", "free_inf_id");
     }
 
     @Override

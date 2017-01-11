@@ -23,11 +23,30 @@ import java.util.List;
  */
 public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
 {
-    protected String associatedTableName;
-    protected String findByIdQuery;
-    protected String deleteByIdQuery;
+    private String associatedTableName;
+    private String associatedTablePrimaryKeyName;
+    private String findByIdQuery;
+    private String deleteByIdQuery;
     
     protected ISQLResultParser<T> defaultParser = r -> {return parseSQLResult(r);};
+    
+    /**
+     * Creates a new generic DAO.
+     * @param tableName The name of the table associated to this DAO. Attention. This value
+     * is user directly in a query, without escape. Possible SQL injection risk. Use only trusted
+     * values as parameter of this constructor.
+     * @param pKey The name of the primary key of the table associated to this DAO. Attention. This value
+     * is user directly in a query, without escape. Possible SQL injection risk. Use only trusted
+     * values as parameter of this constructor.
+     */
+    public GenericDataAccessObject(String tableName, String pKey)
+    {
+        this.associatedTableName = tableName;
+        this.associatedTablePrimaryKeyName = pKey;
+        
+        this.findByIdQuery = "SELECT * FROM " + tableName + " WHERE " + pKey + " = ?";
+        this.deleteByIdQuery = "DELETE FROM " + tableName + " WHERE " + pKey + " = ?";
+    }
     
     /**
      * Returns the list containing all the memorized T objects.
