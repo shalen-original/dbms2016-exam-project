@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.swing.*;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Project;
+import mpm.data.entities.ProjectRole;
 import mpm.main.MPM;
 
 /**
@@ -38,14 +39,14 @@ public class ProjectListElement extends javax.swing.JPanel {
         
         
         
-        String role = DAOs.participations.getUserRolesInProject(
-                MPM.currentUser.getId(), project.getId()).get(0).toString(); 
+        ProjectRole role = DAOs.participations.getUserRolesInProject(
+                MPM.currentUser.getId(), project.getId()).get(0); 
         
-        if(role.equals("Administrator")){
+        if(role == ProjectRole.ADMINISTRATOR){
             roleLabel.setForeground(Color.green);
-            roleLabel.setText(role);
+            roleLabel.setText(role.toString());
         }else{
-            roleLabel.setText(role);
+            roleLabel.setText(role.toString());
         }
 
     }
