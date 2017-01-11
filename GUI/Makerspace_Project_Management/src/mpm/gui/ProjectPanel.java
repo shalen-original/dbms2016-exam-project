@@ -13,6 +13,7 @@ import java.util.List;
 import javafx.scene.layout.Border;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
 import mpm.data.entities.User;
@@ -88,16 +89,7 @@ public class ProjectPanel extends javax.swing.JPanel {
             projectTabbedPane.remove(materialsPanel);
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
-        }
-          
-        List<Pair<Participation, User>> list = 
-            DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId());
-        
-        for(Pair<Participation, User> p : list)
-        {
-            UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
-            userListPanel.add(el);
-        }       
+        }     
     }
 
     /**
@@ -130,6 +122,11 @@ public class ProjectPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(640, 480));
 
         projectTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        projectTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                OnTabChange(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         titleLabel.setText("jLabel1");
@@ -261,6 +258,29 @@ public class ProjectPanel extends javax.swing.JPanel {
         MPM.setPanel(new OverviewPanel());
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void OnTabChange(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OnTabChange
+       
+        JTabbedPane e = (JTabbedPane)evt.getSource();
+        
+        if (e.getSelectedComponent().equals(userPanel))
+            reloadProjectUsers();
+        
+    }//GEN-LAST:event_OnTabChange
+
+    private void reloadProjectUsers()
+    {
+        userListPanel.removeAll();
+        
+        List<Pair<Participation, User>> list = 
+            DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId());
+        
+        for(Pair<Participation, User> p : list)
+        {
+            UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
+            userListPanel.add(el);
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addUserPanel;
