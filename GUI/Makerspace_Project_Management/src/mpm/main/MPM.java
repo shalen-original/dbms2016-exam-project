@@ -31,6 +31,7 @@ public class MPM {
         frame.setPreferredSize(new Dimension(640, 480));
         setPanel (new LoginPanel());
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible (true);
         
     }
