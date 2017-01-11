@@ -5,13 +5,20 @@
  * All rights reserved.
  */
 package mpm.gui;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import mpm.data.dao.* ;
 import mpm.data.entities.*;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import mpm.main.MPM;
 
 /**
  *
@@ -24,17 +31,27 @@ public class BookInfPanel extends javax.swing.JPanel {
      */
     public BookInfPanel() {
         initComponents();
-        for(FreeInf freeinf: DAOs.free_infs.getAvailable())
-        {
-            FreeInfChoice.add(freeinf.getName());
-        }
         
-        StartDatePicker.setDate(new Date() );
-        StartDatePicker.setFormats("E DD/MM/yyyy");
-        StartDatePicker.getMonthView().setLowerBound(new Date());
-        EndDatePicker.setDate(new Date() );
-        EndDatePicker.setFormats("E DD/MM/yyyy");
-        EndDatePicker.getMonthView().setLowerBound(StartDatePicker.getDate());
+        List<FreeInf> infs = DAOs.free_infs.getAvailable();
+        infs.sort((a,b) -> {
+            return a.getName().compareTo(b.getName());
+        });
+        
+        DefaultComboBoxModel<FreeInf> m = new DefaultComboBoxModel<>();
+        for(FreeInf fi: infs)
+        {
+            m.addElement(fi);
+        }
+        cmbFreeInf.setModel(m);
+        cmbFreeInf.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            w.setText(value.getName());
+            return w;
+        });
+        
+        ((SpinnerDateModel)dtpTimeEnd.getModel()).setStart((Date)dtpTimeStart.getValue());
+        
     }
 
     /**
@@ -50,15 +67,13 @@ public class BookInfPanel extends javax.swing.JPanel {
         StartLabel = new javax.swing.JLabel();
         EndLabel = new javax.swing.JLabel();
         BookButton = new javax.swing.JButton();
-        StartDatePicker = new org.jdesktop.swingx.JXDatePicker();
-        EndDatePicker = new org.jdesktop.swingx.JXDatePicker();
         Date date = new Date();
-        SpinnerDateModel sm = new SpinnerDateModel(date,null,null,Calendar.HOUR_OF_DAY);
-        jSpinner1 = new javax.swing.JSpinner(sm);
+        SpinnerDateModel sm = new SpinnerDateModel(date,null,null,Calendar.MINUTE);
+        dtpTimeStart = new javax.swing.JSpinner(sm);
         Date date1 = new Date();
-        SpinnerDateModel sm1 = new SpinnerDateModel(date1,null,null,Calendar.HOUR_OF_DAY);
-        jSpinner2 = new javax.swing.JSpinner(sm1);
-        FreeInfChoice = new java.awt.Choice();
+        SpinnerDateModel sm1 = new SpinnerDateModel(date1,null,null,Calendar.MINUTE);
+        dtpTimeEnd = new javax.swing.JSpinner(sm1);
+        cmbFreeInf = new javax.swing.JComboBox<>();
 
         FreeInfLabel.setText("Free Inf :");
 
@@ -73,102 +88,92 @@ public class BookInfPanel extends javax.swing.JPanel {
             }
         });
 
-        StartDatePicker.setLinkPanel(null);
-        StartDatePicker.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StartDatePickerActionPerformed(evt);
+        JSpinner.DateEditor de = new JSpinner.DateEditor(dtpTimeStart, "E yyyy-MM-dd HH:mm");
+        dtpTimeStart.setEditor(de);
+        dtpTimeStart.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                dtpTimeStartStateChanged(evt);
             }
         });
 
-        EndDatePicker.setLinkPanel(null);
-        EndDatePicker.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EndDatePickerActionPerformed(evt);
-            }
-        });
-
-        JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm:ss");
-        jSpinner1.setEditor(de);
-
-        JSpinner.DateEditor de1 = new JSpinner.DateEditor(jSpinner2, "HH:mm:ss");
-        jSpinner2.setEditor(de1);
+        JSpinner.DateEditor de1 = new JSpinner.DateEditor(dtpTimeEnd, "E yyyy-MM-dd HH:mm");
+        dtpTimeEnd.setEditor(de1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
+                .addContainerGap(116, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(EndLabel)
-                        .addGap(19, 19, 19)
-                        .addComponent(EndDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(FreeInfLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(StartLabel))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(StartDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(FreeInfChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(104, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(FreeInfLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(StartLabel))
+                            .addComponent(EndLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbFreeInf, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dtpTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dtpTimeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(88, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FreeInfLabel)
-                    .addComponent(FreeInfChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                    .addComponent(cmbFreeInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(StartLabel)
-                            .addComponent(StartDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(EndLabel)
-                            .addComponent(EndDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dtpTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dtpTimeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(EndLabel)))
                 .addGap(40, 40, 40)
                 .addComponent(BookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StartDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartDatePickerActionPerformed
-        EndDatePicker.getMonthView().setLowerBound(StartDatePicker.getDate());
-    }//GEN-LAST:event_StartDatePickerActionPerformed
-
     private void BookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookButtonActionPerformed
-        // TODO add your handling code here:
+
+        FreeInfBooking b = new FreeInfBooking(DAOs.bookings.getNextValidId());
+        b.setFreeInfId(((FreeInf)cmbFreeInf.getSelectedItem()).getId());
+        b.setProjectId(MPM.currentProject.getId());
+        b.setStartTime(new Timestamp(((Date)dtpTimeStart.getValue()).getTime()));
+        b.setEndTime(new Timestamp(((Date)dtpTimeEnd.getValue()).getTime()));
+        
+        DAOs.bookings.insert(b);
+        
     }//GEN-LAST:event_BookButtonActionPerformed
 
-    private void EndDatePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndDatePickerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EndDatePickerActionPerformed
+    private void dtpTimeStartStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dtpTimeStartStateChanged
+        
+        Date start = (Date)dtpTimeStart.getValue();
+        Date end = (Date)dtpTimeEnd.getValue();
+        
+        if (end.compareTo(start) < 0)
+            dtpTimeEnd.setValue(dtpTimeStart.getValue());
+        
+        ((SpinnerDateModel)dtpTimeEnd.getModel()).setStart((Date)dtpTimeStart.getValue());
+    }//GEN-LAST:event_dtpTimeStartStateChanged
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BookButton;
-    private org.jdesktop.swingx.JXDatePicker EndDatePicker;
     private javax.swing.JLabel EndLabel;
-    private java.awt.Choice FreeInfChoice;
     private javax.swing.JLabel FreeInfLabel;
-    private org.jdesktop.swingx.JXDatePicker StartDatePicker;
     private javax.swing.JLabel StartLabel;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JComboBox<FreeInf> cmbFreeInf;
+    private javax.swing.JSpinner dtpTimeEnd;
+    private javax.swing.JSpinner dtpTimeStart;
     // End of variables declaration//GEN-END:variables
 }
