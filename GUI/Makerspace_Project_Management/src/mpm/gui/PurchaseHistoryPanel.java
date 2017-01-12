@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
+import mpm.data.entities.Material;
 import mpm.data.entities.Purchase;
 import mpm.main.MPM;
 
@@ -40,7 +41,7 @@ public class PurchaseHistoryPanel extends javax.swing.JPanel {
         
         for(Purchase p : list){
             Object[] o = new Object[4];
-            o[0] = "Mat Name";
+            o[0] = DAOs.materials.findByID(p.getMaterialId()).getName();
             o[1] = (p.getTotalPrice().floatValue()/p.getUnits());
             o[2] = p.getUnits();
             o[3] = p.getTotalPrice().floatValue();
