@@ -6,12 +6,11 @@
 package mpm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import mpm.main.MPM;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Project;
 
@@ -48,14 +47,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         overviewTabbedPane.setIconAt(2, addIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
-        // Get List of Projects for current User
-        List<Project> projectList = DAOs.projects.getUserProjects(MPM.currentUser);
-        
-        // Add each Project to the displayed list
-        for(Project p : projectList){
-            projectListPanel.add(new ProjectListElement(p));
-        }
-        
         addProjectPanel.add(new CreateProjectPanel(),BorderLayout.CENTER);
         projectScrollPane.setViewportView (projectListPanel); 
     }
@@ -85,6 +76,11 @@ public class OverviewPanel extends javax.swing.JPanel {
         overviewTabbedPane.setMaximumSize(new java.awt.Dimension(635, 400));
         overviewTabbedPane.setMinimumSize(new java.awt.Dimension(600, 400));
         overviewTabbedPane.setPreferredSize(new java.awt.Dimension(600, 400));
+        overviewTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                overviewTabbedPaneStateChanged(evt);
+            }
+        });
 
         projectTab.setMaximumSize(new java.awt.Dimension(526, 433));
 
@@ -167,6 +163,28 @@ public class OverviewPanel extends javax.swing.JPanel {
         MPM.setPanel(new LoginPanel());
     }//GEN-LAST:event_logoutButtonActionPerformed
 
+    private void overviewTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_overviewTabbedPaneStateChanged
+        
+         JTabbedPane e = (JTabbedPane)evt.getSource();
+        
+        if (e.getSelectedComponent().equals(projectTab))
+            reloadProjects();
+        
+    }//GEN-LAST:event_overviewTabbedPaneStateChanged
+
+    private void reloadProjects()
+    {
+        projectListPanel.removeAll();
+        
+        // Get List of Projects for current User
+        List<Project> projectList = DAOs.projects.getUserProjects(MPM.currentUser);
+        
+        // Add each Project to the displayed list
+        for(Project p : projectList){
+            projectListPanel.add(new ProjectListElement(p));
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addProjectPanel;

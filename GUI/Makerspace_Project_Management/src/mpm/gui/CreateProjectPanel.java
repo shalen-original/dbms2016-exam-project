@@ -5,7 +5,15 @@
  * All rights reserved.
  */
 package mpm.gui;
-import mpm.data.entities.*;
+
+import javax.swing.JOptionPane;
+import mpm.data.dao.DAOs;
+import mpm.data.entities.Participation;
+import mpm.data.entities.Project;
+import mpm.data.entities.ProjectRole;
+import mpm.data.entities.ProjectStatus;
+import mpm.main.MPM;
+
 /**
  *
  * @author remo
@@ -17,15 +25,6 @@ public class CreateProjectPanel extends javax.swing.JPanel {
      */
     public CreateProjectPanel() {
         initComponents();
-        
-        String[] choices = new String[ProjectStatus.values().length];
-
-        int i=0;
-        for(ProjectStatus s : ProjectStatus.values()){
-            choices[i]=s.toString();
-            i+=1;
-        }
-        statusComboBox.setModel(new javax.swing.DefaultComboBoxModel(choices));
     }
 
     /**
@@ -38,122 +37,107 @@ public class CreateProjectPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         nameLabel = new javax.swing.JLabel();
-        statusLabel = new javax.swing.JLabel();
         createButton = new javax.swing.JButton();
-        nameTextField = new javax.swing.JTextField();
-        statusComboBox = new javax.swing.JComboBox<>();
-        collaborationCheckBox = new javax.swing.JCheckBox();
+        txtProjectName = new javax.swing.JTextField();
+        chbCollaboration = new javax.swing.JCheckBox();
         descriptionLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descriptionTextArea = new javax.swing.JTextArea();
+        taProjectDescription = new javax.swing.JTextArea();
 
         nameLabel.setText("Project Name:");
 
-        statusLabel.setText("Status:");
-
-        createButton.setText("create");
+        createButton.setText("Create project");
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createButtonActionPerformed(evt);
             }
         });
 
-        statusComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusComboBoxActionPerformed(evt);
-            }
-        });
+        txtProjectName.setMinimumSize(new java.awt.Dimension(0, 0));
 
-        collaborationCheckBox.setText("Open for Collaboration");
-        collaborationCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                collaborationCheckBoxActionPerformed(evt);
-            }
-        });
+        chbCollaboration.setText("Open for Collaboration");
 
         descriptionLabel.setText("Description:");
 
-        descriptionTextArea.setColumns(20);
-        descriptionTextArea.setLineWrap(true);
-        descriptionTextArea.setRows(3);
-        descriptionTextArea.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(descriptionTextArea);
+        taProjectDescription.setColumns(20);
+        taProjectDescription.setLineWrap(true);
+        taProjectDescription.setRows(3);
+        taProjectDescription.setWrapStyleWord(true);
+        taProjectDescription.setMinimumSize(new java.awt.Dimension(0, 0));
+        taProjectDescription.setPreferredSize(new java.awt.Dimension(0, 0));
+        jScrollPane1.setViewportView(taProjectDescription);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(165, 165, 165))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(133, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(collaborationCheckBox))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(descriptionLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(statusLabel)
-                                    .addComponent(nameLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nameTextField)
-                                    .addComponent(statusComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap())
+                    .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chbCollaboration)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(nameLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtProjectName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(descriptionLabel)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusLabel)
-                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addComponent(descriptionLabel)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(collaborationCheckBox)
-                .addGap(18, 18, 18)
-                .addComponent(createButton)
-                .addContainerGap())
+                .addComponent(chbCollaboration)
+                .addGap(27, 27, 27)
+                .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        // TODO add your handling code here:
+        
+        Project p = new Project(DAOs.projects.getNextValidId());
+        p.setTitle(txtProjectName.getText());
+        p.setDescription(taProjectDescription.getText());
+        p.setSeekingCollaboration(chbCollaboration.isSelected());
+        
+        // By default new projects are proposed: they have to be set as active
+        // by a Makerspace technician.
+        p.setStatus(ProjectStatus.PROPOSED);
+
+        try
+        {
+            DAOs.projects.createNewProjectWithAdmin(p, MPM.currentUser);
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Operation successful!");
+        txtProjectName.setText("");
+        taProjectDescription.setText("");
+        chbCollaboration.setSelected(false);
     }//GEN-LAST:event_createButtonActionPerformed
-
-    private void statusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusComboBoxActionPerformed
-
-    private void collaborationCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collaborationCheckBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_collaborationCheckBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox collaborationCheckBox;
+    private javax.swing.JCheckBox chbCollaboration;
     private javax.swing.JButton createButton;
     private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JTextField nameTextField;
-    private javax.swing.JComboBox<String> statusComboBox;
-    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTextArea taProjectDescription;
+    private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables
 }
