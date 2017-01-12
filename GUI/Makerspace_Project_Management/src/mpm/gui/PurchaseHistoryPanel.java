@@ -47,7 +47,6 @@ public class PurchaseHistoryPanel extends javax.swing.JPanel {
             o[3] = p.getTotalPrice().floatValue();
             
             model.addRow(o);
-            System.out.println(o[0] + " " + o[1] + " " + o[2] + " " + o[3]);
         }
         
         historyTable.setModel(model);

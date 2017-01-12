@@ -9,9 +9,11 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mpm.data.entities.Message;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
+import mpm.data.logic.IPreparedStatementFiller;
 
 /**
  * Implements a DAO for the Message table.
@@ -54,6 +56,16 @@ public class MessageDAO extends GenericDataAccessObject<Message>{
             s.setTimestamp(4, objToInsert.getCreationTime());
             s.setInt(5, objToInsert.getAuthorId());   
         });
+    }
+    
+    public List<Message> findByRequestID(int requestID){
+        
+        String sql = "SELECT * FROM message " +
+                    "WHERE request_id = ?";
+        
+        IPreparedStatementFiller f = s -> {s.setInt(1, requestID);};
+
+        return DBUtils.performSelect(sql, f, this.defaultParser);
     }
 
     @Override

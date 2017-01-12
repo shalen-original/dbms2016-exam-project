@@ -218,7 +218,8 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
     private void viewHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewHistoryButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, new PurchaseHistoryPanel(), "Purchase History", JOptionPane.PLAIN_MESSAGE, null);
+        JOptionPane.showMessageDialog(null, new PurchaseHistoryPanel(), 
+                "Purchase History", JOptionPane.PLAIN_MESSAGE, null);
     }//GEN-LAST:event_viewHistoryButtonActionPerformed
 
 

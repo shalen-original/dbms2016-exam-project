@@ -5,6 +5,7 @@
  * All rights reserved.
  */
 package mpm.gui;
+import javax.swing.JOptionPane;
 import mpm.data.dao.* ;
 import mpm.data.entities.*;
 
@@ -47,6 +48,7 @@ public class MakeReqPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         MessageTextArea = new javax.swing.JTextArea();
         SenderNameLabel = new javax.swing.JLabel();
+        viewHistoryButton = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -80,6 +82,13 @@ public class MakeReqPanel extends javax.swing.JPanel {
         SenderNameLabel.setText("   ");
         SenderNameLabel.setText(mpm.main.MPM.currentUser.getName());
 
+        viewHistoryButton.setText("view History");
+        viewHistoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewHistoryButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,12 +102,17 @@ public class MakeReqPanel extends javax.swing.JPanel {
                     .addComponent(SenderLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SendButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(RelatedInfChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TitleText, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane3)
-                        .addComponent(SenderNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SendButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(viewHistoryButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(RelatedInfChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TitleText, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3)
+                            .addComponent(SenderNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,7 +135,9 @@ public class MakeReqPanel extends javax.swing.JPanel {
                     .addComponent(SenderLabel)
                     .addComponent(SenderNameLabel))
                 .addGap(18, 18, 18)
-                .addComponent(SendButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SendButton)
+                    .addComponent(viewHistoryButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -133,6 +149,12 @@ public class MakeReqPanel extends javax.swing.JPanel {
     private void TitleTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitleTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TitleTextActionPerformed
+
+    private void viewHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewHistoryButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, new RequestHistoryPanel(), 
+                "Request History", JOptionPane.PLAIN_MESSAGE, null);
+    }//GEN-LAST:event_viewHistoryButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -149,5 +171,6 @@ public class MakeReqPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton viewHistoryButton;
     // End of variables declaration//GEN-END:variables
 }
