@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
+import mpm.data.entities.ProjectRole;
 import mpm.data.entities.User;
 import mpm.data.logic.Pair;
 
@@ -88,7 +89,6 @@ public class ProjectPanel extends javax.swing.JPanel {
             // TODO choose which panels to keep visualized for non-admin users
             projectTabbedPane.remove(settingsPanel);
             projectTabbedPane.remove(bookingPanel);
-            projectTabbedPane.remove(materialsPanel);
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
         }     
