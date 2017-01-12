@@ -52,6 +52,8 @@ public class PurchaseHistoryPanel extends javax.swing.JPanel {
         historyTable.setModel(model);
         model.setColumnIdentifiers(columnNames);
         historyScrollPane.setViewportView(historyTable);
+        historyTable.setDefaultEditor(Object.class, null);
+
     }
 
     /**
