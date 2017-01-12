@@ -18,37 +18,42 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace pref="115" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="MaterialLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="UnitsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="TotalLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="cmbMaterials" min="-2" pref="159" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="lblTotalPrice" min="-2" pref="159" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="cmbMaterials" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                          <Component id="lblTotalPrice" min="-2" pref="159" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="UnitPriceLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="sNumberOfUnits" pref="68" max="32767" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblUnitsOfMeasure" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="BuyButton" max="32767" attributes="0"/>
+                          <Component id="UnitPriceLabel" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="sNumberOfUnits" pref="68" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="lblUnitsOfMeasure" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblUnitaryPrice" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="lblUnitaryPrice" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="viewHistoryButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <Component id="BuyButton" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="115" max="32767" attributes="0"/>
           </Group>
@@ -79,7 +84,10 @@
                   <Component id="lblTotalPrice" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="BuyButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BuyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="viewHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -151,6 +159,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Material&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="viewHistoryButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="view History"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewHistoryButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

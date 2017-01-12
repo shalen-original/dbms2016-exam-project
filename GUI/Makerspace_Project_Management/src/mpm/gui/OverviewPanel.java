@@ -56,7 +56,7 @@ public class OverviewPanel extends javax.swing.JPanel {
             projectListPanel.add(new ProjectListElement(p));
         }
         
-        addProjectPanel.add(new createProjectPanel(),BorderLayout.CENTER);
+        addProjectPanel.add(new CreateProjectPanel(),BorderLayout.CENTER);
         projectScrollPane.setViewportView (projectListPanel); 
     }
 

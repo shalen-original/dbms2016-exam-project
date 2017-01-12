@@ -10,12 +10,12 @@ import mpm.data.entities.*;
  *
  * @author remo
  */
-public class createProjectPanel extends javax.swing.JPanel {
+public class CreateProjectPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form createProjectPanel
      */
-    public createProjectPanel() {
+    public CreateProjectPanel() {
         initComponents();
         
         String[] choices = new String[ProjectStatus.values().length];

@@ -9,9 +9,12 @@ package mpm.data.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import mpm.data.entities.Purchase;
+import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
+import mpm.data.logic.IPreparedStatementFiller;
 
 /**
  * Implements a DAO for the Purchase table.
@@ -54,6 +57,16 @@ public class PurchaseDAO extends GenericDataAccessObject<Purchase>{
             s.setInt(4, objToInsert.getUnits());
             s.setBigDecimal(5, objToInsert.getTotalPrice());   
         });
+    }
+    
+    public List<Purchase> findByProjectID(int projectID){
+        
+        String sql = "SELECT * FROM purchase " +
+                    "WHERE project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {s.setInt(1, projectID);};
+
+        return DBUtils.performSelect(sql, f, this.defaultParser);
     }
 
     @Override
