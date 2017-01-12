@@ -6,6 +6,7 @@
 package mpm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ProjectPanel extends javax.swing.JPanel {
      * Creates new form projectPanel
      */
     public ProjectPanel() {
+        
         initComponents();
         
         ImageIcon overviewIcon = new ImageIcon(new ImageIcon(getClass()
@@ -90,6 +92,7 @@ public class ProjectPanel extends javax.swing.JPanel {
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
         }     
+        
     }
 
     /**
@@ -101,6 +104,7 @@ public class ProjectPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        userListPanel = new javax.swing.JPanel();
         projectTabbedPane = new javax.swing.JTabbedPane();
         overViewPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
@@ -109,13 +113,17 @@ public class ProjectPanel extends javax.swing.JPanel {
         descriptionLabel = new javax.swing.JLabel();
         userPanel = new javax.swing.JPanel();
         userScrollPane = new javax.swing.JScrollPane();
-        userListPanel = new javax.swing.JPanel();
         bookingPanel = new javax.swing.JPanel();
         requestPanel = new javax.swing.JPanel();
         addUserPanel = new javax.swing.JPanel();
         materialsPanel = new javax.swing.JPanel();
         settingsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
+
+        userListPanel.setMaximumSize(new java.awt.Dimension(51131, 45125));
+        userListPanel.setPreferredSize(null);
+        userListPanel.setRequestFocusEnabled(false);
+        userListPanel.setLayout(new javax.swing.BoxLayout(userListPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         setMaximumSize(new java.awt.Dimension(640, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -174,13 +182,8 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         userScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         userScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        userScrollPane.setMaximumSize(new java.awt.Dimension(526, 433));
+        userScrollPane.setMaximumSize(new java.awt.Dimension(526, 3650));
         userScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
-
-        userListPanel.setMaximumSize(new java.awt.Dimension(510, 433));
-        userListPanel.setPreferredSize(new java.awt.Dimension(510, 433));
-        userListPanel.setLayout(new javax.swing.BoxLayout(userListPanel, javax.swing.BoxLayout.PAGE_AXIS));
-        userScrollPane.setViewportView(userListPanel);
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
@@ -270,6 +273,8 @@ public class ProjectPanel extends javax.swing.JPanel {
     {
         userListPanel.removeAll();
         
+        userListPanel.setLayout(new GridLayout(0, 1));//rscolati@unibz.it
+        
         List<Pair<Participation, User>> list = 
             DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId());
         
@@ -278,6 +283,7 @@ public class ProjectPanel extends javax.swing.JPanel {
             UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
             userListPanel.add(el);
         }
+        userScrollPane.setViewportView (userListPanel);
     }
     
 
