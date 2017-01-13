@@ -44,6 +44,14 @@ public class OverviewPanel extends javax.swing.JPanel {
         overviewTabbedPane.setIconAt(1, settingsIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
+        nameLabel.setText(MPM.currentUser.getName());
+        emailLabel.setText(MPM.currentUser.getEmail());
+        roleLabel.setText(DAOs.roles.findByID(
+                MPM.currentUser.getGeneralRoleId()).getName());
+        descriptionLabel.setText("(" + DAOs.roles.findByID(
+                MPM.currentUser.getGeneralRoleId()).getDescription() + ")");
+        idLabel.setText("" + MPM.currentUser.getId());
+        
         //projectScrollPane.setViewportView (projectListPanel);
         reloadProjectTable();
     }
@@ -72,6 +80,19 @@ public class OverviewPanel extends javax.swing.JPanel {
         createButton = new javax.swing.JButton();
         openSelectedButton = new javax.swing.JButton();
         settingsTab = new javax.swing.JPanel();
+        nameTitleLabel = new javax.swing.JLabel();
+        emailTitleLabel = new javax.swing.JLabel();
+        roleTitleLabel = new javax.swing.JLabel();
+        idTitleLabel = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
+        roleLabel = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        idLabel = new javax.swing.JLabel();
+        updateProfileLabel = new javax.swing.JLabel();
+        newEmailLabel = new javax.swing.JLabel();
+        newEmailTextField = new javax.swing.JTextField();
+        updateInformationButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -199,15 +220,99 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         settingsTab.setPreferredSize(new java.awt.Dimension(526, 433));
 
+        nameTitleLabel.setText("Name");
+
+        emailTitleLabel.setText("Email");
+
+        roleTitleLabel.setText("Role");
+
+        idTitleLabel.setText("ID");
+
+        nameLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        nameLabel.setText("jLabel9");
+
+        emailLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        emailLabel.setText("jLabel10");
+
+        roleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        roleLabel.setText("jLabel11");
+
+        descriptionLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        descriptionLabel.setText("jLabel12");
+
+        idLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        idLabel.setText("jLabel13");
+
+        updateProfileLabel.setText("Update Profile Information");
+
+        newEmailLabel.setText("New email address");
+
+        updateInformationButton.setText("Save");
+        updateInformationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateInformationButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsTabLayout = new javax.swing.GroupLayout(settingsTab);
         settingsTab.setLayout(settingsTabLayout);
         settingsTabLayout.setHorizontalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+            .addGroup(settingsTabLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(updateInformationButton)
+                    .addComponent(updateProfileLabel)
+                    .addGroup(settingsTabLayout.createSequentialGroup()
+                        .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameTitleLabel)
+                            .addComponent(emailTitleLabel)
+                            .addComponent(roleTitleLabel)
+                            .addComponent(idTitleLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idLabel)
+                            .addGroup(settingsTabLayout.createSequentialGroup()
+                                .addComponent(roleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(descriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emailLabel)
+                            .addComponent(nameLabel)))
+                    .addGroup(settingsTabLayout.createSequentialGroup()
+                        .addComponent(newEmailLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         settingsTabLayout.setVerticalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
+            .addGroup(settingsTabLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameTitleLabel)
+                    .addComponent(nameLabel))
+                .addGap(18, 18, 18)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailTitleLabel)
+                    .addComponent(emailLabel))
+                .addGap(18, 18, 18)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(roleTitleLabel)
+                    .addComponent(roleLabel)
+                    .addComponent(descriptionLabel))
+                .addGap(18, 18, 18)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idTitleLabel)
+                    .addComponent(idLabel))
+                .addGap(114, 114, 114)
+                .addComponent(updateProfileLabel)
+                .addGap(18, 18, 18)
+                .addGroup(settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newEmailLabel))
+                .addGap(18, 18, 18)
+                .addComponent(updateInformationButton)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         overviewTabbedPane.addTab("Preferences", settingsTab);
@@ -308,6 +413,10 @@ public class OverviewPanel extends javax.swing.JPanel {
         reloadProjectTable();
     }//GEN-LAST:event_createButtonActionPerformed
 
+    private void updateInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInformationButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateInformationButtonActionPerformed
+
     private void reloadProjectTable(){
         
         List<Project> projectList = DAOs
@@ -349,18 +458,31 @@ public class OverviewPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox chbCollaboration;
     private javax.swing.JButton createButton;
     private javax.swing.JLabel defaultStatusLabel;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JLabel emailTitleLabel;
+    private javax.swing.JLabel idLabel;
+    private javax.swing.JLabel idTitleLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel nameTitleLabel;
+    private javax.swing.JLabel newEmailLabel;
+    private javax.swing.JTextField newEmailTextField;
     private javax.swing.JLabel newProjectLabel;
     private javax.swing.JButton openSelectedButton;
     private javax.swing.JTabbedPane overviewTabbedPane;
     private javax.swing.JPanel projectTab;
     private javax.swing.JTable projectTable;
     private javax.swing.JScrollPane projectTableScrollPane;
+    private javax.swing.JLabel roleLabel;
+    private javax.swing.JLabel roleTitleLabel;
     private javax.swing.JPanel settingsTab;
     private javax.swing.JTextArea taProjectDescription;
     private javax.swing.JTextField txtProjectName;
+    private javax.swing.JButton updateInformationButton;
+    private javax.swing.JLabel updateProfileLabel;
     // End of variables declaration//GEN-END:variables
 }
