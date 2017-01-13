@@ -67,10 +67,10 @@ public class OverviewPanel extends javax.swing.JPanel {
         projectTab = new javax.swing.JPanel();
         projectTableScrollPane = new javax.swing.JScrollPane();
         projectTable = new javax.swing.JTable();
-        openSelectedButton = new javax.swing.JButton();
         settingsTab = new javax.swing.JPanel();
         addProjectPanel = new javax.swing.JPanel();
         logoutButton = new javax.swing.JButton();
+        openSelectedButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -98,30 +98,15 @@ public class OverviewPanel extends javax.swing.JPanel {
         ));
         projectTableScrollPane.setViewportView(projectTable);
 
-        openSelectedButton.setText("open Selected");
-        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openSelectedButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout projectTabLayout = new javax.swing.GroupLayout(projectTab);
         projectTab.setLayout(projectTabLayout);
         projectTabLayout.setHorizontalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectTabLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(openSelectedButton)
-                .addGap(186, 186, 186))
         );
         projectTabLayout.setVerticalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(projectTabLayout.createSequentialGroup()
-                .addComponent(projectTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(openSelectedButton)
-                .addContainerGap())
+            .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
         );
 
         overviewTabbedPane.addTab("Projects", null, projectTab, "");
@@ -151,6 +136,13 @@ public class OverviewPanel extends javax.swing.JPanel {
             }
         });
 
+        openSelectedButton.setText("open Selected Project");
+        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openSelectedButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,8 +151,10 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(openSelectedButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
@@ -169,7 +163,9 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addGap(5, 5, 5)
                 .addComponent(overviewTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logoutButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(logoutButton)
+                    .addComponent(openSelectedButton))
                 .addContainerGap())
         );
 
@@ -187,6 +183,9 @@ public class OverviewPanel extends javax.swing.JPanel {
         
         if (e.getSelectedComponent().equals(projectTab))
             reloadProjectTable();
+            
+        openSelectedButton.setEnabled(
+                e.getSelectedComponent().equals(projectTab));
         
     }//GEN-LAST:event_overviewTabbedPaneStateChanged
 
