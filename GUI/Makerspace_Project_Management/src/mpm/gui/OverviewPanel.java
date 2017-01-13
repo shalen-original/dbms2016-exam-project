@@ -10,7 +10,9 @@ import mpm.main.MPM;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Project;
 
@@ -48,7 +50,8 @@ public class OverviewPanel extends javax.swing.JPanel {
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
         addProjectPanel.add(new CreateProjectPanel(),BorderLayout.CENTER);
-        projectScrollPane.setViewportView (projectListPanel); 
+        //projectScrollPane.setViewportView (projectListPanel);
+        reloadProjectTable();
     }
 
     /**
@@ -62,8 +65,9 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         overviewTabbedPane = new javax.swing.JTabbedPane();
         projectTab = new javax.swing.JPanel();
-        projectScrollPane = new javax.swing.JScrollPane();
-        projectListPanel = new javax.swing.JPanel();
+        projectTableScrollPane = new javax.swing.JScrollPane();
+        projectTable = new javax.swing.JTable();
+        openSelectedButton = new javax.swing.JButton();
         settingsTab = new javax.swing.JPanel();
         addProjectPanel = new javax.swing.JPanel();
         logoutButton = new javax.swing.JButton();
@@ -84,26 +88,40 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         projectTab.setMaximumSize(new java.awt.Dimension(526, 433));
 
-        projectScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        projectScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        projectScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        projectScrollPane.setMaximumSize(new java.awt.Dimension(526, 433));
-        projectScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
+        projectTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        projectListPanel.setMaximumSize(new java.awt.Dimension(510, 433));
-        projectListPanel.setPreferredSize(new java.awt.Dimension(510, 433));
-        projectListPanel.setLayout(new javax.swing.BoxLayout(projectListPanel, javax.swing.BoxLayout.PAGE_AXIS));
-        projectScrollPane.setViewportView(projectListPanel);
+            },
+            new String [] {
+
+            }
+        ));
+        projectTableScrollPane.setViewportView(projectTable);
+
+        openSelectedButton.setText("open Selected");
+        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openSelectedButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout projectTabLayout = new javax.swing.GroupLayout(projectTab);
         projectTab.setLayout(projectTabLayout);
         projectTabLayout.setHorizontalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+            .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectTabLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(openSelectedButton)
+                .addGap(186, 186, 186))
         );
         projectTabLayout.setVerticalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+            .addGroup(projectTabLayout.createSequentialGroup()
+                .addComponent(projectTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(openSelectedButton)
+                .addContainerGap())
         );
 
         overviewTabbedPane.addTab("Projects", null, projectTab, "");
@@ -168,31 +186,71 @@ public class OverviewPanel extends javax.swing.JPanel {
          JTabbedPane e = (JTabbedPane)evt.getSource();
         
         if (e.getSelectedComponent().equals(projectTab))
-            reloadProjects();
+            reloadProjectTable();
         
     }//GEN-LAST:event_overviewTabbedPaneStateChanged
 
-    private void reloadProjects()
-    {
-        projectListPanel.removeAll();
+    private void openSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSelectedButtonActionPerformed
         
-        // Get List of Projects for current User
-        List<Project> projectList = DAOs.projects.getUserProjects(MPM.currentUser);
-        
-        // Add each Project to the displayed list
-        for(Project p : projectList){
-            projectListPanel.add(new ProjectListElement(p));
+        int row = projectTable.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(this, "No Project selected.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            int projectID = (Integer) projectTableModel
+                    .getValueAt(row, 0);
+            
+            MPM.currentProject = DAOs.projects.findByID(projectID);
+            MPM.setPanel(new ProjectPanel());
         }
+    }//GEN-LAST:event_openSelectedButtonActionPerformed
+
+    private void reloadProjectTable(){
+        
+        List<Project> projectList = DAOs
+                .projects.getUserProjects(MPM.currentUser);
+        
+        projectTable = new javax.swing.JTable();
+        projectTable.setAutoCreateRowSorter(true);
+                
+        String[] projectColumnNames = {"Id",
+            "Title",
+            "Description",
+            "Status",
+            "Role"};
+        
+        projectTableModel = new DefaultTableModel(
+                0, projectColumnNames.length);
+        
+        for(Project p : projectList){
+            Object[] o = new Object[5];
+            o[0] = p.getId();
+            o[1] = p.getTitle();
+            o[2] = p.getDescription();
+            o[3] = p.getStatus();
+            o[4] = DAOs.participations.getUserRolesInProject(
+                    MPM.currentUser.getId(), p.getId())
+                    .get(0).toString();
+                       
+            projectTableModel.addRow(o);
+        }
+        
+        projectTable.setModel(projectTableModel);
+        projectTableModel.setColumnIdentifiers(projectColumnNames);
+        projectTableScrollPane.setViewportView(projectTable);
+        projectTable.setDefaultEditor(Object.class, null);
     }
     
-
+    private DefaultTableModel projectTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addProjectPanel;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JButton openSelectedButton;
     private javax.swing.JTabbedPane overviewTabbedPane;
-    private javax.swing.JPanel projectListPanel;
-    private javax.swing.JScrollPane projectScrollPane;
     private javax.swing.JPanel projectTab;
+    private javax.swing.JTable projectTable;
+    private javax.swing.JScrollPane projectTableScrollPane;
     private javax.swing.JPanel settingsTab;
     // End of variables declaration//GEN-END:variables
 }
