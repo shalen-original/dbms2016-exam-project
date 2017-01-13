@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Project;
+import mpm.data.entities.ProjectStatus;
 
 /**
  *
@@ -39,17 +40,10 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
-        ImageIcon addIcon = new ImageIcon(new ImageIcon(getClass()
-                .getResource("/mpm/res/addLogo.png"))
-                .getImage().getScaledInstance(
-                32, 32, Image.SCALE_DEFAULT)); 
-        
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
-        overviewTabbedPane.setIconAt(2, addIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
-        addProjectPanel.add(new CreateProjectPanel(),BorderLayout.CENTER);
         //projectScrollPane.setViewportView (projectListPanel);
         reloadProjectTable();
     }
@@ -67,10 +61,18 @@ public class OverviewPanel extends javax.swing.JPanel {
         projectTab = new javax.swing.JPanel();
         projectTableScrollPane = new javax.swing.JScrollPane();
         projectTable = new javax.swing.JTable();
-        settingsTab = new javax.swing.JPanel();
-        addProjectPanel = new javax.swing.JPanel();
-        logoutButton = new javax.swing.JButton();
+        newProjectLabel = new javax.swing.JLabel();
+        defaultStatusLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtProjectName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taProjectDescription = new javax.swing.JTextArea();
+        chbCollaboration = new javax.swing.JCheckBox();
+        createButton = new javax.swing.JButton();
         openSelectedButton = new javax.swing.JButton();
+        settingsTab = new javax.swing.JPanel();
+        logoutButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -98,15 +100,99 @@ public class OverviewPanel extends javax.swing.JPanel {
         ));
         projectTableScrollPane.setViewportView(projectTable);
 
+        newProjectLabel.setText("Add new Project");
+
+        defaultStatusLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        defaultStatusLabel.setText("Default Status: Proposed");
+
+        jLabel1.setText("Title");
+
+        jLabel2.setText("Description");
+
+        taProjectDescription.setColumns(20);
+        taProjectDescription.setLineWrap(true);
+        taProjectDescription.setRows(5);
+        taProjectDescription.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(taProjectDescription);
+
+        chbCollaboration.setText("Open for Collaboration");
+        chbCollaboration.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbCollaborationActionPerformed(evt);
+            }
+        });
+
+        createButton.setText("Create Project");
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
+            }
+        });
+
+        openSelectedButton.setText("open Selected Project");
+        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openSelectedButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout projectTabLayout = new javax.swing.GroupLayout(projectTab);
         projectTab.setLayout(projectTabLayout);
         projectTabLayout.setHorizontalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+            .addGroup(projectTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addGroup(projectTabLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chbCollaboration, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(createButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(projectTabLayout.createSequentialGroup()
+                        .addComponent(newProjectLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(openSelectedButton))
+                    .addGroup(projectTabLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(projectTabLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(defaultStatusLabel)))
+                .addContainerGap())
         );
         projectTabLayout.setVerticalGroup(
             projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+            .addGroup(projectTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(projectTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(projectTabLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(openSelectedButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectTabLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(newProjectLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(defaultStatusLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(12, 12, 12)
+                .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectTabLayout.createSequentialGroup()
+                        .addComponent(chbCollaboration)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(createButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         overviewTabbedPane.addTab("Projects", null, projectTab, "");
@@ -126,20 +212,10 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         overviewTabbedPane.addTab("Preferences", settingsTab);
 
-        addProjectPanel.setLayout(new java.awt.BorderLayout());
-        overviewTabbedPane.addTab("New Project", addProjectPanel);
-
         logoutButton.setText("logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
-            }
-        });
-
-        openSelectedButton.setText("open Selected Project");
-        openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openSelectedButtonActionPerformed(evt);
             }
         });
 
@@ -151,8 +227,6 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(openSelectedButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
@@ -163,9 +237,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addGap(5, 5, 5)
                 .addComponent(overviewTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logoutButton)
-                    .addComponent(openSelectedButton))
+                .addComponent(logoutButton)
                 .addContainerGap())
         );
 
@@ -205,6 +277,37 @@ public class OverviewPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_openSelectedButtonActionPerformed
 
+    private void chbCollaborationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbCollaborationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbCollaborationActionPerformed
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        
+        Project p = new Project(DAOs.projects.getNextValidId());
+        p.setTitle(txtProjectName.getText());
+        p.setDescription(taProjectDescription.getText());
+        p.setSeekingCollaboration(chbCollaboration.isSelected());
+        
+        // By default new projects are proposed: they have to be set as active
+        // by a Makerspace technician.
+        p.setStatus(ProjectStatus.PROPOSED);
+
+        try
+        {
+            DAOs.projects.createNewProjectWithAdmin(p, MPM.currentUser);
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Operation successful!");
+        txtProjectName.setText("");
+        taProjectDescription.setText("");
+        chbCollaboration.setSelected(false);
+        reloadProjectTable();
+    }//GEN-LAST:event_createButtonActionPerformed
+
     private void reloadProjectTable(){
         
         List<Project> projectList = DAOs
@@ -243,13 +346,21 @@ public class OverviewPanel extends javax.swing.JPanel {
     
     private DefaultTableModel projectTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addProjectPanel;
+    private javax.swing.JCheckBox chbCollaboration;
+    private javax.swing.JButton createButton;
+    private javax.swing.JLabel defaultStatusLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JLabel newProjectLabel;
     private javax.swing.JButton openSelectedButton;
     private javax.swing.JTabbedPane overviewTabbedPane;
     private javax.swing.JPanel projectTab;
     private javax.swing.JTable projectTable;
     private javax.swing.JScrollPane projectTableScrollPane;
     private javax.swing.JPanel settingsTab;
+    private javax.swing.JTextArea taProjectDescription;
+    private javax.swing.JTextField txtProjectName;
     // End of variables declaration//GEN-END:variables
 }
