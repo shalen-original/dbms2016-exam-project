@@ -107,8 +107,6 @@ public class ProjectPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        userListPanel = new javax.swing.JPanel();
-        userScrollPane = new javax.swing.JScrollPane();
         projectTabbedPane = new javax.swing.JTabbedPane();
         overViewPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
@@ -129,15 +127,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         materialsPanel = new javax.swing.JPanel();
         settingsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
-
-        userListPanel.setMaximumSize(new java.awt.Dimension(51131, 45125));
-        userListPanel.setRequestFocusEnabled(false);
-        userListPanel.setLayout(new javax.swing.BoxLayout(userListPanel, javax.swing.BoxLayout.PAGE_AXIS));
-
-        userScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        userScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        userScrollPane.setMaximumSize(new java.awt.Dimension(526, 3650));
-        userScrollPane.setPreferredSize(new java.awt.Dimension(526, 433));
 
         setMaximumSize(new java.awt.Dimension(640, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -349,23 +338,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         
     }
     
-    private void reloadProjectUsers()
-    {
-        userListPanel.removeAll();
-        
-        userListPanel.setLayout(new GridLayout(0, 1));//rscolati@unibz.it
-        
-        List<Pair<Participation, User>> list = 
-            DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId());
-        
-        for(Pair<Participation, User> p : list)
-        {
-            UserListElement el = new UserListElement(p.getSecond(), p.getFirst().getRole());
-            userListPanel.add(el);
-        }
-        userScrollPane.setViewportView (userListPanel);
-    }
-    
     private void reloadUserTable(){
         
         List<Participation> participationList = DAOs.participations
@@ -442,9 +414,7 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JLabel selectedUserNameLabel;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JPanel userListPanel;
     private javax.swing.JPanel userPanel;
-    private javax.swing.JScrollPane userScrollPane;
     private javax.swing.JTable userTable;
     private javax.swing.JScrollPane userTableScrollPane;
     // End of variables declaration//GEN-END:variables
