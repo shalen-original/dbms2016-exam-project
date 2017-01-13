@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.table.DefaultTableModel;
 import mpm.main.MPM;
 
 /**
@@ -52,7 +53,7 @@ public class BookInfPanel extends javax.swing.JPanel {
         });
         
         ((SpinnerDateModel)dtpTimeEnd.getModel()).setStart((Date)dtpTimeStart.getValue());
-        
+        reloadBookingTable();
     }
 
     /**
@@ -75,6 +76,9 @@ public class BookInfPanel extends javax.swing.JPanel {
         SpinnerDateModel sm1 = new SpinnerDateModel(date1,null,null,Calendar.MINUTE);
         dtpTimeEnd = new javax.swing.JSpinner(sm1);
         cmbFreeInf = new javax.swing.JComboBox<>();
+        bookingTableScrollPane = new javax.swing.JScrollPane();
+        bookingTable = new javax.swing.JTable();
+        bookingHistoryLabel = new javax.swing.JLabel();
 
         FreeInfLabel.setText("Free Inf :");
 
@@ -100,47 +104,72 @@ public class BookInfPanel extends javax.swing.JPanel {
         JSpinner.DateEditor de1 = new JSpinner.DateEditor(dtpTimeEnd, "E yyyy-MM-dd HH:mm");
         dtpTimeEnd.setEditor(de1);
 
+        cmbFreeInf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFreeInfActionPerformed(evt);
+            }
+        });
+
+        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        bookingTableScrollPane.setViewportView(bookingTable);
+
+        bookingHistoryLabel.setText("Booking History:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bookingHistoryLabel)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(BookButton)
+                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(FreeInfLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(StartLabel))
-                            .addComponent(EndLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbFreeInf, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dtpTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dtpTimeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(117, Short.MAX_VALUE))
+                                .addComponent(FreeInfLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(StartLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(EndLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGap(115, 115, 115)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(dtpTimeStart, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbFreeInf, javax.swing.GroupLayout.Alignment.LEADING, 0, 203, Short.MAX_VALUE)
+                                .addComponent(dtpTimeEnd)))
+                        .addComponent(bookingTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FreeInfLabel)
                     .addComponent(cmbFreeInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(StartLabel)
-                            .addComponent(dtpTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(58, 58, 58))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dtpTimeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(EndLabel)))
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(StartLabel)
+                    .addComponent(dtpTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EndLabel)
+                    .addComponent(dtpTimeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addComponent(bookingHistoryLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bookingTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -161,6 +190,7 @@ public class BookInfPanel extends javax.swing.JPanel {
             return;
         }
         
+        reloadBookingTable();
         JOptionPane.showMessageDialog(this, "Operation successful!");
         
     }//GEN-LAST:event_BookButtonActionPerformed
@@ -176,12 +206,53 @@ public class BookInfPanel extends javax.swing.JPanel {
         ((SpinnerDateModel)dtpTimeEnd.getModel()).setStart((Date)dtpTimeStart.getValue());
     }//GEN-LAST:event_dtpTimeStartStateChanged
 
+    private void cmbFreeInfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFreeInfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFreeInfActionPerformed
+
+    private void reloadBookingTable(){
+        
+        List<FreeInfBooking> bookingList = DAOs.bookings
+                .findByProjectID(MPM.currentProject.getId());
+                
+        
+        bookingTable = new javax.swing.JTable();
+        bookingTable.setAutoCreateRowSorter(true);
+                
+        String[] bookingColumnNames = {"Infrastructure",
+            "From",
+            "Until"};
+        
+        bookingTableModel = new DefaultTableModel(
+                0, bookingColumnNames.length);
+        
+        for(FreeInfBooking b : bookingList){
+            Object[] o = new Object[3];
+            o[0] = DAOs.free_infs.findByID(b.getFreeInfId()).getName();
+            o[1] = b.getStartTime();
+            o[2] = b.getEndTime();
+                       
+            bookingTableModel.addRow(o);
+
+        }
+        
+        bookingTable.setModel(bookingTableModel);
+        bookingTableModel.setColumnIdentifiers(bookingColumnNames);
+        bookingTableScrollPane.setViewportView(bookingTable);
+        bookingTable.setDefaultEditor(Object.class, null);
+        
+        
+    }
     
+    private DefaultTableModel bookingTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BookButton;
     private javax.swing.JLabel EndLabel;
     private javax.swing.JLabel FreeInfLabel;
     private javax.swing.JLabel StartLabel;
+    private javax.swing.JLabel bookingHistoryLabel;
+    private javax.swing.JTable bookingTable;
+    private javax.swing.JScrollPane bookingTableScrollPane;
     private javax.swing.JComboBox<FreeInf> cmbFreeInf;
     private javax.swing.JSpinner dtpTimeEnd;
     private javax.swing.JSpinner dtpTimeStart;
