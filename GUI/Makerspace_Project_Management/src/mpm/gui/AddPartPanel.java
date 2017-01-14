@@ -126,7 +126,26 @@ public class AddPartPanel extends javax.swing.JPanel {
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+        DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
+        for (User user : DAOs.users.getAll())
+        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
+        {
+            if(((User)pair.getSecond()).getName().equals(user.getName()))
+           exists=true;
+        }
+        if(!exists)
+         m.addElement(user);
+        exists=false;
+        }
+        if(m.getSize()!=0){
+        cmbUser.setModel(m);
+        cmbUser.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            w.setText(value.getName() + " (" + value.getEmail() + ")");
+            return w;
+        });
+        }
         JOptionPane.showMessageDialog(this, "Operation successful!");
         
         
