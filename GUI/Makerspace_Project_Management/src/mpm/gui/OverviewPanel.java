@@ -630,6 +630,45 @@ public class OverviewPanel extends javax.swing.JPanel {
         
         if (btnAddNewMaterial.getText().equals("Save new material"))
         {
+            if(txtName.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Material name can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if(txtUnitaryPrice.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Unitary price can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            double price=-1;
+            try{
+                price =Double.parseDouble(txtUnitaryPrice.getText());
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Unitary price must be a number.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(price==0)
+            {
+                 JOptionPane.showMessageDialog(this, "Unitary price can't be 0.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if(txtUnitsOfMeasure.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Units of measure can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if((int)sUnitsAvailable.getValue()==0)
+            {
+                 JOptionPane.showMessageDialog(this, "Units avaible should be at least 1.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
             Material m = new Material(DAOs.materials.getNextValidId());
             m.setName(txtName.getText());
             m.setDescription(taDescription.getText());
@@ -667,7 +706,45 @@ public class OverviewPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Select a material", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+             if(txtName.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Material name can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if(txtUnitaryPrice.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Unitary price can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            double price=-1;
+            try{
+                price =Double.parseDouble(txtUnitaryPrice.getText());
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Unitary price must be a number.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(price==0)
+            {
+                 JOptionPane.showMessageDialog(this, "Unitary price can't be 0.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if(txtUnitsOfMeasure.getText().isEmpty())
+            {
+                 JOptionPane.showMessageDialog(this, "Units of measure can't be empty.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+            if((int)sUnitsAvailable.getValue()==0)
+            {
+                 JOptionPane.showMessageDialog(this, "Units avaible should be at least 1.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
             selectedMaterial.setName(txtName.getText());
             selectedMaterial.setDescription(taDescription.getText());
             selectedMaterial.setUnitsOfMeasure(txtUnitsOfMeasure.getText());
