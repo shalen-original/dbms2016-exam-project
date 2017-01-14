@@ -184,7 +184,6 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         changeRoleLabel.setText("Modify role:");
 
-        selectedUserComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         selectedUserComboBox.setEnabled(false);
 
         deleteUserButton.setText("Remove selected user");
@@ -298,63 +297,83 @@ public class ProjectPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_OnTabChange
 
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveChangesButtonActionPerformed
-
-    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
-        
-        //TODO add check if user=last admin
-        int adminCount = 0;
-        
-        List<Participation> pList = DAOs.participations
-                .findByProjectID(MPM.currentProject.getId());
-        
-        for(Participation p : pList){
-            if(p.getRole().equals(ProjectRole.ADMINISTRATOR))
-                adminCount += 1;
-        }
         
         int userID = (Integer) userTableModel.getValueAt(userTable
                 .getSelectedRow(), 0);
         int projectID = MPM.currentProject.getId();
         
-        if(userID==MPM.currentUser.getId()) {
-            
-            if(adminCount > 1){
-                
-                int pID = DAOs.participations
-                        .findByUserAndProjectID(userID, projectID).get(0).getId();
-
-                DAOs.participations.deleteByID(pID);
+        if(userID == MPM.currentUser.getId()){
+            if(isUserLastAdmin()){
                 JOptionPane.showMessageDialog(null, 
-                        "User: " + userTableModel
-                                .getValueAt(userTable.getSelectedRow(), 1) + 
-                                " removed from Project", 
-                        "User removed", JOptionPane.PLAIN_MESSAGE);
-                
-                MPM.setPanel(new OverviewPanel());
-                
-            }else{
-                
-                JOptionPane.showMessageDialog(null, 
-                    "Can not remove last admin from Project.\n" + 
-                            "Please select a new administrator before removing.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Can not change role to last admin of Project.\n" + 
+                                "Please select a new administrator before changing.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        }else{
-            
-            int pID = DAOs.participations
-                    .findByUserAndProjectID(userID, projectID).get(0).getId();
-
-            DAOs.participations.deleteByID(pID);
-            JOptionPane.showMessageDialog(null, 
-                    "User: " + userTableModel
-                            .getValueAt(userTable.getSelectedRow(), 1) + 
-                            " removed from Project", 
-                    "User removed", JOptionPane.PLAIN_MESSAGE);
-            
-            reloadUserTable();
         }
+
+        Participation p = DAOs.participations
+                .findByUserAndProjectID(userID, projectID).get(0);
+
+        p.setRole(ProjectRole.fromString(selectedUserComboBox
+                .getSelectedItem().toString()));
+
+        DAOs.participations.update(p);
+        JOptionPane.showMessageDialog(null, 
+                "Role of user: " + userTableModel
+                        .getValueAt(userTable.getSelectedRow(), 1) + 
+                        " updated", 
+                "User role updated", JOptionPane.PLAIN_MESSAGE);
+
+        if(userID==MPM.currentUser.getId())
+            MPM.setPanel(new ProjectPanel());
+        else
+            reloadUserTable();     
+    }//GEN-LAST:event_saveChangesButtonActionPerformed
+
+    private Boolean isUserLastAdmin(){
+    
+        int adminCount = 0;
+        List<Participation> pList = DAOs.participations
+                .findByProjectID(MPM.currentProject.getId());
+        
+        for(Participation p : pList)
+            if(p.getRole().equals(ProjectRole.ADMINISTRATOR))
+                adminCount += 1;
+        
+        return (adminCount == 1);
+    }
+    
+    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
+        
+        int userID = (Integer) userTableModel.getValueAt(userTable
+                .getSelectedRow(), 0);
+        int projectID = MPM.currentProject.getId();
+        
+        if(userID == MPM.currentUser.getId()){
+            if(isUserLastAdmin()){
+                JOptionPane.showMessageDialog(null, 
+                        "Can not remove last admin from Project.\n" + 
+                                "Please select a new administrator before removing.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        int pID = DAOs.participations
+                .findByUserAndProjectID(userID, projectID).get(0).getId();
+
+        DAOs.participations.deleteByID(pID);
+        JOptionPane.showMessageDialog(null, 
+                "User: " + userTableModel
+                        .getValueAt(userTable.getSelectedRow(), 1) + 
+                        " removed from Project", 
+                "User removed", JOptionPane.PLAIN_MESSAGE);
+
+        if(userID==MPM.currentUser.getId())
+            MPM.setPanel(new OverviewPanel());
+        else
+            reloadUserTable();
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
     private void listSelectionChanged(ListSelectionEvent e){
@@ -365,9 +384,18 @@ public class ProjectPanel extends javax.swing.JPanel {
         if(DAOs.participations.isUserAdminInProject(
                 MPM.currentUser.getId(), MPM.currentProject.getId())){
             
-            selectedUserComboBox.setEnabled(true);
             deleteUserButton.setEnabled(true);
             saveChangesButton.setEnabled(true);
+            selectedUserComboBox.setEnabled(true);
+            
+            selectedUserComboBox.removeAllItems();
+            
+            for(ProjectRole p : ProjectRole.values()){
+            
+                if(!userTableModel.getValueAt(userTable
+                .getSelectedRow(), 3).equals(p.toString()))
+                    selectedUserComboBox.addItem(p.toString());
+            }
         }
         
     }
@@ -379,7 +407,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         userTable = new javax.swing.JTable();
         userTable.setAutoCreateRowSorter(true);
-                
+        
+             
         String[] projectColumnNames = {"Id",
             "Name",
             "Email",
@@ -422,10 +451,6 @@ public class ProjectPanel extends javax.swing.JPanel {
             userPanel.remove(deleteUserButton);
             userPanel.remove(changeRoleLabel);
             userPanel.remove(saveChangesButton);
-            /*
-            userPanel.remove(selectedLabel);
-            userPanel.remove(selectedUserNameLabel);
-            */
         }
           
         userTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
