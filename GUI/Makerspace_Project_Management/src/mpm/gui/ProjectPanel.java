@@ -6,23 +6,16 @@
 package mpm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import mpm.main.MPM;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.Border;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
-import mpm.data.entities.ProjectRole;
-import mpm.data.entities.User;
-import mpm.data.logic.Pair;
 
 /**
  *
@@ -44,11 +37,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         ImageIcon personsIcon = new ImageIcon(new ImageIcon(getClass()
                 .getResource("/mpm/res/personLogo.png"))
-                .getImage().getScaledInstance(
-                32, 32, Image.SCALE_DEFAULT));
-        
-        ImageIcon settingsIcon = new ImageIcon(new ImageIcon(getClass()
-                .getResource("/mpm/res/settingsLogo.png"))
                 .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
@@ -78,7 +66,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         projectTabbedPane.setIconAt(3, reqIcon);
         projectTabbedPane.setIconAt(4, addUserIcon);
         projectTabbedPane.setIconAt(5, buyIcon);
-        projectTabbedPane.setIconAt(6, settingsIcon);
         
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
@@ -90,7 +77,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
             // TODO choose which panels to keep visualized for non-admin users
-            projectTabbedPane.remove(settingsPanel);
             projectTabbedPane.remove(bookingPanel);
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
