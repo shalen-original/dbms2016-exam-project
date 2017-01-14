@@ -419,6 +419,7 @@ public class OverviewPanel extends javax.swing.JPanel {
         }
         
         JOptionPane.showMessageDialog(this, "Operation successful!");
+        newEmailTextField.setText("");
         
     }//GEN-LAST:event_updateInformationButtonActionPerformed
 
