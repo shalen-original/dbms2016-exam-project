@@ -73,6 +73,20 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
         return DBUtils.performSelect(sql, f, this.defaultParser);
     }
     
+    public List<Participation> findByUserAndProjectID(int userID, int projectID){
+        
+        String sql = "SELECT * FROM participation " +
+                    "WHERE user_id = ? " +
+                    "AND project_id = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, userID);
+            s.setInt(2, projectID);        
+        };
+
+        return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
     public List<Pair<Participation, User>> getUserParticipatingToProjectWithRole(int projectID)
     {
         String sql = "SELECT * FROM participation NATURAL JOIN makerspace_user"

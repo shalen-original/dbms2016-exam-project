@@ -48,8 +48,14 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
+        ImageIcon inventoryIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/inventoryLogo.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
+        
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
+        overviewTabbedPane.setIconAt(2, inventoryIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
         GeneralRole currR = DAOs.roles.findByID(MPM.currentUser.getGeneralRoleId());

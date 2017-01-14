@@ -10,12 +10,14 @@ import mpm.main.MPM;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
+import mpm.data.entities.ProjectRole;
 
 /**
  *
@@ -102,11 +104,10 @@ public class ProjectPanel extends javax.swing.JPanel {
         userPanel = new javax.swing.JPanel();
         userTableScrollPane = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        selectedLabel = new javax.swing.JLabel();
-        selectedUserNameLabel = new javax.swing.JLabel();
         changeRoleLabel = new javax.swing.JLabel();
         selectedUserComboBox = new javax.swing.JComboBox<>();
         deleteUserButton = new javax.swing.JButton();
+        saveChangesButton = new javax.swing.JButton();
         addUserPanel = new javax.swing.JPanel();
         bookingPanel = new javax.swing.JPanel();
         requestPanel = new javax.swing.JPanel();
@@ -181,17 +182,27 @@ public class ProjectPanel extends javax.swing.JPanel {
         ));
         userTableScrollPane.setViewportView(userTable);
 
-        selectedLabel.setText("Selected User:");
-
-        selectedUserNameLabel.setText("jLabel2");
-
-        changeRoleLabel.setText("Change role:");
+        changeRoleLabel.setText("Modify role:");
 
         selectedUserComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         selectedUserComboBox.setEnabled(false);
 
-        deleteUserButton.setText("remove user from project");
+        deleteUserButton.setText("Remove selected user");
         deleteUserButton.setEnabled(false);
+        deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserButtonActionPerformed(evt);
+            }
+        });
+
+        saveChangesButton.setText("Update role");
+        saveChangesButton.setActionCommand("");
+        saveChangesButton.setEnabled(false);
+        saveChangesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChangesButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
@@ -202,34 +213,27 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(userTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                     .addGroup(userPanelLayout.createSequentialGroup()
-                        .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(selectedLabel)
-                            .addComponent(changeRoleLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(userPanelLayout.createSequentialGroup()
-                                .addComponent(selectedUserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(deleteUserButton))
-                            .addGroup(userPanelLayout.createSequentialGroup()
-                                .addComponent(selectedUserNameLabel)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(saveChangesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(selectedUserComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(changeRoleLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteUserButton)))
                 .addContainerGap())
         );
         userPanelLayout.setVerticalGroup(
             userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(userPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(userTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(userTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(changeRoleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selectedUserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectedLabel)
-                    .addComponent(selectedUserNameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectedUserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(changeRoleLabel)
-                    .addComponent(deleteUserButton))
+                    .addComponent(deleteUserButton)
+                    .addComponent(saveChangesButton))
                 .addGap(23, 23, 23))
         );
 
@@ -293,18 +297,77 @@ public class ProjectPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_OnTabChange
 
+    private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveChangesButtonActionPerformed
+
+    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
+        
+        //TODO add check if user=last admin
+        int adminCount = 0;
+        
+        List<Participation> pList = DAOs.participations
+                .findByProjectID(MPM.currentProject.getId());
+        
+        for(Participation p : pList){
+            if(p.getRole().equals(ProjectRole.ADMINISTRATOR))
+                adminCount += 1;
+        }
+        
+        int userID = (Integer) userTableModel.getValueAt(userTable
+                .getSelectedRow(), 0);
+        int projectID = MPM.currentProject.getId();
+        
+        if(userID==MPM.currentUser.getId()) {
+            
+            if(adminCount > 1){
+                
+                int pID = DAOs.participations
+                        .findByUserAndProjectID(userID, projectID).get(0).getId();
+
+                DAOs.participations.deleteByID(pID);
+                JOptionPane.showMessageDialog(null, 
+                        "User: " + userTableModel
+                                .getValueAt(userTable.getSelectedRow(), 1) + 
+                                " removed from Project", 
+                        "User removed", JOptionPane.PLAIN_MESSAGE);
+                
+                MPM.setPanel(new OverviewPanel());
+                
+            }else{
+                
+                JOptionPane.showMessageDialog(null, 
+                    "Can not remove last admin from Project.\n" + 
+                            "Please select a new administrator before removing.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            
+            int pID = DAOs.participations
+                    .findByUserAndProjectID(userID, projectID).get(0).getId();
+
+            DAOs.participations.deleteByID(pID);
+            JOptionPane.showMessageDialog(null, 
+                    "User: " + userTableModel
+                            .getValueAt(userTable.getSelectedRow(), 1) + 
+                            " removed from Project", 
+                    "User removed", JOptionPane.PLAIN_MESSAGE);
+            
+            reloadUserTable();
+        }
+    }//GEN-LAST:event_deleteUserButtonActionPerformed
+
     private void listSelectionChanged(ListSelectionEvent e){
     
         int userID = (Integer) userTableModel.getValueAt(userTable
                 .getSelectedRow(), 0);
-        
-        selectedUserNameLabel.setText(DAOs.users.findByID(userID).getName());
-        
+                
         if(DAOs.participations.isUserAdminInProject(
                 MPM.currentUser.getId(), MPM.currentProject.getId())){
             
             selectedUserComboBox.setEnabled(true);
             deleteUserButton.setEnabled(true);
+            saveChangesButton.setEnabled(true);
         }
         
     }
@@ -346,18 +409,23 @@ public class ProjectPanel extends javax.swing.JPanel {
         userTableScrollPane.setViewportView(userTable);
         userTable.setDefaultEditor(Object.class, null);
         
-        selectedUserNameLabel.setText("<none>");
         
         if(DAOs.participations.isUserAdminInProject(
                 MPM.currentUser.getId(), MPM.currentProject.getId())){
             
             selectedUserComboBox.setEnabled(false);
             deleteUserButton.setEnabled(false);
+            saveChangesButton.setEnabled(false);
         }else{
         
             userPanel.remove(selectedUserComboBox);
             userPanel.remove(deleteUserButton);
             userPanel.remove(changeRoleLabel);
+            userPanel.remove(saveChangesButton);
+            /*
+            userPanel.remove(selectedLabel);
+            userPanel.remove(selectedUserNameLabel);
+            */
         }
           
         userTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -380,9 +448,8 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JPanel overViewPanel;
     private javax.swing.JTabbedPane projectTabbedPane;
     private javax.swing.JPanel requestPanel;
-    private javax.swing.JLabel selectedLabel;
+    private javax.swing.JButton saveChangesButton;
     private javax.swing.JComboBox<String> selectedUserComboBox;
-    private javax.swing.JLabel selectedUserNameLabel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel userPanel;
     private javax.swing.JTable userTable;

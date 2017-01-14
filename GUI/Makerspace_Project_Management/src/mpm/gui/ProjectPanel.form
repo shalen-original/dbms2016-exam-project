@@ -168,22 +168,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="userTableScrollPane" pref="504" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="selectedLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="changeRoleLabel" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="saveChangesButton" pref="128" max="32767" attributes="0"/>
+                                  <Component id="selectedUserComboBox" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="changeRoleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="selectedUserComboBox" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="deleteUserButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="selectedUserNameLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="deleteUserButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -194,17 +185,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="userTableScrollPane" pref="294" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="userTableScrollPane" pref="252" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <Component id="changeRoleLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="selectedUserComboBox" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="selectedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="selectedUserNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="selectedUserComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="changeRoleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="deleteUserButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
@@ -234,19 +223,9 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="selectedLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Selected User:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="selectedUserNameLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel2"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="changeRoleLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Change role:"/>
+                <Property name="text" type="java.lang.String" value="Modify role:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="selectedUserComboBox">
@@ -267,9 +246,22 @@
             </Component>
             <Component class="javax.swing.JButton" name="deleteUserButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="remove user from project"/>
+                <Property name="text" type="java.lang.String" value="Remove selected user"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteUserButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="saveChangesButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Update role"/>
+                <Property name="actionCommand" type="java.lang.String" value=""/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveChangesButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
