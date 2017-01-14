@@ -405,7 +405,21 @@ public class OverviewPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void updateInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInformationButtonActionPerformed
-        // TODO add your handling code here:
+
+        MPM.currentUser.setEmail(newEmailTextField.getText());
+        
+        try
+        {
+            DAOs.users.update(MPM.currentUser);
+            emailLabel.setText(newEmailTextField.getText());
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Operation successful!");
+        
     }//GEN-LAST:event_updateInformationButtonActionPerformed
 
     private void reloadProjectTable(){
