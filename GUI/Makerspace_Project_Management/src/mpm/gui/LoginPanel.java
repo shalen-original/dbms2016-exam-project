@@ -124,7 +124,7 @@ public class LoginPanel extends javax.swing.JPanel {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         
         List<User> userList = DAOs.users
-                .findByMail(usernameInputField.getText());
+                .findByMail(usernameInputField.getText().toLowerCase());
         if (userList.isEmpty()) { 
             errorLabel.setText("Username not valid");
             usernameInputField.setForeground(Color.GRAY);
