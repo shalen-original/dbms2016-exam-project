@@ -55,6 +55,12 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .getImage().getScaledInstance(
                 32, 32, Image.SCALE_DEFAULT));
         
+        // Icon for Request List
+        ImageIcon requestListIcon = new ImageIcon(new ImageIcon(getClass()
+                .getResource("/mpm/res/requestBellLogo.png"))
+                .getImage().getScaledInstance(
+                32, 32, Image.SCALE_DEFAULT));
+        
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
@@ -82,6 +88,9 @@ public class OverviewPanel extends javax.swing.JPanel {
                     freeInfIcon, new FreeInfManagement(), "", 3);
             overviewTabbedPane.insertTab("Technical Infs", 
                     techInfIcon, new TechInfManagement(), "", 4);
+            // TODO Change JPanel with RequestListPanel or however it will be called
+            overviewTabbedPane.insertTab("Request List", 
+                    requestListIcon, new javax.swing.JPanel(), "", 5);
         }
     }
 
