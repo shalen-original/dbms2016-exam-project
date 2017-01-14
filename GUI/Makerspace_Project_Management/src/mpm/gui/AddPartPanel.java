@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import mpm.data.dao.* ;
 import mpm.data.entities.*;
+import mpm.data.logic.Pair;
 import mpm.main.MPM;
 
 /**
@@ -21,14 +22,22 @@ public class AddPartPanel extends javax.swing.JPanel {
     /**
      * Creates new form AddPartPanel
      */
+    boolean exists = false;
     public AddPartPanel() {
         initComponents();
         
         DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
         for (User user : DAOs.users.getAll())
+        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
         {
-            m.addElement(user);
+            if(((User)pair.getSecond()).getName().equals(user.getName()))
+           exists=true;
         }
+        if(!exists)
+         m.addElement(user);
+        exists=false;
+        }
+        if(m.getSize()!=0){
         cmbUser.setModel(m);
         cmbUser.setRenderer((a, value, c, d, e) -> {
             BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
@@ -36,8 +45,9 @@ public class AddPartPanel extends javax.swing.JPanel {
             w.setText(value.getName() + " (" + value.getEmail() + ")");
             return w;
         });
-        
+        }
         cmbRole.setModel(new DefaultComboBoxModel<>(ProjectRole.values()));
+        
     }
 
     /**
