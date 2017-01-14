@@ -7,29 +7,21 @@ package mpm.gui;
 
 import mpm.main.MPM;
 import java.awt.Image;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.GeneralRole;
-import mpm.data.entities.Material;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
-import mpm.data.logic.IDHider;
 
 /**
  *
  * @author remo
  */
 public class OverviewPanel extends javax.swing.JPanel {
-    
-    private Material selectedMaterial;
     
     /**
      * Creates new form projectPanel
@@ -55,7 +47,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         
         overviewTabbedPane.setIconAt(0, projectsIcon);
         overviewTabbedPane.setIconAt(1, settingsIcon);
-        overviewTabbedPane.setIconAt(2, inventoryIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
         GeneralRole currR = DAOs.roles.findByID(MPM.currentUser.getGeneralRoleId());
@@ -73,21 +64,11 @@ public class OverviewPanel extends javax.swing.JPanel {
             Parts dedicated to Makerspace technicians
         */
         
-        if (!DAOs.users.hasUserRole(MPM.currentUser, "Staff"))
-        {
-            // Removing tabs if currentUser is not technician
-            overviewTabbedPane.remove(inventoryTab);
-        }else{
-            // Filling material list
-            reloadMaterialInventoryTable(); 
-            
-            tbInventory.getSelectionModel().addListSelectionListener(e -> {
-                materialSelectionChanged();
-            });
-            
+        if (DAOs.users.hasUserRole(MPM.currentUser, "Staff"))
+        { 
+            overviewTabbedPane.insertTab("Inventory", inventoryIcon, new MaterialInventoryManagement(), "", 2);
             overviewTabbedPane.addTab("Free Infs", new FreeInfManagement());
             overviewTabbedPane.addTab("Technical Infs", new TechInfManagement());
-            
         }
     }
 
@@ -128,24 +109,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         newEmailLabel = new javax.swing.JLabel();
         newEmailTextField = new javax.swing.JTextField();
         updateInformationButton = new javax.swing.JButton();
-        inventoryTab = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbInventory = new javax.swing.JTable();
-        pnlEditAdd = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        taDescription = new javax.swing.JTextArea();
-        jLabel8 = new javax.swing.JLabel();
-        txtUnitaryPrice = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtUnitsOfMeasure = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        sUnitsAvailable = new javax.swing.JSpinner();
-        btnSaveChanges = new javax.swing.JButton();
-        btnAddNewMaterial = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -212,7 +175,7 @@ public class OverviewPanel extends javax.swing.JPanel {
             .addGroup(projectTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                    .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                     .addGroup(projectTabLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,7 +293,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                         .addComponent(newEmailLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         settingsTabLayout.setVerticalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,154 +327,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         );
 
         overviewTabbedPane.addTab("Profile", settingsTab);
-
-        jLabel3.setText("Current inventory:");
-
-        tbInventory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Name", "Unitary price", "Units of measure", "Units available", "Description"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tbInventory.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(tbInventory);
-
-        pnlEditAdd.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit selected:"));
-
-        jLabel4.setText("Name:");
-
-        jLabel7.setText("Description:");
-
-        taDescription.setColumns(20);
-        taDescription.setRows(5);
-        jScrollPane3.setViewportView(taDescription);
-
-        jLabel8.setText("Unitary price:");
-
-        jLabel5.setText("Units of measure:");
-
-        jLabel6.setText("Units available:");
-
-        sUnitsAvailable.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        javax.swing.GroupLayout pnlEditAddLayout = new javax.swing.GroupLayout(pnlEditAdd);
-        pnlEditAdd.setLayout(pnlEditAddLayout);
-        pnlEditAddLayout.setHorizontalGroup(
-            pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEditAddLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnlEditAddLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlEditAddLayout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                            .addComponent(txtUnitaryPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlEditAddLayout.createSequentialGroup()
-                        .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditAddLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(pnlEditAddLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(16, 16, 16)))
-                        .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sUnitsAvailable)
-                            .addComponent(txtUnitsOfMeasure, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlEditAddLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlEditAddLayout.setVerticalGroup(
-            pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEditAddLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlEditAddLayout.createSequentialGroup()
-                        .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtUnitaryPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txtUnitsOfMeasure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(10, 10, 10)
-                        .addGroup(pnlEditAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(sUnitsAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        btnSaveChanges.setText("Save changes");
-        btnSaveChanges.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveChangesActionPerformed(evt);
-            }
-        });
-
-        btnAddNewMaterial.setText("Add new material");
-        btnAddNewMaterial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewMaterialActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout inventoryTabLayout = new javax.swing.GroupLayout(inventoryTab);
-        inventoryTab.setLayout(inventoryTabLayout);
-        inventoryTabLayout.setHorizontalGroup(
-            inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inventoryTabLayout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
-                .addGroup(inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addGroup(inventoryTabLayout.createSequentialGroup()
-                        .addComponent(btnSaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnAddNewMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlEditAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(91, Short.MAX_VALUE))
-        );
-        inventoryTabLayout.setVerticalGroup(
-            inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inventoryTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlEditAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(inventoryTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddNewMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31))
-        );
-
-        overviewTabbedPane.addTab("Inventory", inventoryTab);
 
         logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
@@ -624,171 +439,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_updateInformationButtonActionPerformed
 
-    private void btnAddNewMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewMaterialActionPerformed
-        
-        if (btnAddNewMaterial.getText().equals("Add new material"))
-        {
-            ((TitledBorder) pnlEditAdd.getBorder()).setTitle("New material:");
-            pnlEditAdd.repaint();
-            tbInventory.getSelectionModel().clearSelection();
-            btnAddNewMaterial.setText("Save new material");
-            btnSaveChanges.setText("Abort material creation");
-            
-            return;
-        }
-        
-        if (btnAddNewMaterial.getText().equals("Save new material"))
-        {
-            if(txtName.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Material name can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if(txtUnitaryPrice.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Unitary price can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            double price=-1;
-            try{
-                price =Double.parseDouble(txtUnitaryPrice.getText());
-            }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(this, "Unitary price must be a number.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if(price==0)
-            {
-                 JOptionPane.showMessageDialog(this, "Unitary price can't be 0.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if(txtUnitsOfMeasure.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Units of measure can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if((int)sUnitsAvailable.getValue()==0)
-            {
-                 JOptionPane.showMessageDialog(this, "Units avaible should be at least 1.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            Material m = new Material(DAOs.materials.getNextValidId());
-            m.setName(txtName.getText());
-            m.setDescription(taDescription.getText());
-            m.setUnitsOfMeasure(txtUnitsOfMeasure.getText());
-            m.setUnitsAvailable((int)sUnitsAvailable.getValue());
-            m.setUnitaryPrice(BigDecimal.valueOf(Double.parseDouble(txtUnitaryPrice.getText())));
-
-            try
-            {
-                DAOs.materials.insert(m);
-                reloadMaterialInventoryTable();
-                tbInventory.getSelectionModel().setSelectionInterval(0, 0);
-
-                btnAddNewMaterial.setText("Add new material");
-                btnSaveChanges.setText("Save changes");
-                ((TitledBorder) pnlEditAdd.getBorder()).setTitle("Edit selected:");
-            }catch(RuntimeException ex){
-                JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this, "Operation successful!");
-            
-        }
-        
-    }//GEN-LAST:event_btnAddNewMaterialActionPerformed
-
-    private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
-        
-        if (btnSaveChanges.getText().endsWith("Save changes"))
-        {
-            if (selectedMaterial == null)
-            {
-                JOptionPane.showMessageDialog(this, "Select a material", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-             if(txtName.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Material name can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if(txtUnitaryPrice.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Unitary price can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            double price=-1;
-            try{
-                price =Double.parseDouble(txtUnitaryPrice.getText());
-            }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(this, "Unitary price must be a number.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if(price==0)
-            {
-                 JOptionPane.showMessageDialog(this, "Unitary price can't be 0.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if(txtUnitsOfMeasure.getText().isEmpty())
-            {
-                 JOptionPane.showMessageDialog(this, "Units of measure can't be empty.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if((int)sUnitsAvailable.getValue()==0)
-            {
-                 JOptionPane.showMessageDialog(this, "Units avaible should be at least 1.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            selectedMaterial.setName(txtName.getText());
-            selectedMaterial.setDescription(taDescription.getText());
-            selectedMaterial.setUnitsOfMeasure(txtUnitsOfMeasure.getText());
-            selectedMaterial.setUnitsAvailable((int)sUnitsAvailable.getValue());
-            selectedMaterial.setUnitaryPrice(BigDecimal.valueOf(Double.parseDouble(txtUnitaryPrice.getText())));
-
-            try
-            {
-                DAOs.materials.update(selectedMaterial);
-                reloadMaterialInventoryTable();
-                tbInventory.getSelectionModel().setSelectionInterval(0, 0);
-            }catch(RuntimeException ex){
-                JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this, "Operation successful!");
-            
-            return;
-        }
-        
-        if (btnSaveChanges.getText().endsWith("Abort material creation"))
-        {
-            ((TitledBorder) pnlEditAdd.getBorder()).setTitle("Edit selected:");
-            pnlEditAdd.repaint();
-            tbInventory.getSelectionModel().setSelectionInterval(0, 0);
-            btnAddNewMaterial.setText("Add new material");
-            btnSaveChanges.setText("Save changes");
-        }
-        
-        
-        
-    }//GEN-LAST:event_btnSaveChangesActionPerformed
-
     private void reloadProjectTable()
     {
         
@@ -826,59 +476,8 @@ public class OverviewPanel extends javax.swing.JPanel {
         projectTable.setDefaultEditor(Object.class, null);
     }
     
-    private void reloadMaterialInventoryTable()
-    {
-        List<Material> l = DAOs.materials.getAll();
-        
-        DefaultTableModel m = (DefaultTableModel) tbInventory.getModel();
-        m.setRowCount(0); // Clearing row list
-        
-        l.forEach(mat -> {
-        
-            Object[] a = new Object[5];
-            a[0] = new IDHider(mat, mat.getName());
-            a[1] = mat.getUnitaryPrice();
-            a[2] = mat.getUnitsOfMeasure();
-            a[3] = mat.getUnitsAvailable();
-            a[4] = mat.getDescription();
-            
-            m.addRow(a);
-            
-        });
-        
-    }
-    
-    private void materialSelectionChanged()
-    {
-        
-        int selectedIndex = tbInventory.getSelectedRow();
-        if (selectedIndex == -1)
-        {
-            txtName.setText("");
-            txtUnitsOfMeasure.setText("");
-            sUnitsAvailable.setValue(0);
-            taDescription.setText("");
-            txtUnitaryPrice.setText("");
-            
-            return;
-        }
-            
-        
-        TableModel m = tbInventory.getModel();
-        
-        selectedMaterial = ((IDHider<Material>) m.getValueAt(selectedIndex, 0)).getHidden();
-        
-        txtName.setText(selectedMaterial.getName());
-        txtUnitsOfMeasure.setText(selectedMaterial.getUnitsOfMeasure());
-        sUnitsAvailable.setValue(selectedMaterial.getUnitsAvailable());
-        taDescription.setText(selectedMaterial.getDescription());
-        txtUnitaryPrice.setText(selectedMaterial.getUnitaryPrice().toString());
-    }
-    
     private DefaultTableModel projectTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewMaterial;
-    private javax.swing.JButton btnSaveChanges;
     private javax.swing.JCheckBox chbCollaboration;
     private javax.swing.JButton createButton;
     private javax.swing.JLabel defaultStatusLabel;
@@ -887,18 +486,9 @@ public class OverviewPanel extends javax.swing.JPanel {
     private javax.swing.JLabel emailTitleLabel;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idTitleLabel;
-    private javax.swing.JPanel inventoryTab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel nameTitleLabel;
@@ -907,21 +497,14 @@ public class OverviewPanel extends javax.swing.JPanel {
     private javax.swing.JLabel newProjectLabel;
     private javax.swing.JButton openSelectedButton;
     private javax.swing.JTabbedPane overviewTabbedPane;
-    private javax.swing.JPanel pnlEditAdd;
     private javax.swing.JPanel projectTab;
     private javax.swing.JTable projectTable;
     private javax.swing.JScrollPane projectTableScrollPane;
     private javax.swing.JLabel roleLabel;
     private javax.swing.JLabel roleTitleLabel;
-    private javax.swing.JSpinner sUnitsAvailable;
     private javax.swing.JPanel settingsTab;
-    private javax.swing.JTextArea taDescription;
     private javax.swing.JTextArea taProjectDescription;
-    private javax.swing.JTable tbInventory;
-    private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtProjectName;
-    private javax.swing.JTextField txtUnitaryPrice;
-    private javax.swing.JTextField txtUnitsOfMeasure;
     private javax.swing.JButton updateInformationButton;
     private javax.swing.JLabel updateProfileLabel;
     // End of variables declaration//GEN-END:variables
