@@ -36,63 +36,71 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="MessageLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="RelatedInfLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="TitleLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="SenderLabel" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="SendButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="viewHistoryButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="RelatedInfChoice" alignment="0" max="32767" attributes="0"/>
-                          <Component id="TitleText" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jScrollPane3" max="32767" attributes="0"/>
-                          <Component id="SenderNameLabel" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="MessageLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="SendButton" min="-2" pref="170" max="-2" attributes="0"/>
+                              <EmptySpace pref="26" max="32767" attributes="0"/>
+                              <Component id="viewHistoryButton" min="-2" pref="170" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="RelatedInfLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cmbTechInf" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="TitleLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTitle" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="SenderLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblAuthor" min="-2" pref="215" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtTitle" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TitleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TitleText" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="cmbTechInf" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="RelatedInfLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="RelatedInfChoice" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="MessageLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" min="-2" pref="121" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="MessageLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="SenderLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="SenderNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAuthor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="SendButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="viewHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SendButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="viewHistoryButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,17 +111,12 @@
         <Property name="text" type="java.lang.String" value="Title :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TitleText">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TitleTextActionPerformed"/>
-      </Events>
+    <Component class="javax.swing.JTextField" name="txtTitle">
     </Component>
     <Component class="javax.swing.JLabel" name="RelatedInfLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Related to Inf:"/>
+        <Property name="text" type="java.lang.String" value="Requested technical infrastructure:"/>
       </Properties>
-    </Component>
-    <Component class="java.awt.Choice" name="RelatedInfChoice">
     </Component>
     <Component class="javax.swing.JLabel" name="MessageLabel">
       <Properties>
@@ -122,12 +125,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="SenderLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sender:"/>
+        <Property name="text" type="java.lang.String" value="Author:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="SendButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Send"/>
+        <Property name="text" type="java.lang.String" value="Create Request"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SendButtonActionPerformed"/>
@@ -140,7 +143,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="MessageTextArea">
+        <Component class="javax.swing.JTextArea" name="taMessage">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -148,21 +151,40 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="SenderNameLabel">
+    <Component class="javax.swing.JLabel" name="lblAuthor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="   "/>
+        <Property name="text" type="java.lang.String" value="authorLabel"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SenderNameLabel.setText(mpm.main.MPM.currentUser.getName());"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lblAuthor.setText(mpm.main.MPM.currentUser.getName());"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="viewHistoryButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="view History"/>
+        <Property name="text" type="java.lang.String" value="View all Requests"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[109, 23]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[109, 23]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[109, 23]"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewHistoryButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbTechInf">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TechInf&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
