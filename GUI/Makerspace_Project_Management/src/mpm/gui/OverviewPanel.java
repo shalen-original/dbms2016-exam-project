@@ -79,6 +79,8 @@ public class OverviewPanel extends javax.swing.JPanel {
                 materialSelectionChanged();
             });
             
+            overviewTabbedPane.addTab("Technical Infs", new TechInfManagement());
+            
         }
     }
 
