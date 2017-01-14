@@ -19,7 +19,7 @@ public class Request implements IUniquelyIdentifiable{
     private String title;
     private int projectId;
     private int techInfId;
-    private int assignedUserId;
+    private Integer assignedUserId;
 
     public Request(int id) {
         this.id = id;
@@ -54,11 +54,11 @@ public class Request implements IUniquelyIdentifiable{
         this.techInfId = techInfId;
     }
 
-    public int getAssignedUserId() {
+    public Integer getAssignedUserId() {
         return assignedUserId;
     }
 
-    public void setAssignedUserId(int assignedUserId) {
+    public void setAssignedUserId(Integer assignedUserId) {
         this.assignedUserId = assignedUserId;
     }
     

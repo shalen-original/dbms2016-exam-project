@@ -234,7 +234,7 @@ CREATE TABLE REQUEST(
   title VARCHAR(50) NOT NULL,
   project_id INTEGER NOT NULL,
   technical_inf_id INTEGER NOT NULL,
-  handled_by_user INTEGER NOT NULL,
+  handled_by_user INTEGER,
   FOREIGN KEY(project_id) REFERENCES PROJECT(project_id)
   ON UPDATE CASCADE
   ON DELETE CASCADE,
