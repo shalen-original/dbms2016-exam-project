@@ -10,6 +10,7 @@ package mpm.data.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import mpm.data.entities.GeneralRole;
 import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
@@ -66,6 +67,13 @@ public class UserDAO extends GenericDataAccessObject<User>{
         return DBUtils.performSelect(sql, f, this.defaultParser);
     }
 
+    public boolean hasUserRole(User u, String roleName)
+    {
+        GeneralRole r = DAOs.roles.findByID(u.getGeneralRoleId());
+        
+        return r.getName().equals(roleName);
+    }
+    
     @Override
     protected User parseSQLResult(ResultSet r) throws SQLException 
     {
