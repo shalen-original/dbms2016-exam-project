@@ -121,11 +121,10 @@ public class ProjectPanel extends javax.swing.JPanel {
         changeRoleLabel = new javax.swing.JLabel();
         selectedUserComboBox = new javax.swing.JComboBox<>();
         deleteUserButton = new javax.swing.JButton();
+        addUserPanel = new javax.swing.JPanel();
         bookingPanel = new javax.swing.JPanel();
         requestPanel = new javax.swing.JPanel();
-        addUserPanel = new javax.swing.JPanel();
         materialsPanel = new javax.swing.JPanel();
-        settingsPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -248,7 +247,10 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGap(23, 23, 23))
         );
 
-        projectTabbedPane.addTab("Persons", userPanel);
+        projectTabbedPane.addTab("Users", userPanel);
+
+        addUserPanel.setLayout(new java.awt.BorderLayout());
+        projectTabbedPane.addTab("Add User", addUserPanel);
 
         bookingPanel.setLayout(new java.awt.BorderLayout());
         projectTabbedPane.addTab("Booking", bookingPanel);
@@ -256,24 +258,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         requestPanel.setLayout(new java.awt.BorderLayout());
         projectTabbedPane.addTab("Request", requestPanel);
 
-        addUserPanel.setLayout(new java.awt.BorderLayout());
-        projectTabbedPane.addTab("Add User", addUserPanel);
-
         materialsPanel.setLayout(new java.awt.BorderLayout());
         projectTabbedPane.addTab("Materials", materialsPanel);
-
-        javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
-        settingsPanel.setLayout(settingsPanelLayout);
-        settingsPanelLayout.setHorizontalGroup(
-            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        settingsPanelLayout.setVerticalGroup(
-            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
-
-        projectTabbedPane.addTab("Settings", settingsPanel);
 
         backButton.setText("back to overview");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -313,12 +299,12 @@ public class ProjectPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void OnTabChange(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OnTabChange
-       
+
         JTabbedPane e = (JTabbedPane)evt.getSource();
-        
+
         if (e.getSelectedComponent().equals(userPanel))
-            reloadUserTable();
-        
+        reloadUserTable();
+
     }//GEN-LAST:event_OnTabChange
 
     private void listSelectionChanged(ListSelectionEvent e){
@@ -411,7 +397,6 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JLabel selectedLabel;
     private javax.swing.JComboBox<String> selectedUserComboBox;
     private javax.swing.JLabel selectedUserNameLabel;
-    private javax.swing.JPanel settingsPanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel userPanel;
     private javax.swing.JTable userTable;
