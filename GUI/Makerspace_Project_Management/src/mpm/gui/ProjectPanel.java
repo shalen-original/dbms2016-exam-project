@@ -77,12 +77,14 @@ public class ProjectPanel extends javax.swing.JPanel {
         requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
         addUserPanel.add(partPanel,BorderLayout.CENTER);
         materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
+        modifyPanel.setVisible(false);
         
         if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
             // TODO choose which panels to keep visualized for non-admin users
             projectTabbedPane.remove(bookingPanel);
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
+            ModifyButton.setVisible(false);
         }     
                
     }
@@ -97,22 +99,31 @@ public class ProjectPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         projectTabbedPane = new javax.swing.JTabbedPane();
-        overViewPanel = new javax.swing.JPanel();
-        titleLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        descriptionArea = new javax.swing.JTextArea();
-        descriptionLabel = new javax.swing.JLabel();
         userPanel = new javax.swing.JPanel();
         userTableScrollPane = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         changeRoleLabel = new javax.swing.JLabel();
-        selectedUserComboBox = new javax.swing.JComboBox<>();
+        selectedUserComboBox = new javax.swing.JComboBox<String>();
         deleteUserButton = new javax.swing.JButton();
         saveChangesButton = new javax.swing.JButton();
         addUserPanel = new javax.swing.JPanel();
         bookingPanel = new javax.swing.JPanel();
         requestPanel = new javax.swing.JPanel();
         materialsPanel = new javax.swing.JPanel();
+        overViewPanel = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        descriptionArea = new javax.swing.JTextArea();
+        descriptionLabel = new javax.swing.JLabel();
+        ModifyButton = new javax.swing.JButton();
+        modifyPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        saveButton = new javax.swing.JButton();
+        modTitleLabel = new javax.swing.JLabel();
+        titleTextField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descTextArea = new javax.swing.JTextArea();
+        abortButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(640, 480));
@@ -125,50 +136,6 @@ public class ProjectPanel extends javax.swing.JPanel {
                 OnTabChange(evt);
             }
         });
-
-        titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        titleLabel.setText("jLabel1");
-
-        jScrollPane2.setBorder(null);
-
-        descriptionArea.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        descriptionArea.setColumns(20);
-        descriptionArea.setLineWrap(true);
-        descriptionArea.setRows(3);
-        descriptionArea.setWrapStyleWord(true);
-        descriptionArea.setBorder(null);
-        jScrollPane2.setViewportView(descriptionArea);
-
-        descriptionLabel.setText("Description");
-
-        javax.swing.GroupLayout overViewPanelLayout = new javax.swing.GroupLayout(overViewPanel);
-        overViewPanel.setLayout(overViewPanelLayout);
-        overViewPanelLayout.setHorizontalGroup(
-            overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(overViewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(overViewPanelLayout.createSequentialGroup()
-                        .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLabel)
-                            .addComponent(descriptionLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        overViewPanelLayout.setVerticalGroup(
-            overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(overViewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addGap(40, 40, 40)
-                .addComponent(descriptionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        projectTabbedPane.addTab("Overview", overViewPanel);
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,6 +217,138 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         materialsPanel.setLayout(new java.awt.BorderLayout());
         projectTabbedPane.addTab("Materials", materialsPanel);
+
+        titleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        titleLabel.setText("jLabel1");
+
+        jScrollPane2.setBorder(null);
+
+        descriptionArea.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
+        descriptionArea.setColumns(20);
+        descriptionArea.setLineWrap(true);
+        descriptionArea.setRows(3);
+        descriptionArea.setWrapStyleWord(true);
+        descriptionArea.setBorder(null);
+        jScrollPane2.setViewportView(descriptionArea);
+
+        descriptionLabel.setText("Description");
+
+        ModifyButton.setText("Modify");
+        ModifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModifyButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Description:");
+
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        modTitleLabel.setText("Title:");
+
+        descTextArea.setColumns(20);
+        descTextArea.setRows(5);
+        jScrollPane1.setViewportView(descTextArea);
+
+        abortButton.setText("Abort modification");
+        abortButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abortButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout modifyPanelLayout = new javax.swing.GroupLayout(modifyPanel);
+        modifyPanel.setLayout(modifyPanelLayout);
+        modifyPanelLayout.setHorizontalGroup(
+            modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modifyPanelLayout.createSequentialGroup()
+                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(modTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(modifyPanelLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(saveButton))))
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(abortButton)))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        modifyPanelLayout.setVerticalGroup(
+            modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modifyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(modTitleLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modifyPanelLayout.createSequentialGroup()
+                                    .addComponent(saveButton)
+                                    .addGap(86, 86, 86))
+                                .addGroup(modifyPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(150, 150, 150)))
+                            .addGroup(modifyPanelLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0))))
+                    .addComponent(abortButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+        );
+
+        javax.swing.GroupLayout overViewPanelLayout = new javax.swing.GroupLayout(overViewPanel);
+        overViewPanel.setLayout(overViewPanelLayout);
+        overViewPanelLayout.setHorizontalGroup(
+            overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(overViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(overViewPanelLayout.createSequentialGroup()
+                        .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                            .addGroup(overViewPanelLayout.createSequentialGroup()
+                                .addComponent(descriptionLabel)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(overViewPanelLayout.createSequentialGroup()
+                        .addComponent(titleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ModifyButton)
+                        .addGap(65, 65, 65))
+                    .addGroup(overViewPanelLayout.createSequentialGroup()
+                        .addComponent(modifyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        overViewPanelLayout.setVerticalGroup(
+            overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(overViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titleLabel)
+                    .addComponent(ModifyButton))
+                .addGap(37, 37, 37)
+                .addComponent(descriptionLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(modifyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        projectTabbedPane.addTab("Overview", overViewPanel);
 
         backButton.setText("back to overview");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -377,6 +476,24 @@ public class ProjectPanel extends javax.swing.JPanel {
             reloadUserTable();
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
+    private void ModifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyButtonActionPerformed
+        modifyPanel.setVisible(true);
+        titleTextField.setText(titleLabel.getText());
+        descTextArea.setText(descriptionArea.getText());
+    }//GEN-LAST:event_ModifyButtonActionPerformed
+
+    private void abortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortButtonActionPerformed
+        modifyPanel.setVisible(false);
+    }//GEN-LAST:event_abortButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        //to add database interaction
+        titleLabel.setText(titleTextField.getText());
+        descriptionArea.setText(descTextArea.getText());
+        JOptionPane.showMessageDialog(this, "Operation successful!");
+        modifyPanel.setVisible(false);
+    }//GEN-LAST:event_saveButtonActionPerformed
+
     private void listSelectionChanged(ListSelectionEvent e){
     
         int userID = (Integer) userTableModel.getValueAt(userTable
@@ -452,6 +569,8 @@ public class ProjectPanel extends javax.swing.JPanel {
             userPanel.remove(deleteUserButton);
             userPanel.remove(changeRoleLabel);
             userPanel.remove(saveChangesButton);
+            ModifyButton.setVisible(false);
+            modifyPanel.setVisible(false);
         }
           
         userTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -462,21 +581,30 @@ public class ProjectPanel extends javax.swing.JPanel {
     
     private DefaultTableModel userTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ModifyButton;
+    private javax.swing.JButton abortButton;
     private javax.swing.JPanel addUserPanel;
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bookingPanel;
     private javax.swing.JLabel changeRoleLabel;
     private javax.swing.JButton deleteUserButton;
+    private javax.swing.JTextArea descTextArea;
     private javax.swing.JTextArea descriptionArea;
     private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel materialsPanel;
+    private javax.swing.JLabel modTitleLabel;
+    private javax.swing.JPanel modifyPanel;
     private javax.swing.JPanel overViewPanel;
     private javax.swing.JTabbedPane projectTabbedPane;
     private javax.swing.JPanel requestPanel;
+    private javax.swing.JButton saveButton;
     private javax.swing.JButton saveChangesButton;
     private javax.swing.JComboBox<String> selectedUserComboBox;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JTextField titleTextField;
     private javax.swing.JPanel userPanel;
     private javax.swing.JTable userTable;
     private javax.swing.JScrollPane userTableScrollPane;
