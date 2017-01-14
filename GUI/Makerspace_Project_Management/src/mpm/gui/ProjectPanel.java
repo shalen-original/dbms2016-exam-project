@@ -28,6 +28,7 @@ public class ProjectPanel extends javax.swing.JPanel {
     /**
      * Creates new form projectPanel
      */
+    AddPartPanel partPanel = new AddPartPanel();
     public ProjectPanel() {
         
         initComponents();
@@ -74,7 +75,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         bookingPanel.add(new BookInfPanel(),BorderLayout.CENTER);
         requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
-        addUserPanel.add(new AddPartPanel(),BorderLayout.CENTER);
+        addUserPanel.add(partPanel,BorderLayout.CENTER);
         materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
         
         if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
@@ -293,7 +294,7 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         if (e.getSelectedComponent().equals(userPanel))
         reloadUserTable();
-
+        partPanel.loadUserList();
     }//GEN-LAST:event_OnTabChange
 
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed

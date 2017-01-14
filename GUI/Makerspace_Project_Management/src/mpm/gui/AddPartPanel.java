@@ -25,27 +25,7 @@ public class AddPartPanel extends javax.swing.JPanel {
     boolean exists = false;
     public AddPartPanel() {
         initComponents();
-        
-        DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
-        for (User user : DAOs.users.getAll())
-        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
-        {
-            if(((User)pair.getSecond()).getName().equals(user.getName()))
-           exists=true;
-        }
-        if(!exists)
-         m.addElement(user);
-        exists=false;
-        }
-        if(m.getSize()!=0){
-        cmbUser.setModel(m);
-        cmbUser.setRenderer((a, value, c, d, e) -> {
-            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
-                                            .getListCellRendererComponent(a,value,c,d,e);
-            w.setText(value.getName() + " (" + value.getEmail() + ")");
-            return w;
-        });
-        }
+        loadUserList();
         cmbRole.setModel(new DefaultComboBoxModel<>(ProjectRole.values()));
         
     }
@@ -62,8 +42,8 @@ public class AddPartPanel extends javax.swing.JPanel {
         ParticipantLabel = new javax.swing.JLabel();
         RoleLabel = new javax.swing.JLabel();
         AddButton = new javax.swing.JButton();
-        cmbUser = new javax.swing.JComboBox<>();
-        cmbRole = new javax.swing.JComboBox<>();
+        cmbUser = new javax.swing.JComboBox<User>();
+        cmbRole = new javax.swing.JComboBox<ProjectRole>();
 
         ParticipantLabel.setText("User :");
 
@@ -152,12 +132,35 @@ public class AddPartPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_AddButtonActionPerformed
 
+    public void loadUserList(){
+     
+        DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
+        for (User user : DAOs.users.getAll())
+        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
+        {
+            if(((User)pair.getSecond()).getName().equals(user.getName()))
+           exists=true;
+        }
+        if(!exists)
+         m.addElement(user);
+        exists=false;
+        }
+        if(m.getSize()!=0){
+        cmbUser.setModel(m);
+        cmbUser.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            w.setText(value.getName() + " (" + value.getEmail() + ")");
+            return w;
+        });
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JLabel ParticipantLabel;
     private javax.swing.JLabel RoleLabel;
-    private javax.swing.JComboBox<ProjectRole> cmbRole;
+    private static javax.swing.JComboBox<ProjectRole> cmbRole;
     private javax.swing.JComboBox<User> cmbUser;
     // End of variables declaration//GEN-END:variables
 }
