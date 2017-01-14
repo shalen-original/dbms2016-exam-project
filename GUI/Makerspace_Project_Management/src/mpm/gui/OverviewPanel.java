@@ -395,6 +395,12 @@ public class OverviewPanel extends javax.swing.JPanel {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         
+        if (txtProjectName.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Insert a project name", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         Project p = new Project(DAOs.projects.getNextValidId());
         p.setTitle(txtProjectName.getText());
         p.setDescription(taProjectDescription.getText());
