@@ -146,11 +146,10 @@ public class RequestHistoryPanel extends javax.swing.JPanel {
     private void sendMessageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageButtonActionPerformed
         
         if(messageTextField.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "No text to submit.", 
+            JOptionPane.showMessageDialog(this, "Please insert a message text.", 
                     "Error", JOptionPane.ERROR_MESSAGE);
         }else{
             
-            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             
             Message message = new Message(DAOs.messages.getNextValidId());
@@ -245,14 +244,12 @@ public class RequestHistoryPanel extends javax.swing.JPanel {
         requestsScrollPane.setViewportView(requestsTable);
         requestsTable.setDefaultEditor(Object.class, null);
         
-        requestsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                listSelectionChanged(e);}
+        requestsTable.getSelectionModel().addListSelectionListener(e -> {
+            listSelectionChanged();
         });
     }
     
-    private void listSelectionChanged(ListSelectionEvent e){
-        
+    private void listSelectionChanged(){
         reloadMessageTable();
     }
 
