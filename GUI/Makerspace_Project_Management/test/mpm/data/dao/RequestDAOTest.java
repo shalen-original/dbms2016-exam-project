@@ -7,7 +7,9 @@
 package mpm.data.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.Request;
+import org.junit.Test;
 
 /**
  * Tests for the RequestDAO.java class
@@ -70,6 +72,18 @@ public class RequestDAOTest extends GenericDAOTestHelper<Request>{
         this.objectToDelete = this.fullTableList.get(3);
     }
 
+    @Test
+    public void findByProjectIDTest()
+    {
+        ArrayList<Request> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        expected.add(this.fullTableList.get(1));
+        
+        List<Request> result = ((RequestDAO)dao).findByProjectID(100);
+        
+        this.listEquals(expected, result);  
+    }
+    
     @Override
     protected boolean testEquals(Request a, Request b) 
     {

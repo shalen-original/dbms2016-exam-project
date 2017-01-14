@@ -8,7 +8,9 @@ package mpm.data.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.Purchase;
+import org.junit.Test;
 
 /**
  * Tests for the PurchaseDAO.java class
@@ -71,6 +73,18 @@ public class PurchaseDAOTest extends GenericDAOTestHelper<Purchase>{
         this.objectToDelete = this.fullTableList.get(3); 
     }
 
+    @Test
+    public void findByProjectIDTest()
+    {
+        ArrayList<Purchase> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        expected.add(this.fullTableList.get(1));
+        
+        List<Purchase> result = ((PurchaseDAO)dao).findByProjectID(100);
+        
+        this.listEquals(expected, result);  
+    }
+    
     @Override
     protected boolean testEquals(Purchase a, Purchase b)
     {

@@ -95,6 +95,18 @@ public class ParticipationDAOTest extends GenericDAOTestHelper<Participation>{
     }
     
     @Test
+    public void findByUserAndProjectIDTest()
+    {
+        ArrayList<Participation> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        
+        List<Participation> result = ((ParticipationDAO)dao)
+                .findByUserAndProjectID(10, 101);
+        
+        this.listEquals(expected, result);  
+    }
+    
+    @Test
     public void getUserParticipatingToProjectWithRoleTest()
     {
         ArrayList<Pair<Participation, User>> expected = new ArrayList<>();

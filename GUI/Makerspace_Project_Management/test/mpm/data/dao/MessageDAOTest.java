@@ -8,7 +8,9 @@ package mpm.data.dao;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import mpm.data.entities.Message;
+import org.junit.Test;
 
 /**
  * Tests for the MessageDAO.java class
@@ -62,7 +64,18 @@ public class MessageDAOTest extends GenericDAOTestHelper<Message>{
         // Setting up delete test
         this.objectToDelete = this.fullTableList.get(0);
     }
-
+    
+    @Test
+    public void findByRequestIDTest()
+    {
+        ArrayList<Message> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+        
+        List<Message> result = ((MessageDAO)dao).findByRequestID(401);
+        
+        this.listEquals(expected, result);  
+    }
+    
     @Override
     protected boolean testEquals(Message a, Message b) 
     {
