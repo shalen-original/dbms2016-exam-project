@@ -5,7 +5,6 @@
  */
 package mpm.gui;
 
-import java.awt.BorderLayout;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
+import mpm.data.entities.GeneralRole;
 import mpm.data.entities.Project;
 import mpm.data.entities.ProjectStatus;
 
@@ -44,12 +44,12 @@ public class OverviewPanel extends javax.swing.JPanel {
         overviewTabbedPane.setIconAt(1, settingsIcon);
         //projectListPanel.setLayout(new GridLayout(0, 1));
         
+        GeneralRole currR = DAOs.roles.findByID(MPM.currentUser.getGeneralRoleId());
+        
         nameLabel.setText(MPM.currentUser.getName());
         emailLabel.setText(MPM.currentUser.getEmail());
-        roleLabel.setText(DAOs.roles.findByID(
-                MPM.currentUser.getGeneralRoleId()).getName());
-        descriptionLabel.setText("(" + DAOs.roles.findByID(
-                MPM.currentUser.getGeneralRoleId()).getDescription() + ")");
+        roleLabel.setText(currR.getName());
+        descriptionLabel.setText("(" + currR.getDescription() + ")");
         idLabel.setText("" + MPM.currentUser.getId());
         
         //projectScrollPane.setViewportView (projectListPanel);
@@ -137,11 +137,6 @@ public class OverviewPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(taProjectDescription);
 
         chbCollaboration.setText("Open for Collaboration");
-        chbCollaboration.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbCollaborationActionPerformed(evt);
-            }
-        });
 
         createButton.setText("Create Project");
         createButton.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +145,7 @@ public class OverviewPanel extends javax.swing.JPanel {
             }
         });
 
-        openSelectedButton.setText("open Selected Project");
+        openSelectedButton.setText("Open Selected Project");
         openSelectedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openSelectedButtonActionPerformed(evt);
@@ -164,7 +159,7 @@ public class OverviewPanel extends javax.swing.JPanel {
             .addGroup(projectTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(projectTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addComponent(projectTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                     .addGroup(projectTabLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -282,7 +277,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                         .addComponent(newEmailLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         settingsTabLayout.setVerticalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,9 +310,9 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        overviewTabbedPane.addTab("Preferences", settingsTab);
+        overviewTabbedPane.addTab("Profile", settingsTab);
 
-        logoutButton.setText("logout");
+        logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -356,7 +351,7 @@ public class OverviewPanel extends javax.swing.JPanel {
 
     private void overviewTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_overviewTabbedPaneStateChanged
         
-         JTabbedPane e = (JTabbedPane)evt.getSource();
+        JTabbedPane e = (JTabbedPane)evt.getSource();
         
         if (e.getSelectedComponent().equals(projectTab))
             reloadProjectTable();
@@ -381,10 +376,6 @@ public class OverviewPanel extends javax.swing.JPanel {
             MPM.setPanel(new ProjectPanel());
         }
     }//GEN-LAST:event_openSelectedButtonActionPerformed
-
-    private void chbCollaborationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbCollaborationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chbCollaborationActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         
