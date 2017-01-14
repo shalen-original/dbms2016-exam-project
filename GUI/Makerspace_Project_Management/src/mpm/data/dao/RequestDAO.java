@@ -75,7 +75,10 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
         p.setTitle(r.getString("title"));
         p.setProjectId(r.getInt("project_id"));
         p.setTechInfId(r.getInt("technical_inf_id"));
+        
         p.setAssignedUserId(r.getInt("handled_by_user"));
+        if (r.wasNull())
+            p.setAssignedUserId(null);
         
         return p;
     }

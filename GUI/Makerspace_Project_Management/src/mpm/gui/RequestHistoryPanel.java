@@ -234,7 +234,11 @@ public class RequestHistoryPanel extends javax.swing.JPanel {
             o[0] = r.getId();
             o[1] = r.getTitle();
             o[2] = DAOs.technical_infs.findByID(r.getTechInfId()).getName();
-            o[3] = DAOs.users.findByID(r.getAssignedUserId()).getName();
+            
+            if (r.getAssignedUserId() != null)
+                o[3] = DAOs.users.findByID(r.getAssignedUserId()).getName();
+            else
+                o[3] = "";
                        
             reqModel.addRow(o);
         }
