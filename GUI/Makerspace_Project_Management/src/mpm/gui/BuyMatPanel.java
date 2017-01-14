@@ -131,7 +131,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
         lblUnitsOfMeasure.setText("unit_of_measure");
 
-        sNumberOfUnits.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sNumberOfUnits.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         sNumberOfUnits.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sNumberOfUnitsStateChanged(evt);
@@ -219,15 +219,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyButtonActionPerformed
-        
-        if(sNumberOfUnits.getValue().equals(0))
-        {
-            JOptionPane.showMessageDialog(this, "In order to buy something, "+
-                    "the units number should be greater than 0.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-            
+     
         Material a = (Material)cmbMaterials.getSelectedItem();
         
         Purchase p = new Purchase(DAOs.purchases.getNextValidId());
@@ -239,7 +231,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
         
         try
         {
-            DAOs.purchases.insert(p);
+            DAOs.purchases.insertAndUpdateMaterial(p);
             refreshPurchaseHistory();
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
@@ -248,7 +240,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
         }
         
         JOptionPane.showMessageDialog(this, "Operation successful!");
-        sNumberOfUnits.setValue(0);
+        
     }//GEN-LAST:event_BuyButtonActionPerformed
 
     private void cmbMaterialsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaterialsItemStateChanged
@@ -256,9 +248,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
         
         lblUnitaryPrice.setText(a.getUnitaryPrice().toString() + " € / " + a.getUnitsOfMeasure());
         lblUnitsOfMeasure.setText(a.getUnitsOfMeasure());
-        ((SpinnerNumberModel)sNumberOfUnits.getModel()).setMinimum(0);
         ((SpinnerNumberModel)sNumberOfUnits.getModel()).setMaximum(a.getUnitsAvailable());
-        sNumberOfUnits.setValue(0);
         
         lblTotalPrice.setText("0 €"); 
     }//GEN-LAST:event_cmbMaterialsItemStateChanged
