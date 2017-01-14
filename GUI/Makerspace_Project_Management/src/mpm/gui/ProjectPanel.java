@@ -62,9 +62,9 @@ public class ProjectPanel extends javax.swing.JPanel {
                 
         projectTabbedPane.setIconAt(0, overviewIcon);
         projectTabbedPane.setIconAt(1, personsIcon);
-        projectTabbedPane.setIconAt(2, bookingIcon);
-        projectTabbedPane.setIconAt(3, reqIcon);
-        projectTabbedPane.setIconAt(4, addUserIcon);
+        projectTabbedPane.setIconAt(2, addUserIcon);
+        projectTabbedPane.setIconAt(3, bookingIcon);
+        projectTabbedPane.setIconAt(4, reqIcon);
         projectTabbedPane.setIconAt(5, buyIcon);
         
         titleLabel.setText(MPM.currentProject.getTitle());
