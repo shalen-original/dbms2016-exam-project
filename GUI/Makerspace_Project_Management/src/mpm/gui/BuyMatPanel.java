@@ -220,6 +220,14 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
     private void BuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyButtonActionPerformed
         
+        if(sNumberOfUnits.getValue().equals(0))
+        {
+            JOptionPane.showMessageDialog(this, "In order to buy something, "+
+                    "the units number should be greater than 0.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+            
         Material a = (Material)cmbMaterials.getSelectedItem();
         
         Purchase p = new Purchase(DAOs.purchases.getNextValidId());
@@ -240,7 +248,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
         }
         
         JOptionPane.showMessageDialog(this, "Operation successful!");
-        
+        sNumberOfUnits.setValue(0);
     }//GEN-LAST:event_BuyButtonActionPerformed
 
     private void cmbMaterialsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaterialsItemStateChanged
