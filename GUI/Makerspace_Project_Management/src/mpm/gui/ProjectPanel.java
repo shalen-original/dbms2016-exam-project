@@ -84,7 +84,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
         addUserPanel.add(partPanel,BorderLayout.CENTER);
         materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
-        modifyPanel.setVisible(false);
+        
+        modifyPanel.setVisible(true);
         
         if(!(DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject) ||
                 forceAdminMode)) {
@@ -92,8 +93,11 @@ public class ProjectPanel extends javax.swing.JPanel {
             projectTabbedPane.remove(bookingPanel);
             projectTabbedPane.remove(addUserPanel);
             projectTabbedPane.remove(requestPanel);
-            ModifyButton.setVisible(false);
-        }     
+            modifyPanel.setVisible(false); 
+        }
+        
+        titleTextField.setText(titleLabel.getText());
+        descTextArea.setText(descriptionArea.getText());
                
     }
 
@@ -112,7 +116,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         descriptionArea = new javax.swing.JTextArea();
         descriptionLabel = new javax.swing.JLabel();
-        ModifyButton = new javax.swing.JButton();
         modifyPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
@@ -160,12 +163,7 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         descriptionLabel.setText("Description");
 
-        ModifyButton.setText("Edit");
-        ModifyButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModifyButtonActionPerformed(evt);
-            }
-        });
+        modifyPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit project details:"));
 
         jLabel1.setText("Description:");
 
@@ -198,17 +196,21 @@ public class ProjectPanel extends javax.swing.JPanel {
         modifyPanelLayout.setHorizontalGroup(
             modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modifyPanelLayout.createSequentialGroup()
-                .addComponent(modTitleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane1)
-            .addGroup(modifyPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modifyPanelLayout.createSequentialGroup()
-                .addComponent(abortButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saveButton))
+                .addContainerGap()
+                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addComponent(modTitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(modifyPanelLayout.createSequentialGroup()
+                        .addComponent(abortButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         modifyPanelLayout.setVerticalGroup(
             modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,11 +219,11 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(modTitleLabel))
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(abortButton)
                     .addComponent(saveButton))
@@ -236,30 +238,26 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGap(46, 46, 46)
                 .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(modifyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(overViewPanelLayout.createSequentialGroup()
-                        .addComponent(titleLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ModifyButton))
-                    .addGroup(overViewPanelLayout.createSequentialGroup()
-                        .addComponent(descriptionLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                        .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleLabel)
+                            .addComponent(descriptionLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(38, 38, 38))
         );
         overViewPanelLayout.setVerticalGroup(
             overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(overViewPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(titleLabel)
-                    .addComponent(ModifyButton))
-                .addGap(20, 20, 20)
+                .addComponent(titleLabel)
+                .addGap(23, 23, 23)
                 .addComponent(descriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(modifyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         projectTabbedPane.addTab("Overview", overViewPanel);
@@ -473,14 +471,9 @@ public class ProjectPanel extends javax.swing.JPanel {
             reloadUserTable();
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
-    private void ModifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyButtonActionPerformed
-        modifyPanel.setVisible(true);
-        titleTextField.setText(titleLabel.getText());
-        descTextArea.setText(descriptionArea.getText());
-    }//GEN-LAST:event_ModifyButtonActionPerformed
-
     private void abortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortButtonActionPerformed
-        modifyPanel.setVisible(false);
+        titleTextField.setText(MPM.currentProject.getTitle());
+        descTextArea.setText(MPM.currentProject.getDescription());     
     }//GEN-LAST:event_abortButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -493,7 +486,6 @@ public class ProjectPanel extends javax.swing.JPanel {
             DAOs.projects.update(MPM.currentProject);
             titleLabel.setText(titleTextField.getText());
             descriptionArea.setText(descTextArea.getText());
-            modifyPanel.setVisible(false);
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -578,7 +570,6 @@ public class ProjectPanel extends javax.swing.JPanel {
             userPanel.remove(deleteUserButton);
             userPanel.remove(changeRoleLabel);
             userPanel.remove(saveChangesButton);
-            ModifyButton.setVisible(false);
             modifyPanel.setVisible(false);
         }
           
@@ -590,7 +581,6 @@ public class ProjectPanel extends javax.swing.JPanel {
     
     private DefaultTableModel userTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ModifyButton;
     private javax.swing.JButton abortButton;
     private javax.swing.JPanel addUserPanel;
     private javax.swing.JButton backButton;
