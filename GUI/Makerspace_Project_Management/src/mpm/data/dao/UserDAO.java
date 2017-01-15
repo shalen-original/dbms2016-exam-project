@@ -89,6 +89,23 @@ public class UserDAO extends GenericDataAccessObject<User>{
         return DBUtils.performSelect(sql, f, this.defaultParser);
     }
     
+    public List<User> getUsersNotPartecipatingInProject(int projectId)
+    {
+        String sql = "SELECT * FROM makerspace_user "
+                + "WHERE user_id "
+                + "NOT IN ("
+                    + "SELECT u.user_id "
+                    + "FROM project NATURAL JOIN participation "
+                    + "NATURAL JOIN makerspace_user u WHERE project_id=?"
+                + ")";
+        
+        IPreparedStatementFiller f = s -> {
+          s.setInt(1, projectId);
+        };
+        
+        return DBUtils.performSelect(sql, f, defaultParser);
+    }
+    
     @Override
     public User parseSQLResult(ResultSet r) throws SQLException 
     {

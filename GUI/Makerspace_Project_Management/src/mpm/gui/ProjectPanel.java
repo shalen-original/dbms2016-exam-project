@@ -28,7 +28,8 @@ public class ProjectPanel extends javax.swing.JPanel {
     /**
      * Creates new form projectPanel
      */
-    AddPartPanel partPanel = new AddPartPanel();
+    AddPartPanel partPanel;
+    
     public ProjectPanel() {
         
         initComponents();
@@ -73,6 +74,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
         
+        partPanel = new AddPartPanel();
         bookingPanel.add(new BookInfPanel(),BorderLayout.CENTER);
         requestPanel.add(new MakeReqPanel(),BorderLayout.CENTER);
         addUserPanel.add(partPanel,BorderLayout.CENTER);
@@ -378,9 +380,11 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         JTabbedPane e = (JTabbedPane)evt.getSource();
 
-        if (e.getSelectedComponent().equals(userPanel))
-        reloadUserTable();
-        partPanel.loadUserList();
+        if (e.getSelectedComponent() == userPanel)
+            reloadUserTable();
+        
+        if (e.getSelectedComponent() == addUserPanel)
+            partPanel.reloadUserList();
     }//GEN-LAST:event_OnTabChange
 
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed

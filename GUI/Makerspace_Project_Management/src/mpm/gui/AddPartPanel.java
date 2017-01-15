@@ -5,6 +5,7 @@
  * All rights reserved.
  */
 package mpm.gui;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -25,9 +26,20 @@ public class AddPartPanel extends javax.swing.JPanel {
     boolean exists = false;
     public AddPartPanel() {
         initComponents();
-        loadUserList();
-        cmbRole.setModel(new DefaultComboBoxModel<>(ProjectRole.values()));
         
+        cmbUser.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            
+            if (value != null)
+                w.setText(value.getName() + " (" + value.getEmail() + ")");
+            
+            return w;
+        });
+        
+        reloadUserList();
+        
+        cmbRole.setModel(new DefaultComboBoxModel<>(ProjectRole.values()));
     }
 
     /**
@@ -93,6 +105,13 @@ public class AddPartPanel extends javax.swing.JPanel {
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         
+        if (cmbUser.getSelectedItem() == null)
+        {
+            JOptionPane.showMessageDialog(this, "Select a user!", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         Participation p = new Participation(DAOs.participations.getNextValidId());
         p.setProjectId(MPM.currentProject.getId());
         p.setRole((ProjectRole)cmbRole.getSelectedItem());
@@ -101,59 +120,22 @@ public class AddPartPanel extends javax.swing.JPanel {
         try
         {
             DAOs.participations.insert(p);
+            reloadUserList();
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
-        for (User user : DAOs.users.getAll())
-        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
-        {
-            if(((User)pair.getSecond()).getName().equals(user.getName()))
-           exists=true;
-        }
-        if(!exists)
-         m.addElement(user);
-        exists=false;
-        }
-        if(m.getSize()!=0){
-        cmbUser.setModel(m);
-        cmbUser.setRenderer((a, value, c, d, e) -> {
-            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
-                                            .getListCellRendererComponent(a,value,c,d,e);
-            w.setText(value.getName() + " (" + value.getEmail() + ")");
-            return w;
-        });
-        }
+        
         JOptionPane.showMessageDialog(this, "Operation successful!");
-        
-        
-        
     }//GEN-LAST:event_AddButtonActionPerformed
 
-    public void loadUserList(){
-     
-        DefaultComboBoxModel<User> m = new DefaultComboBoxModel<>();
-        for (User user : DAOs.users.getAll())
-        {   for( Pair pair :DAOs.participations.getUserParticipatingToProjectWithRole(MPM.currentProject.getId())) 
-        {
-            if(((User)pair.getSecond()).getName().equals(user.getName()))
-           exists=true;
-        }
-        if(!exists)
-         m.addElement(user);
-        exists=false;
-        }
-        if(m.getSize()!=0){
-        cmbUser.setModel(m);
-        cmbUser.setRenderer((a, value, c, d, e) -> {
-            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
-                                            .getListCellRendererComponent(a,value,c,d,e);
-            w.setText(value.getName() + " (" + value.getEmail() + ")");
-            return w;
-        });
-        }
+    public final void reloadUserList(){
+        DefaultComboBoxModel<User> m = (DefaultComboBoxModel<User>) cmbUser.getModel();
+        m.removeAllElements();
+        
+        List<User> list = DAOs.users.getUsersNotPartecipatingInProject(MPM.currentProject.getId());
+        list.forEach(m::addElement);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
