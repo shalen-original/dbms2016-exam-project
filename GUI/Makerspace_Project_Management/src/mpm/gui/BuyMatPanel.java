@@ -32,38 +32,20 @@ public class BuyMatPanel extends javax.swing.JPanel {
         
         if (r.contains(ProjectRole.ADMINISTRATOR))
         {
-            
-            DefaultComboBoxModel<Material> m = new DefaultComboBoxModel<>();
-            for (Material material : DAOs.materials.getAll())
-            { 
-                m.addElement(material);
-            }
-            cmbMaterials.setModel(m);
             cmbMaterials.setRenderer((a, value, c, d, e) -> {
                 BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
                                                 .getListCellRendererComponent(a,value,c,d,e);
-                w.setText(value.getName());
+                if (value != null)
+                    w.setText(value.getName());
                 return w;
             });
-
-            if (cmbMaterials.getItemCount() > 0)
-            {
-                cmbMaterials.setSelectedIndex(0);
-                cmbMaterialsItemStateChanged(null); // Forcing GUI update
-            }
             
+            reloadMaterialComboBox();   
         }else{
             pnlBuyNew.setVisible(false);
         }
         
-        
-        
-        historyTable = new javax.swing.JTable();
-        historyTable.setAutoCreateRowSorter(true);
-        historyScrollPane.setViewportView(historyTable);
-        historyTable.setDefaultEditor(Object.class, null);
-        
-        refreshPurchaseHistory();
+        reloadPurchaseHistory();
     }
 
     /**
@@ -89,6 +71,8 @@ public class BuyMatPanel extends javax.swing.JPanel {
         UnitPriceLabel = new javax.swing.JLabel();
         lblUnitsOfMeasure = new javax.swing.JLabel();
         sNumberOfUnits = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
+        lblTotalUnitsAvailable = new javax.swing.JLabel();
 
         historyTable.setAutoCreateRowSorter(true);
         historyTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -96,9 +80,25 @@ public class BuyMatPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-
+                "Material", "Unitary price", "Units", "Total price"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        historyTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         historyScrollPane.setViewportView(historyTable);
 
         lblUnitsOfMeasure1.setText("Purchase history:");
@@ -138,6 +138,10 @@ public class BuyMatPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Total units available:");
+
+        lblTotalUnitsAvailable.setText("5");
+
         javax.swing.GroupLayout pnlBuyNewLayout = new javax.swing.GroupLayout(pnlBuyNew);
         pnlBuyNew.setLayout(pnlBuyNewLayout);
         pnlBuyNewLayout.setHorizontalGroup(
@@ -145,6 +149,11 @@ public class BuyMatPanel extends javax.swing.JPanel {
             .addGroup(pnlBuyNewLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(pnlBuyNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBuyNewLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTotalUnitsAvailable)
+                        .addContainerGap())
                     .addGroup(pnlBuyNewLayout.createSequentialGroup()
                         .addComponent(MaterialLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,8 +175,7 @@ public class BuyMatPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBuyNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTotalPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BuyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))))
-                .addGap(0, 0, 0))
+                            .addComponent(BuyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)))))
         );
         pnlBuyNewLayout.setVerticalGroup(
             pnlBuyNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +196,10 @@ public class BuyMatPanel extends javax.swing.JPanel {
                     .addComponent(sNumberOfUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUnitsOfMeasure)
                     .addComponent(BuyButton))
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBuyNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTotalUnitsAvailable)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -210,10 +221,10 @@ public class BuyMatPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(pnlBuyNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUnitsOfMeasure1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(historyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(historyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addGap(40, 40, 40))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -221,6 +232,14 @@ public class BuyMatPanel extends javax.swing.JPanel {
     private void BuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuyButtonActionPerformed
      
         Material a = (Material)cmbMaterials.getSelectedItem();
+        
+        if (((int)sNumberOfUnits.getValue()) > a.getUnitsAvailable())
+        {
+            JOptionPane.showMessageDialog(this, "The number of units selected is "
+                    + "greater than the total available for this material. "
+                    + "\nPlease reduce the number of units", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         Purchase p = new Purchase(DAOs.purchases.getNextValidId());
         p.setMaterialId(a.getId());
@@ -232,7 +251,8 @@ public class BuyMatPanel extends javax.swing.JPanel {
         try
         {
             DAOs.purchases.insertAndUpdateMaterial(p);
-            refreshPurchaseHistory();
+            reloadMaterialComboBox();
+            reloadPurchaseHistory();
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -246,9 +266,18 @@ public class BuyMatPanel extends javax.swing.JPanel {
     private void cmbMaterialsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaterialsItemStateChanged
         Material a = (Material)cmbMaterials.getSelectedItem();
         
+        if (a == null)
+        {
+            lblUnitaryPrice.setText("");
+            lblUnitsOfMeasure.setText("");
+            lblTotalUnitsAvailable.setText("");
+            lblTotalPrice.setText("0 €"); 
+            return;
+        }
+        
         lblUnitaryPrice.setText(a.getUnitaryPrice().toString() + " € / " + a.getUnitsOfMeasure());
         lblUnitsOfMeasure.setText(a.getUnitsOfMeasure());
-        ((SpinnerNumberModel)sNumberOfUnits.getModel()).setMaximum(a.getUnitsAvailable());
+        lblTotalUnitsAvailable.setText(a.getUnitsAvailable() + "");
         
         lblTotalPrice.setText("0 €"); 
     }//GEN-LAST:event_cmbMaterialsItemStateChanged
@@ -264,17 +293,13 @@ public class BuyMatPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_sNumberOfUnitsStateChanged
 
-    private void refreshPurchaseHistory()
+    private void reloadPurchaseHistory()
     {
         List<Purchase> list = DAOs.purchases
                 .findByProjectID(MPM.currentProject.getId());
         
-        String[] columnNames = {"Material",
-        "Price per unit",
-        "Units",
-        "Total Price"};
-        
-        DefaultTableModel model = new DefaultTableModel(0, columnNames.length);
+        DefaultTableModel m = (DefaultTableModel)historyTable.getModel();
+        m.setRowCount(0);
         
         for(Purchase p : list){
             Object[] o = new Object[4];
@@ -283,12 +308,45 @@ public class BuyMatPanel extends javax.swing.JPanel {
             o[2] = p.getUnits();
             o[3] = p.getTotalPrice().floatValue();
             
-            model.addRow(o);
+            m.addRow(o);
         }
         
-        historyTable.setModel(model);
-        model.setColumnIdentifiers(columnNames);
+    }
+    
+    private void reloadMaterialComboBox()
+    {
+        Integer selectedMaterialId = null;
+        if (cmbMaterials.getSelectedItem() != null)
+        {
+           selectedMaterialId = ((Material)cmbMaterials.getSelectedItem()).getId();
+        }
         
+        DefaultComboBoxModel<Material> m = (DefaultComboBoxModel<Material>)cmbMaterials.getModel();
+        m.removeAllElements();
+        
+        for (Material material : DAOs.materials.getAll())
+        { 
+            m.addElement(material);
+        }
+        
+        // Reselecting previously selected material
+        if (selectedMaterialId != null)
+        {
+            int indexToSelect = 0;
+            for (int i = 0; i < cmbMaterials.getItemCount(); i++)
+            {
+                if (((Material)cmbMaterials.getItemAt(i)).getId() == selectedMaterialId)
+                    indexToSelect = i;
+            }
+            cmbMaterials.setSelectedIndex(indexToSelect);
+            cmbMaterialsItemStateChanged(null);
+        }else{
+            if (cmbMaterials.getItemCount() > 0)
+            {
+                cmbMaterials.setSelectedIndex(0);
+                cmbMaterialsItemStateChanged(null); // Forcing GUI update
+            }
+        }
     }
     
     
@@ -301,7 +359,9 @@ public class BuyMatPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<Material> cmbMaterials;
     private javax.swing.JScrollPane historyScrollPane;
     private javax.swing.JTable historyTable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblTotalPrice;
+    private javax.swing.JLabel lblTotalUnitsAvailable;
     private javax.swing.JLabel lblUnitaryPrice;
     private javax.swing.JLabel lblUnitsOfMeasure;
     private javax.swing.JLabel lblUnitsOfMeasure1;
