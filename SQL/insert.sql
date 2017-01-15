@@ -108,6 +108,9 @@ VALUES (403,'Something else to print',101,503,10);
 INSERT INTO REQUEST (request_id, title, project_id, technical_inf_id, handled_by_user)
 VALUES (404,'Request without messages',101,501,12);
 
+INSERT INTO REQUEST (request_id, title, project_id, technical_inf_id)
+VALUES (405,'Request not assigned to anyone',101,501);
+
 
 -- Data for table MESSAGE
 

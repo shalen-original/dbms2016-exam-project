@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.Message;
 import mpm.data.entities.Request;
@@ -178,7 +177,7 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
         return p;
     }
     
-    public class RequestWIDResolvedToStrings
+    public static class RequestWIDResolvedToStrings
     {
         private String projectName;
         private String techInfName;
@@ -221,6 +220,23 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
             this.request = request;
         }
         
+        @Override
+        public String toString()
+        {
+            StringBuilder b = new StringBuilder();
+        
+            b.append("RequestWIDResolvedToStrings[");
+            b.append(request);
+            b.append(",");
+            b.append(projectName);
+            b.append(",");
+            b.append(techInfName);
+            b.append(",");
+            b.append(assignedToName);
+            b.append("]");
+
+            return b.toString();
+        }
     }
 
 }

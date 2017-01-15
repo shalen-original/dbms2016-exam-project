@@ -9,7 +9,9 @@ package mpm.data.dao;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import mpm.data.entities.Material;
 import mpm.data.entities.Purchase;
+import mpm.data.logic.DBUtils;
 import org.junit.Test;
 
 /**
@@ -85,6 +87,36 @@ public class PurchaseDAOTest extends GenericDAOTestHelper<Purchase>{
         this.listEquals(expected, result);  
     }
     
+    @Test
+    public void insertAndUpdateMaterialTest()
+    {
+        MaterialDAO mdao = new MaterialDAO();
+        Material m = mdao.findByID(objectToInsert.getMaterialId());  
+        ((PurchaseDAO)dao).insertAndUpdateMaterial(objectToInsert);
+        
+        List<Purchase> res = dao.getAll();
+        
+        boolean ok = false;
+        for (Purchase p : res)
+        {
+            if (testEquals(p, objectToInsert))
+                ok = true;
+        }
+        
+        if (!ok)
+            fail(objectToInsert + " was not added to the database");
+        
+        Material mafter = mdao.findByID(objectToInsert.getMaterialId());
+        
+        if (m.getUnitsAvailable() - mafter.getUnitsAvailable() != objectToInsert.getUnits())
+            fail("The material table was not updated correctly");
+        
+        dao.delete(objectToInsert);
+        mdao.update(m); //Restoring database
+        
+        
+    }
+    
     @Override
     protected boolean testEquals(Purchase a, Purchase b)
     {
@@ -104,6 +136,9 @@ public class PurchaseDAOTest extends GenericDAOTestHelper<Purchase>{
            return false;
         
         return true;
+    }
+
+    private void fail(String string) {
     }
     
 }
