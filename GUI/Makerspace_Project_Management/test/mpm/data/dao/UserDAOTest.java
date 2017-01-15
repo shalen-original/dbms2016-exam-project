@@ -9,6 +9,7 @@ package mpm.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.User;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -75,6 +76,36 @@ public class UserDAOTest extends GenericDAOTestHelper<User>{
         List<User> result = ((UserDAO)dao).findByMail("mnardini@unibz.it");
         
         this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void findByGeneralRole()
+    {
+        ArrayList<User> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(0));
+ 
+        List<User> result = ((UserDAO)dao).findByGeneralRole("Staff");
+        
+        this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void getUsersNotPartecipatingInProject()
+    {
+        ArrayList<User> expected = new ArrayList<>();
+        expected.add(this.fullTableList.get(1));
+        expected.add(this.fullTableList.get(2));
+        expected.add(this.fullTableList.get(3));
+ 
+        List<User> result = ((UserDAO)dao).getUsersNotPartecipatingInProject(101);
+        
+        this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void hasUserRole()
+    {
+        assertTrue(DAOs.users.hasUserRole(fullTableList.get(0), "Staff"));
     }
     
     @Override
