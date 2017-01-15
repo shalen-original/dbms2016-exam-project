@@ -58,21 +58,7 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
      */
     public List<T> getAll()
     {
-        ArrayList<T> ans = new ArrayList<>();
-        
-        DBUtils.performOperation(conn -> {
-        
-            Statement s = conn.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM " + associatedTableName);
-            
-            while (r.next())
-            {
-                ans.add(parseSQLResult(r));
-            }
-        
-        });
-
-        return ans;
+        return DBUtils.performSelect("SELECT * FROM " + associatedTableName, defaultParser);
     }
     
     /**

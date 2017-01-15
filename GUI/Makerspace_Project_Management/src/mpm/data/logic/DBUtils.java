@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mpm.main.ProjectConstants;
@@ -68,6 +69,23 @@ public class DBUtils {
             PreparedStatement s = conn.prepareStatement(sql);
             filler.accept(s);
             ResultSet r = s.executeQuery();
+            
+            while (r.next())
+            {
+                ans.add(parser.accept(r));
+            }
+        });
+        
+        return ans;
+    }
+    
+    public static <T> List<T> performSelect(String sql, ISQLResultParser<T> parser)
+    {
+        List<T> ans = new ArrayList<>();
+        
+        DBUtils.performOperation(conn -> {
+            Statement s = conn.createStatement();
+            ResultSet r = s.executeQuery(sql);
             
             while (r.next())
             {
