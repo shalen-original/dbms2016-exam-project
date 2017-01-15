@@ -59,7 +59,7 @@ public class MaterialDAO extends GenericDataAccessObject<Material>{
     }
 
     @Override
-    protected Material parseSQLResult(ResultSet r) throws SQLException 
+    public Material parseSQLResult(ResultSet r) throws SQLException 
     {
         Material p = new Material(r.getInt("material_id"));
         p.setName(r.getString("name"));

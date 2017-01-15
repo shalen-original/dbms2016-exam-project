@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import mpm.data.entities.Purchase;
-import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
@@ -114,7 +113,7 @@ public class PurchaseDAO extends GenericDataAccessObject<Purchase>{
     }
 
     @Override
-    protected Purchase parseSQLResult(ResultSet r) throws SQLException 
+    public Purchase parseSQLResult(ResultSet r) throws SQLException 
     {
         Purchase p = new Purchase(r.getInt("purchase_id"));
         p.setProjectId(r.getInt("project_id"));

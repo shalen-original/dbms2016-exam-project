@@ -69,7 +69,7 @@ public class MessageDAO extends GenericDataAccessObject<Message>{
     }
 
     @Override
-    protected Message parseSQLResult(ResultSet r) throws SQLException 
+    public Message parseSQLResult(ResultSet r) throws SQLException 
     {
         Message p = new Message(r.getInt("message_id"));
         p.setText(r.getString("message_text"));

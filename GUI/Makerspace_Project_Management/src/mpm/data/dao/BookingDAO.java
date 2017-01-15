@@ -118,7 +118,7 @@ public class BookingDAO extends GenericDataAccessObject<FreeInfBooking>{
     }
     
     @Override
-    protected FreeInfBooking parseSQLResult(ResultSet r) throws SQLException {
+    public FreeInfBooking parseSQLResult(ResultSet r) throws SQLException {
         FreeInfBooking p = new FreeInfBooking(r.getInt("booking_id"));
         p.setProjectId(r.getInt("project_id"));
         p.setFreeInfId(r.getInt("free_inf_id"));

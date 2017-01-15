@@ -75,7 +75,7 @@ public class UserDAO extends GenericDataAccessObject<User>{
     }
     
     @Override
-    protected User parseSQLResult(ResultSet r) throws SQLException 
+    public User parseSQLResult(ResultSet r) throws SQLException 
     {
         User p = new User(r.getInt("user_id"));
         p.setName(r.getString("name"));

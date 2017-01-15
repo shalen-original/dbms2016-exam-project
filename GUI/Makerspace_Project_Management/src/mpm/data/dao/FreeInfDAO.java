@@ -75,7 +75,7 @@ public class FreeInfDAO extends GenericDataAccessObject<FreeInf> {
     }
     
     @Override
-    protected FreeInf parseSQLResult(ResultSet r) throws SQLException {
+    public FreeInf parseSQLResult(ResultSet r) throws SQLException {
         
         FreeInf p = new FreeInf(r.getInt("free_inf_id"));
         p.setName(r.getString("name"));

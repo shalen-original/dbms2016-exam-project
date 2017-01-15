@@ -112,7 +112,7 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
     }
     
     @Override
-    protected Request parseSQLResult(ResultSet r) throws SQLException 
+    public Request parseSQLResult(ResultSet r) throws SQLException 
     {
         Request p = new Request(r.getInt("request_id"));
         p.setTitle(r.getString("title"));

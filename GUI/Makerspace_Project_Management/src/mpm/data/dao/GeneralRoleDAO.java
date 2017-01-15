@@ -49,7 +49,7 @@ public class GeneralRoleDAO extends GenericDataAccessObject<GeneralRole>{
 
 
     @Override
-    protected GeneralRole parseSQLResult(ResultSet r) throws SQLException {
+    public GeneralRole parseSQLResult(ResultSet r) throws SQLException {
         
         GeneralRole p = new GeneralRole(r.getInt("role_id"));
         p.setName(r.getString("name"));

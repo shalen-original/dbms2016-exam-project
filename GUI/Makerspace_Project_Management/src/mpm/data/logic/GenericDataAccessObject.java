@@ -154,6 +154,6 @@ public abstract class GenericDataAccessObject< T extends IUniquelyIdentifiable>
      * row of the ResultSet.
      * @throws SQLException If a database error occours.
      */
-    protected abstract T parseSQLResult(ResultSet r) throws SQLException;
+    public abstract T parseSQLResult(ResultSet r) throws SQLException;
     
 }

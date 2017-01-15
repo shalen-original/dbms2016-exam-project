@@ -126,7 +126,7 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
     }
     
     @Override
-    protected Project parseSQLResult(ResultSet r) throws SQLException {
+    public Project parseSQLResult(ResultSet r) throws SQLException {
         
         Project p = new Project(r.getInt("project_id"));
         p.setTitle(r.getString("title"));

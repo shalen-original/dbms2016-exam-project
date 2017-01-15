@@ -51,7 +51,7 @@ public class TechInfDAO extends GenericDataAccessObject<TechInf>{
     }
 
     @Override
-    protected TechInf parseSQLResult(ResultSet r) throws SQLException 
+    public TechInf parseSQLResult(ResultSet r) throws SQLException 
     {
         TechInf p = new TechInf(r.getInt("technical_inf_id"));
         p.setName(r.getString("name"));

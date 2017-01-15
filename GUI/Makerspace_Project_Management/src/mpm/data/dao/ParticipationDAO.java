@@ -99,11 +99,7 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
         ISQLResultParser<Pair<Participation, User>> p = r -> {
             
             Participation pa = parseSQLResult(r);
-            
-            User u = new User(r.getInt("user_id"));
-            u.setName(r.getString("name"));
-            u.setGeneralRoleId(r.getInt("user_role"));
-            u.setEmail(r.getString("email"));
+            User u = DAOs.users.parseSQLResult(r);
 
             return new Pair(pa, u);
         };
@@ -143,7 +139,7 @@ public class ParticipationDAO extends GenericDataAccessObject<Participation>{
     }
     
     @Override
-    protected Participation parseSQLResult(ResultSet r) throws SQLException 
+    public Participation parseSQLResult(ResultSet r) throws SQLException 
     {
         Participation p = new Participation(r.getInt("participation_id"));
         p.setProjectId(r.getInt("project_id"));
