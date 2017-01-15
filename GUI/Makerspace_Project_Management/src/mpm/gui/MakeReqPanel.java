@@ -61,12 +61,12 @@ public class MakeReqPanel extends javax.swing.JPanel {
         RelatedInfLabel = new javax.swing.JLabel();
         MessageLabel = new javax.swing.JLabel();
         SenderLabel = new javax.swing.JLabel();
-        SendButton = new javax.swing.JButton();
+        CreateReqButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         taMessage = new javax.swing.JTextArea();
         lblAuthor = new javax.swing.JLabel();
         viewHistoryButton = new javax.swing.JButton();
-        cmbTechInf = new javax.swing.JComboBox<>();
+        cmbTechInf = new javax.swing.JComboBox<TechInf>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -80,10 +80,10 @@ public class MakeReqPanel extends javax.swing.JPanel {
 
         SenderLabel.setText("Author:");
 
-        SendButton.setText("Create Request");
-        SendButton.addActionListener(new java.awt.event.ActionListener() {
+        CreateReqButton.setText("Create Request");
+        CreateReqButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SendButtonActionPerformed(evt);
+                CreateReqButtonActionPerformed(evt);
             }
         });
 
@@ -118,7 +118,7 @@ public class MakeReqPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(CreateReqButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                                 .addComponent(viewHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -157,14 +157,25 @@ public class MakeReqPanel extends javax.swing.JPanel {
                     .addComponent(lblAuthor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CreateReqButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(viewHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
+    private void CreateReqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateReqButtonActionPerformed
         
+        
+        if(txtTitle.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter request title.");
+            return;
+        }
+        if(taMessage.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter message text.");
+            return;
+        }
         Request r = new Request(DAOs.requests.getNextValidId());
         
         r.setAssignedUserId(-1); // By default, no technician is assigned to this request
@@ -184,7 +195,8 @@ public class MakeReqPanel extends javax.swing.JPanel {
         taMessage.setText("");
         cmbTechInf.setSelectedIndex(0);
         
-    }//GEN-LAST:event_SendButtonActionPerformed
+        JOptionPane.showMessageDialog(null, "Operation succesful!");
+    }//GEN-LAST:event_CreateReqButtonActionPerformed
 
     private void viewHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewHistoryButtonActionPerformed
         JOptionPane.showMessageDialog(null, new RequestHistoryPanel(), 
@@ -193,9 +205,9 @@ public class MakeReqPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CreateReqButton;
     private javax.swing.JLabel MessageLabel;
     private javax.swing.JLabel RelatedInfLabel;
-    private javax.swing.JButton SendButton;
     private javax.swing.JLabel SenderLabel;
     private javax.swing.JLabel TitleLabel;
     private java.awt.Choice choice1;
