@@ -42,7 +42,8 @@ public class UserDAO extends GenericDataAccessObject<User>{
     }
 
     @Override
-    public void insert(User objToInsert) {
+    public void insert(User objToInsert) 
+    {
         
         String sql = "INSERT INTO makerspace_user(user_id, name, " + 
                             "user_role, email) " + 
@@ -57,7 +58,8 @@ public class UserDAO extends GenericDataAccessObject<User>{
         
     }
     
-    public List<User> findByMail(String email){
+    public List<User> findByMail(String email)
+    {
         
         String sql = "SELECT * FROM makerspace_user " +
                     "WHERE email = ?";
@@ -72,6 +74,19 @@ public class UserDAO extends GenericDataAccessObject<User>{
         GeneralRole r = DAOs.roles.findByID(u.getGeneralRoleId());
         
         return r.getName().equals(roleName);
+    }
+    
+    public List<User> findByGeneralRole(String generalRoleName)
+    {
+        String sql = "SELECT u.user_id, u.name, u.user_role, u.email "
+                + "FROM makerspace_user u INNER JOIN general_role r "
+                + "ON (u.user_role = r.role_id) WHERE r.name = ?";
+        
+        IPreparedStatementFiller f = s -> {     
+            s.setString(1, generalRoleName);          
+        };
+        
+        return DBUtils.performSelect(sql, f, this.defaultParser);
     }
     
     @Override

@@ -88,9 +88,9 @@ public class OverviewPanel extends javax.swing.JPanel {
                     freeInfIcon, new FreeInfManagement(), "", 3);
             overviewTabbedPane.insertTab("Technical Infs", 
                     techInfIcon, new TechInfManagement(), "", 4);
+            overviewTabbedPane.insertTab("Requests", 
+                    requestListIcon, new RequestsManagement(), "", 5);
             // TODO Change JPanel with RequestListPanel or however it will be called
-            overviewTabbedPane.insertTab("Request List", 
-                    requestListIcon, new javax.swing.JPanel(), "", 5);
         }
     }
 

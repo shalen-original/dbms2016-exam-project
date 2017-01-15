@@ -11,9 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import mpm.data.entities.Message;
+import mpm.data.entities.User;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
+import mpm.data.logic.ISQLResultParser;
+import mpm.data.logic.Pair;
 
 /**
  * Implements a DAO for the Message table.
@@ -66,6 +69,25 @@ public class MessageDAO extends GenericDataAccessObject<Message>{
         IPreparedStatementFiller f = s -> {s.setInt(1, requestID);};
 
         return DBUtils.performSelect(sql, f, this.defaultParser);
+    }
+    
+    public List<Pair<Message, User>> findByRequestIDWithAuthorData(int requestID) {
+        
+        String sql = "SELECT * FROM message m INNER JOIN makerspace_user u "
+                + "ON (m.message_author = u.user_id) WHERE request_id = ?";
+        
+        IPreparedStatementFiller f = s -> {s.setInt(1, requestID);};
+
+        ISQLResultParser<Pair<Message,User>> p = r -> {
+            
+            User u = DAOs.users.parseSQLResult(r);
+            Message m = parseSQLResult(r);
+
+            return new Pair(m, u);
+        };
+        
+        return DBUtils.performSelect(sql, f, p);
+        
     }
 
     @Override

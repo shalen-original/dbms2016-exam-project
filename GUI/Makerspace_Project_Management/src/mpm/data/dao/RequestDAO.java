@@ -12,12 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
-import mpm.data.entities.Message;
 import mpm.data.entities.Request;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
 import mpm.data.logic.IPreparedStatementFiller;
+import mpm.data.logic.ISQLResultParser;
 
 /**
  * Implements a DAO for the Request table.
@@ -26,6 +27,7 @@ import mpm.data.logic.IPreparedStatementFiller;
 public class RequestDAO extends GenericDataAccessObject<Request> {
 
     private String insertIntoQuery;
+    private ISQLResultParser<RequestWIDResolvedToStrings> deepParser;
     
     public RequestDAO()
     {
@@ -34,6 +36,18 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
         insertIntoQuery = "INSERT INTO request(request_id, title, " + 
                             "project_id, technical_inf_id, handled_by_user) " + 
                             "VALUES (?, ?, ?, ?, ?)";
+        
+        deepParser = r -> {
+            
+            RequestWIDResolvedToStrings ans = 
+                    new RequestWIDResolvedToStrings(parseSQLResult(r));
+            
+            ans.setProjectName(r.getString("project_title"));
+            ans.setTechInfName(r.getString("tech_inf_name"));
+            ans.setAssignedToName(r.getString("user_name"));
+            
+            return ans;
+        };
     }
     
     @Override
@@ -111,6 +125,58 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
         });
     }
     
+    public List<RequestWIDResolvedToStrings> deepGetAll()
+    {
+        String sql = "SELECT r.request_id, r.title, r.project_id, r.technical_inf_id, " +
+                            "r.handled_by_user, p.title AS project_title, t.name AS tech_inf_name, " +
+                            "u.name AS user_name " + 
+                    "FROM request r INNER JOIN project p ON (r.project_id = p.project_id) " + 
+                    "INNER JOIN technical_inf t ON (r.technical_inf_id = t.technical_inf_id) " +
+                    "INNER JOIN makerspace_user u ON (u.user_id = r.handled_by_user)";
+        
+        return DBUtils.performSelect(sql, this.deepParser);
+
+    }
+    
+    public List<RequestWIDResolvedToStrings> deepGetUnassignedRequests()
+    {
+        String sql = "SELECT r.request_id, r.title, r.project_id, r.technical_inf_id, " +
+                            "r.handled_by_user, p.title AS project_title, t.name AS tech_inf_name " +
+                    "FROM request r INNER JOIN project p ON (r.project_id = p.project_id) " + 
+                    "INNER JOIN technical_inf t ON (r.technical_inf_id = t.technical_inf_id) " +
+                    "WHERE r.handled_by_user IS NULL";
+        
+        ISQLResultParser<RequestWIDResolvedToStrings> p = r -> {
+            
+            RequestWIDResolvedToStrings ans = 
+                    new RequestWIDResolvedToStrings(parseSQLResult(r));
+            
+            ans.setProjectName(r.getString("project_title"));
+            ans.setTechInfName(r.getString("tech_inf_name"));
+            
+            return ans;
+        };
+        
+        return DBUtils.performSelect(sql, p);
+    }
+    
+    public List<RequestWIDResolvedToStrings> deepFindByAssignedUserId(int userID)
+    {
+        String sql = "SELECT r.request_id, r.title, r.project_id, r.technical_inf_id, " +
+                            "r.handled_by_user, p.title AS project_title, t.name AS tech_inf_name, " +
+                            "u.name AS user_name " + 
+                    "FROM request r INNER JOIN project p ON (r.project_id = p.project_id) " + 
+                    "INNER JOIN technical_inf t ON (r.technical_inf_id = t.technical_inf_id) " +
+                    "INNER JOIN makerspace_user u ON (u.user_id = r.handled_by_user) "
+                    + "WHERE r.handled_by_user = ?";
+        
+        IPreparedStatementFiller f = s -> {
+            s.setInt(1, userID);
+        };
+        
+        return DBUtils.performSelect(sql, f, this.deepParser);
+    }
+    
     @Override
     public Request parseSQLResult(ResultSet r) throws SQLException 
     {
@@ -124,6 +190,51 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
             p.setAssignedUserId(null);
         
         return p;
+    }
+    
+    public class RequestWIDResolvedToStrings
+    {
+        private String projectName;
+        private String techInfName;
+        private String assignedToName;
+        private Request request;
+
+        public RequestWIDResolvedToStrings(Request request) {
+            this.request = request;
+        }
+
+        public String getProjectName() {
+            return projectName;
+        }
+
+        public void setProjectName(String projectName) {
+            this.projectName = projectName;
+        }
+
+        public String getTechInfName() {
+            return techInfName;
+        }
+
+        public void setTechInfName(String techInfName) {
+            this.techInfName = techInfName;
+        }
+
+        public String getAssignedToName() {
+            return assignedToName;
+        }
+
+        public void setAssignedToName(String assignedToName) {
+            this.assignedToName = assignedToName;
+        }
+
+        public Request getRequest() {
+            return request;
+        }
+
+        public void setRequest(Request request) {
+            this.request = request;
+        }
+        
     }
 
 }
