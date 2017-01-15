@@ -30,7 +30,12 @@ public class ProjectPanel extends javax.swing.JPanel {
      */
     AddPartPanel partPanel;
     
-    public ProjectPanel() {
+    public ProjectPanel()
+    {
+        this(false);
+    }
+    
+    public ProjectPanel(boolean forceAdminMode) {
         
         initComponents();
         
@@ -81,7 +86,8 @@ public class ProjectPanel extends javax.swing.JPanel {
         materialsPanel.add(new BuyMatPanel(),BorderLayout.CENTER);
         modifyPanel.setVisible(false);
         
-        if(!DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject)) {
+        if(!(DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject) ||
+                forceAdminMode)) {
             // TODO choose which panels to keep visualized for non-admin users
             projectTabbedPane.remove(bookingPanel);
             projectTabbedPane.remove(addUserPanel);
