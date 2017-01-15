@@ -181,6 +181,18 @@ public class BookInfPanel extends javax.swing.JPanel {
         b.setStartTime(new Timestamp(((Date)dtpTimeStart.getValue()).getTime()));
         b.setEndTime(new Timestamp(((Date)dtpTimeEnd.getValue()).getTime()));
         
+        List<FreeInfBooking> l = DAOs.bookings.findBookedInfBetween(b.getStartTime(), b.getEndTime());
+        for (FreeInfBooking fib : l)
+        {
+            if (fib.getFreeInfId() == b.getFreeInfId())
+            {
+                JOptionPane.showMessageDialog(this, "The requested free infrastructure "
+                        + "is already booked in the given time interval. \nPlease choose another time interval.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }    
+        }
+        
         try
         {
             DAOs.bookings.insert(b);
