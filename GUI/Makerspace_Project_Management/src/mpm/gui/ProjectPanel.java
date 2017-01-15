@@ -152,7 +152,7 @@ public class ProjectPanel extends javax.swing.JPanel {
 
         descriptionLabel.setText("Description");
 
-        ModifyButton.setText("Modify");
+        ModifyButton.setText("Edit");
         ModifyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModifyButtonActionPerformed(evt);
@@ -245,7 +245,7 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titleLabel)
                     .addComponent(ModifyButton))
-                .addGap(37, 37, 37)
+                .addGap(20, 20, 20)
                 .addComponent(descriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,11 +474,23 @@ public class ProjectPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_abortButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        //to add database interaction
-        titleLabel.setText(titleTextField.getText());
-        descriptionArea.setText(descTextArea.getText());
+        
+        MPM.currentProject.setTitle(titleTextField.getText());
+        MPM.currentProject.setDescription(descTextArea.getText());
+        
+        try
+        {
+            DAOs.projects.update(MPM.currentProject);
+            titleLabel.setText(titleTextField.getText());
+            descriptionArea.setText(descTextArea.getText());
+            modifyPanel.setVisible(false);
+        }catch(RuntimeException ex){
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+               
         JOptionPane.showMessageDialog(this, "Operation successful!");
-        modifyPanel.setVisible(false);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void listSelectionChanged(ListSelectionEvent e){
