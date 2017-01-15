@@ -42,8 +42,9 @@ public class LoginPanel extends javax.swing.JPanel {
         inputLabel = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
 
-        setMaximumSize(new java.awt.Dimension(640, 480));
+        setMaximumSize(new java.awt.Dimension(740, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
+        setPreferredSize(new java.awt.Dimension(740, 480));
 
         logoLabel.setBackground(new java.awt.Color(253, 101, 8));
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -89,19 +90,20 @@ public class LoginPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(284, 284, 284)
-                .addComponent(loginButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inputLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(errorLabel)
-                    .addComponent(usernameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(159, 159, 159))
+                .addComponent(errorLabel)
+                .addGap(385, 385, 385))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(loginButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(inputLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usernameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +117,7 @@ public class LoginPanel extends javax.swing.JPanel {
                     .addComponent(inputLabel))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addGap(164, 164, 164))
+                .addContainerGap())
         );
 
         loginButton.getAccessibleContext().setAccessibleName("loginButton");

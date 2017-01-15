@@ -28,7 +28,7 @@ public class MPM {
        
         frame = new JFrame ("Makerspace Project Management");
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(700, 480));
+        frame.setPreferredSize(new Dimension(740, 480));
         setPanel (new LoginPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
