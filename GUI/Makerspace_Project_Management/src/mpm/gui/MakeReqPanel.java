@@ -186,15 +186,14 @@ public class MakeReqPanel extends javax.swing.JPanel {
         try
         {
             DAOs.requests.createRequestWithMessage(r, taMessage.getText(), MPM.currentUser.getId());
+            txtTitle.setText("");
+            taMessage.setText("");
+            cmbTechInf.setSelectedIndex(0);
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
                     "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
-        txtTitle.setText("");
-        taMessage.setText("");
-        cmbTechInf.setSelectedIndex(0);
-        
         JOptionPane.showMessageDialog(null, "Operation succesful!");
     }//GEN-LAST:event_CreateReqButtonActionPerformed
 
