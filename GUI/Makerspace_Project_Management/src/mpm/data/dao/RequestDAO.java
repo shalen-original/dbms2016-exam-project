@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import mpm.data.entities.Message;
 import mpm.data.entities.Request;
 import mpm.data.logic.DBUtils;
 import mpm.data.logic.GenericDataAccessObject;
@@ -90,39 +91,24 @@ public class RequestDAO extends GenericDataAccessObject<Request> {
 
     public void createRequestWithMessage(Request r, String messageText, int authorId)
     {
-        DBUtils.performOperation(conn -> {
+        Message m = new Message(DAOs.messages.getNextValidId());
+        m.setText(messageText);
+        m.setRequestId(r.getId());
+        m.setCreationTime(new Timestamp(System.currentTimeMillis()));
+        m.setAuthorId(authorId);
         
-            conn.setAutoCommit(false);
-            
-            try {
-                PreparedStatement s = conn.prepareStatement(insertIntoQuery);
-                s.setInt(1, r.getId());
-                s.setString(2, r.getTitle());
-                s.setInt(3, r.getProjectId());
-                s.setInt(4, r.getTechInfId());
-                s.setNull(5, Types.INTEGER); 
-                s.executeUpdate();
-
-                String sql = "INSERT INTO message(message_id, message_text, " + 
-                            "request_id, message_time, message_author) " + 
-                            "VALUES (?, ?, ?, ?, ?)";
-                s = conn.prepareStatement(sql);
-                s.setInt(1, DAOs.messages.getNextValidId());
-                s.setString(2, messageText);
-                s.setInt(3, r.getId());
-                s.setTimestamp(4, new Timestamp(System.currentTimeMillis())); 
-                s.setInt(5, authorId);
-                s.executeUpdate();
-                
-                conn.commit();
-                            
-            }catch (SQLException e){              
-                conn.rollback();
-                throw e;               
-            }finally{
-                conn.setAutoCommit(true);
-            }
+        DBUtils.beginTransaction();
+        DBUtils.performOperation(conn -> {
+            PreparedStatement s = conn.prepareStatement(insertIntoQuery);
+            s.setInt(1, r.getId());
+            s.setString(2, r.getTitle());
+            s.setInt(3, r.getProjectId());
+            s.setInt(4, r.getTechInfId());
+            s.setNull(5, Types.INTEGER); 
+            s.executeUpdate();
         });
+        DAOs.messages.insert(m);
+        DBUtils.endTranstaction();
     }
     
     public List<RequestWIDResolvedToStrings> deepGetAll()

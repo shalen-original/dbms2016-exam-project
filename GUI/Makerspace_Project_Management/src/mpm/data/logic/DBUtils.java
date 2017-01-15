@@ -23,6 +23,8 @@ import mpm.main.ProjectConstants;
  */
 public class DBUtils {
     
+    private static Connection conn;
+    
     /**
      * Allows to perform a generic operation on the database.
      * This methods creates a connection for the requested operation and closes it
@@ -32,15 +34,21 @@ public class DBUtils {
      */
     public static void performOperation(IDatabaseOperation operation)
     {
-        try (Connection conn = DriverManager.getConnection(ProjectConstants.DB_URL,
-                ProjectConstants.DB_USERNAME,
-                ProjectConstants.DB_PASSWORD)) 
+        try
         {
-            
+            if (conn == null || conn.isClosed())
+            {
+                conn = DriverManager.getConnection(ProjectConstants.DB_URL,
+                                    ProjectConstants.DB_USERNAME,
+                                    ProjectConstants.DB_PASSWORD);
+            }
+
             operation.accept(conn);
             
         }catch (SQLException ex){
-            //TODO
+            try{
+                conn.rollback();
+            } catch (Exception ex2) {}
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -94,6 +102,32 @@ public class DBUtils {
         });
         
         return ans;
+    }
+    
+    /**
+     * Begins a transaction on the current connection. Absolutely NOT thread safe.
+     */
+    public static void beginTransaction()
+    {
+        try
+        {
+            conn.setAutoCommit(false);
+        }catch (SQLException ex){
+            //TODO
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+    
+    public static void endTranstaction()
+    {
+        try
+        {
+            conn.commit();
+            conn.setAutoCommit(true);
+        }catch (SQLException ex){
+            //TODO
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 
 }

@@ -63,43 +63,26 @@ public class PurchaseDAO extends GenericDataAccessObject<Purchase>{
     
     public void insertAndUpdateMaterial(Purchase p)
     {
+        DBUtils.beginTransaction();
+        this.insert(p);
         DBUtils.performOperation(conn -> {
-        
-            conn.setAutoCommit(false);
+            String sql = "SELECT units_available FROM material "
+                        + "WHERE material_id = ?";
             
-            try {
-                PreparedStatement s = conn.prepareStatement(insertQuery);
-                s.setInt(1, p.getId());
-                s.setInt(2, p.getProjectId());
-                s.setInt(3, p.getMaterialId());
-                s.setInt(4, p.getUnits());
-                s.setBigDecimal(5, p.getTotalPrice());   
-                s.executeUpdate();
-                
-                String sql = "SELECT units_available FROM material "
-                        + "WHERE material_id = ?";
-                s = conn.prepareStatement(sql);
-                s.setInt(1, p.getMaterialId());
-                ResultSet r = s.executeQuery();
-                r.next();
-                int currUnits = r.getInt("units_available");
-                
-                sql = "UPDATE material SET units_available = ? "
-                        + "WHERE material_id = ?";
-                s = conn.prepareStatement(sql);
-                s.setInt(1, currUnits - p.getUnits());
-                s.setInt(2, p.getMaterialId());
-                s.executeUpdate();
-                
-                conn.commit();
-                            
-            }catch (SQLException e){              
-                conn.rollback();
-                throw e;               
-            }finally{
-                conn.setAutoCommit(true);
-            }
+            PreparedStatement s = conn.prepareStatement(sql);
+            s.setInt(1, p.getMaterialId());
+            ResultSet r = s.executeQuery();
+            r.next();
+            int currUnits = r.getInt("units_available");
+
+            sql = "UPDATE material SET units_available = ? "
+                    + "WHERE material_id = ?";
+            s = conn.prepareStatement(sql);
+            s.setInt(1, currUnits - p.getUnits());
+            s.setInt(2, p.getMaterialId());
+            s.executeUpdate();
         });
+        DBUtils.endTranstaction();
     }
     
     public List<Purchase> findByProjectID(int projectID){

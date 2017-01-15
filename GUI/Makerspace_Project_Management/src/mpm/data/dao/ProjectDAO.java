@@ -88,41 +88,10 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
         part.setRole(ProjectRole.ADMINISTRATOR);
         part.setUserId(MPM.currentUser.getId());
         
-        DBUtils.performOperation(conn -> {
-        
-            conn.setAutoCommit(false);
-            
-            try {
-                String sql = "INSERT INTO project(project_id, title, " + 
-                                "description, status, seeking_collaboration) " + 
-                                "VALUES (?, ?, ?, ?::p_status, ?)";
-                PreparedStatement s = conn.prepareStatement(sql);
-                s.setInt(1, p.getId());
-                s.setString(2, p.getTitle());
-                s.setString(3, p.getDescription());
-                s.setString(4, p.getStatus().toString().toLowerCase());
-                s.setBoolean(5, p.getSeekingCollaboration()); 
-                s.executeUpdate();
-
-                sql = "INSERT INTO participation(participation_id," + 
-                        "project_id, user_id, project_role) " + 
-                        "VALUES (?, ?, ?, ?::p_role)";
-                s = conn.prepareStatement(sql);
-                s.setInt(1, part.getId());
-                s.setInt(2, part.getProjectId());
-                s.setInt(3, part.getUserId());
-                s.setString(4, part.getRole().toString().toLowerCase()); 
-                s.executeUpdate();
-                
-                conn.commit();
-                            
-            }catch (SQLException e){              
-                conn.rollback();
-                throw e;               
-            }finally{
-                conn.setAutoCommit(true);
-            }
-        });
+        DBUtils.beginTransaction();
+        this.insert(p);
+        DAOs.participations.insert(part);
+        DBUtils.endTranstaction();
     }
     
     @Override
