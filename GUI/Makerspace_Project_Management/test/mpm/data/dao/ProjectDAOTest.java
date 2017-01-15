@@ -8,9 +8,12 @@ package mpm.data.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import mpm.data.entities.Participation;
 import mpm.data.entities.Project;
+import mpm.data.entities.ProjectRole;
 import mpm.data.entities.ProjectStatus;
 import mpm.data.entities.User;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -89,6 +92,52 @@ public class ProjectDAOTest extends GenericDAOTestHelper<Project>{
         List<Project> result = ((ProjectDAO)dao).getUserProjects(new User(12));
         
         this.listEquals(expected, result);   
+    }
+    
+    @Test
+    public void testCreateNewProjectWithAdmin()
+    {
+        User u = new User(12);
+        u.setName("Matteo Nardini");
+        u.setGeneralRoleId(1021);
+        u.setEmail("mnardini@unibz.it");
+        
+        ((ProjectDAO)dao).createNewProjectWithAdmin(this.objectToInsert, u);
+        
+        List<Project> all = dao.getAll();
+        
+        boolean ok = false;
+        for (Project item : all)
+        {
+            if (testEquals(item, objectToInsert))
+                ok = true;
+        }
+        
+        if (!ok)
+        {
+            fail("The new " + objectToInsert + " was not inserted." + 
+                 "Remember to fix the database before testing again");
+        }
+        
+        List<Participation> allp = (new ParticipationDAO()).getAll();
+        ok = false;
+        for (Participation item : allp)
+        {
+            if (item.getProjectId() != this.objectToInsert.getId() &&
+                    item.getRole() == ProjectRole.ADMINISTRATOR &&
+                    item.getUserId() == u.getId())
+                ok = true;
+            
+        }
+        
+        if (!ok)
+        {
+            fail("No admin participation for this project was found." + 
+                 "Remember to fix the database before testing again");
+        }
+        
+        
+        dao.delete(objectToInsert);
     }
     
     @Override

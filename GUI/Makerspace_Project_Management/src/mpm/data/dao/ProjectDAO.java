@@ -86,7 +86,7 @@ public class ProjectDAO extends GenericDataAccessObject<Project>
         Participation part = new Participation(DAOs.participations.getNextValidId());
         part.setProjectId(p.getId());
         part.setRole(ProjectRole.ADMINISTRATOR);
-        part.setUserId(MPM.currentUser.getId());
+        part.setUserId(admin.getId());
         
         DBUtils.beginTransaction();
         this.insert(p);

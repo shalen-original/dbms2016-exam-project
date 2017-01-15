@@ -10,6 +10,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import mpm.data.entities.Message;
+import mpm.data.entities.User;
+import mpm.data.logic.Pair;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -74,6 +77,51 @@ public class MessageDAOTest extends GenericDAOTestHelper<Message>{
         List<Message> result = ((MessageDAO)dao).findByRequestID(401);
         
         this.listEquals(expected, result);  
+    }
+    
+    @Test
+    public void findByRequestIDWithAuthorData()
+    {
+        ArrayList<Pair<Message,User>> expected = new ArrayList<>();
+        User u = new User(12);
+        u.setName("Matteo Nardini");
+        u.setGeneralRoleId(1021);
+        u.setEmail("mnardini@unibz.it");
+        
+        expected.add(new Pair(this.fullTableList.get(0),u));
+        
+        List<Pair<Message,User>> result = ((MessageDAO)dao).findByRequestIDWithAuthorData(401);
+        
+        
+        
+        expected.sort((a,b) -> {
+            return Integer.compare(a.getFirst().getId(), b.getFirst().getId());  
+        });
+        
+        result.sort((a,b) -> {
+            return Integer.compare(a.getFirst().getId(), b.getFirst().getId());  
+        });
+        
+        if (expected.size() != result.size())
+            fail("expected and result do not have the same size");
+        
+        for (int i = 0; i < expected.size(); i++)
+        {
+  
+            if (!testEquals(expected.get(i).getFirst(), result.get(i).getFirst()))
+            {
+                fail(expected.get(i).getFirst() + " is different from " + result.get(i).getSecond());
+            }
+            
+            User a = expected.get(i).getSecond();
+            User b = result.get(i).getSecond();
+            
+            if (a.getId() != b.getId() ||
+                    !a.getName().equals(b.getName()) ||
+                    !a.getEmail().equals(b.getEmail()) ||
+                    a.getGeneralRoleId() != b.getGeneralRoleId())
+                fail(a + " is different from " + b);
+        }     
     }
     
     @Override
