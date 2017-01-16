@@ -237,7 +237,14 @@ public class BuyMatPanel extends javax.swing.JPanel {
         {
             JOptionPane.showMessageDialog(this, "The number of units selected is "
                     + "greater than the total available for this material. "
-                    + "\nPlease reduce the number of units", "Error", JOptionPane.ERROR_MESSAGE);
+                    + "\nPlease reduce the number of units."
+                    + "The total available is " + a.getUnitsAvailable()+".", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            lblUnitaryPrice.setText("");
+            lblUnitsOfMeasure.setText("");
+            lblTotalUnitsAvailable.setText("");
+            sNumberOfUnits.setValue(((SpinnerNumberModel)sNumberOfUnits.getModel()).getMinimum());
+            lblTotalPrice.setText("0 €"); 
             return;
         }
         
