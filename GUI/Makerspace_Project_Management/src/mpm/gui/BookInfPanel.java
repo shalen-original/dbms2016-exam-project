@@ -51,7 +51,7 @@ public class BookInfPanel extends javax.swing.JPanel {
             w.setText(value.getName());
             return w;
         });
-        
+        ((SpinnerDateModel)dtpTimeStart.getModel()).setStart(new Date());   
         ((SpinnerDateModel)dtpTimeEnd.getModel()).setStart((Date)dtpTimeStart.getValue());
         reloadBookingTable();
     }
@@ -211,7 +211,7 @@ public class BookInfPanel extends javax.swing.JPanel {
         
         Date start = (Date)dtpTimeStart.getValue();
         Date end = (Date)dtpTimeEnd.getValue();
-        
+
         if (end.compareTo(start) < 0)
             dtpTimeEnd.setValue(dtpTimeStart.getValue());
         
