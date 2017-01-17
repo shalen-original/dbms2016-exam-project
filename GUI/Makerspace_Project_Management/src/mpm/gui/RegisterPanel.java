@@ -7,6 +7,7 @@
 package mpm.gui;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.*;
@@ -23,9 +24,16 @@ public class RegisterPanel extends javax.swing.JPanel {
      */
     public RegisterPanel() {
         initComponents();
-        for (GeneralRole role : DAOs.roles.getAll())
-        cmbRole.addItem(role.getName());
-
+        cmbRole.setRenderer((a, value, c, d, e) -> {
+            BasicComboBoxRenderer w = (BasicComboBoxRenderer)(new BasicComboBoxRenderer())
+                                            .getListCellRendererComponent(a,value,c,d,e);
+            if (value != null)
+                w.setText(value.getName());
+            return w;
+        });
+        
+        DAOs.roles.getAll().forEach(cmbRole::addItem);
+        
    }
  
 
@@ -45,7 +53,7 @@ public class RegisterPanel extends javax.swing.JPanel {
         emailLabel = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         roleLabel = new javax.swing.JLabel();
-        cmbRole = new javax.swing.JComboBox();
+        cmbRole = new javax.swing.JComboBox<>();
         backButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
 
@@ -67,19 +75,24 @@ public class RegisterPanel extends javax.swing.JPanel {
         });
 
         registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(156, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(surnameLabel)
                             .addComponent(roleLabel)
                             .addComponent(emailLabel)
-                            .addComponent(surnameLabel)
                             .addComponent(nameLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -88,16 +101,15 @@ public class RegisterPanel extends javax.swing.JPanel {
                             .addComponent(emailTextField)
                             .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
                         .addComponent(backButton)
-                        .addGap(43, 43, 43)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(registerButton)))
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addContainerGap(72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -106,18 +118,18 @@ public class RegisterPanel extends javax.swing.JPanel {
                     .addComponent(surnameLabel)
                     .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emailLabel)
-                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailLabel))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roleLabel)
-                    .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(roleLabel))
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton)
                     .addComponent(registerButton))
-                .addGap(111, 111, 111))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -125,10 +137,50 @@ public class RegisterPanel extends javax.swing.JPanel {
         MPM.setPanel(new LoginPanel());
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        
+        if (nameTextField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "The name cannot be empty",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (surnameTextField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "The surname cannot be empty",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (emailTextField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "The email cannot be empty",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        User u = new User(DAOs.users.getNextValidId());
+        
+        u.setName(nameTextField.getText() + " " + surnameTextField.getText());
+        u.setEmail(emailTextField.getText());
+        u.setGeneralRoleId(((GeneralRole)cmbRole.getSelectedItem()).getId());
+        
+        try
+        {
+           DAOs.users.insert(u);
+        }catch(RuntimeException ex){
+           JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
+                   "Error", JOptionPane.ERROR_MESSAGE);
+           return;
+        }
+        JOptionPane.showMessageDialog(null, "Operation succesful!");
+        MPM.setPanel(new LoginPanel());
+        
+    }//GEN-LAST:event_registerButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JComboBox cmbRole;
+    private javax.swing.JComboBox<GeneralRole> cmbRole;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel nameLabel;
