@@ -63,6 +63,8 @@ public class User implements IUniquelyIdentifiable{
         b.append(name);
         b.append(",");
         b.append(email);
+        b.append(", general_role:");
+        b.append(generalRoleId);
         b.append("]");
         
         return b.toString();
