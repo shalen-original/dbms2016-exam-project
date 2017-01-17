@@ -197,7 +197,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                         .addComponent(newEmailLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         settingsTabLayout.setVerticalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                     .addComponent(newEmailLabel))
                 .addGap(18, 18, 18)
                 .addComponent(updateInformationButton)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         overviewTabbedPane.addTab("Profile", settingsTab);
@@ -258,7 +258,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                 .addComponent(overviewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutButton)
-                .addGap(20, 20, 20))
+                .addGap(22, 22, 22))
         );
 
         overviewTabbedPane.getAccessibleContext().setAccessibleName("Projects");

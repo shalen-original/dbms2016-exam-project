@@ -151,7 +151,9 @@
         <Component class="javax.swing.JButton" name="btnRegister">
           <Properties>
             <Property name="text" type="java.lang.String" value="Register"/>
-            <Property name="toolTipText" type="java.lang.String" value="Click to login"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Click to register&quot;" type="code"/>
+            </Property>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="usernameInputField"/>
             </Property>

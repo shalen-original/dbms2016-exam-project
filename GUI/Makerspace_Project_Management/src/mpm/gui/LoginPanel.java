@@ -85,7 +85,7 @@ public class LoginPanel extends javax.swing.JPanel {
         });
 
         btnRegister.setText("Register");
-        btnRegister.setToolTipText("Click to login");
+        btnRegister.setToolTipText("Click to register");
         btnRegister.setNextFocusableComponent(usernameInputField);
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +192,8 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameInputFieldKeyPressed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
+        
+        MPM.setPanel(new RegisterPanel());
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
