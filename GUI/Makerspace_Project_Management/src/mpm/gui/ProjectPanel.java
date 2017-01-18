@@ -123,7 +123,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         titleTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         descTextArea = new javax.swing.JTextArea();
-        abortButton = new javax.swing.JButton();
         userPanel = new javax.swing.JPanel();
         userTableScrollPane = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -184,13 +183,6 @@ public class ProjectPanel extends javax.swing.JPanel {
         descTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descTextArea);
 
-        abortButton.setText("Abort modification");
-        abortButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abortButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout modifyPanelLayout = new javax.swing.GroupLayout(modifyPanel);
         modifyPanel.setLayout(modifyPanelLayout);
         modifyPanelLayout.setHorizontalGroup(
@@ -207,8 +199,7 @@ public class ProjectPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(modifyPanelLayout.createSequentialGroup()
-                        .addComponent(abortButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -224,9 +215,7 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(abortButton)
-                    .addComponent(saveButton))
+                .addComponent(saveButton)
                 .addContainerGap())
         );
 
@@ -471,11 +460,6 @@ public class ProjectPanel extends javax.swing.JPanel {
             reloadUserTable();
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
-    private void abortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abortButtonActionPerformed
-        titleTextField.setText(MPM.currentProject.getTitle());
-        descTextArea.setText(MPM.currentProject.getDescription());     
-    }//GEN-LAST:event_abortButtonActionPerformed
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         
         MPM.currentProject.setTitle(titleTextField.getText());
@@ -581,7 +565,6 @@ public class ProjectPanel extends javax.swing.JPanel {
     
     private DefaultTableModel userTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton abortButton;
     private javax.swing.JPanel addUserPanel;
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bookingPanel;
