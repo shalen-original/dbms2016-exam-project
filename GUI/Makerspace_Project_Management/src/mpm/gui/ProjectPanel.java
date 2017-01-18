@@ -31,6 +31,7 @@ public class ProjectPanel extends javax.swing.JPanel {
      * Creates new form projectPanel
      */
     AddPartPanel partPanel;
+    boolean forceAdminMode;
     
     public ProjectPanel()
     {
@@ -90,6 +91,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         modifyPanel.setVisible(true);
         
+        this.forceAdminMode = forceAdminMode;    
         if(!(DAOs.participations.isUserAdminInProject(MPM.currentUser, MPM.currentProject) ||
                 forceAdminMode)) {
             // TODO choose which panels to keep visualized for non-admin users
@@ -546,7 +548,7 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .getSelectedRow(), 0);
                 
         if(DAOs.participations.isUserAdminInProject(
-                MPM.currentUser.getId(), MPM.currentProject.getId())){
+                MPM.currentUser.getId(), MPM.currentProject.getId()) || this.forceAdminMode){
             
             deleteUserButton.setEnabled(true);
             saveChangesButton.setEnabled(true);
@@ -604,7 +606,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         
         if(DAOs.participations.isUserAdminInProject(
-                MPM.currentUser.getId(), MPM.currentProject.getId())){
+                MPM.currentUser.getId(), MPM.currentProject.getId()) || this.forceAdminMode){
             
             selectedUserComboBox.setEnabled(false);
             deleteUserButton.setEnabled(false);
