@@ -7,6 +7,8 @@
 package mpm.gui;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import mpm.data.dao.DAOs;
@@ -158,6 +160,14 @@ public class RegisterPanel extends javax.swing.JPanel {
             return;
         }
         
+        Pattern emailRegex = Pattern.compile("^[a-z0-9\\.\\-\\_]+@[a-z0-9\\.\\_]+\\.[a-z]{2,5}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = emailRegex .matcher(emailTextField.getText());
+        if(!matcher.find())
+            {
+            JOptionPane.showMessageDialog(this, "The email is not in the right format.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         User u = new User(DAOs.users.getNextValidId());
         
         u.setName(nameTextField.getText() + " " + surnameTextField.getText());
