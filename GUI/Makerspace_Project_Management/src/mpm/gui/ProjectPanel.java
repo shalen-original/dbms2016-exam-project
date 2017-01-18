@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import mpm.main.MPM;
 import java.awt.Image;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
 import mpm.data.entities.ProjectRole;
+import mpm.data.entities.ProjectStatus;
 
 /**
  *
@@ -78,6 +80,7 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         titleLabel.setText(MPM.currentProject.getTitle());
         descriptionArea.setText(MPM.currentProject.getDescription());
+        lblStatus.setText(MPM.currentProject.getStatus().toString());
         
         partPanel = new AddPartPanel();
         bookingPanel.add(new BookInfPanel(),BorderLayout.CENTER);
@@ -96,8 +99,20 @@ public class ProjectPanel extends javax.swing.JPanel {
             modifyPanel.setVisible(false); 
         }
         
+        if (!DAOs.users.hasUserRole(MPM.currentUser, "Staff"))
+        {
+            pnlStatus.setVisible(false);
+        }
+        
         titleTextField.setText(titleLabel.getText());
         descTextArea.setText(descriptionArea.getText());
+        
+        DefaultComboBoxModel<ProjectStatus> m = ((DefaultComboBoxModel<ProjectStatus>)cmbStatus.getModel());
+        for (ProjectStatus p : ProjectStatus.values())
+        {
+            m.addElement(p);
+        }
+        cmbStatus.setSelectedItem(MPM.currentProject.getStatus());
                
     }
 
@@ -123,6 +138,11 @@ public class ProjectPanel extends javax.swing.JPanel {
         titleTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         descTextArea = new javax.swing.JTextArea();
+        pnlStatus = new javax.swing.JPanel();
+        cmbStatus = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         userPanel = new javax.swing.JPanel();
         userTableScrollPane = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -183,6 +203,29 @@ public class ProjectPanel extends javax.swing.JPanel {
         descTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descTextArea);
 
+        jLabel3.setText("Status:");
+
+        javax.swing.GroupLayout pnlStatusLayout = new javax.swing.GroupLayout(pnlStatus);
+        pnlStatus.setLayout(pnlStatusLayout);
+        pnlStatusLayout.setHorizontalGroup(
+            pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlStatusLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        pnlStatusLayout.setVerticalGroup(
+            pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlStatusLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(pnlStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout modifyPanelLayout = new javax.swing.GroupLayout(modifyPanel);
         modifyPanel.setLayout(modifyPanelLayout);
         modifyPanelLayout.setHorizontalGroup(
@@ -193,13 +236,14 @@ public class ProjectPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1)
                     .addGroup(modifyPanelLayout.createSequentialGroup()
                         .addComponent(modTitleLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(modifyPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(modifyPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pnlStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(143, 143, 143)
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -215,9 +259,15 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(saveButton)
+                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveButton)
+                    .addComponent(pnlStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        lblStatus.setText("lblStatus");
+
+        jLabel2.setText("Project status:");
 
         javax.swing.GroupLayout overViewPanelLayout = new javax.swing.GroupLayout(overViewPanel);
         overViewPanel.setLayout(overViewPanelLayout);
@@ -229,10 +279,14 @@ public class ProjectPanel extends javax.swing.JPanel {
                     .addComponent(modifyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(overViewPanelLayout.createSequentialGroup()
-                        .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLabel)
-                            .addComponent(descriptionLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(titleLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(overViewPanelLayout.createSequentialGroup()
+                        .addComponent(descriptionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStatus)))
                 .addGap(38, 38, 38))
         );
         overViewPanelLayout.setVerticalGroup(
@@ -241,12 +295,15 @@ public class ProjectPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(titleLabel)
                 .addGap(23, 23, 23)
-                .addComponent(descriptionLabel)
+                .addGroup(overViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(descriptionLabel)
+                    .addComponent(lblStatus)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(modifyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         projectTabbedPane.addTab("Overview", overViewPanel);
@@ -292,7 +349,7 @@ public class ProjectPanel extends javax.swing.JPanel {
             .addGroup(userPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                    .addComponent(userTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
                     .addGroup(userPanelLayout.createSequentialGroup()
                         .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(saveChangesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
@@ -465,11 +522,15 @@ public class ProjectPanel extends javax.swing.JPanel {
         MPM.currentProject.setTitle(titleTextField.getText());
         MPM.currentProject.setDescription(descTextArea.getText());
         
+        if (pnlStatus.isVisible())
+            MPM.currentProject.setStatus((ProjectStatus)cmbStatus.getSelectedItem());
+        
         try
         {
             DAOs.projects.update(MPM.currentProject);
             titleLabel.setText(titleTextField.getText());
             descriptionArea.setText(descTextArea.getText());
+            lblStatus.setText(cmbStatus.getSelectedItem().toString());
         }catch(RuntimeException ex){
             JOptionPane.showMessageDialog(this, "Oops, something went wrong. \n " + ex.getMessage(), 
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -569,17 +630,22 @@ public class ProjectPanel extends javax.swing.JPanel {
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bookingPanel;
     private javax.swing.JLabel changeRoleLabel;
+    private javax.swing.JComboBox<ProjectStatus> cmbStatus;
     private javax.swing.JButton deleteUserButton;
     private javax.swing.JTextArea descTextArea;
     private javax.swing.JTextArea descriptionArea;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JPanel materialsPanel;
     private javax.swing.JLabel modTitleLabel;
     private javax.swing.JPanel modifyPanel;
     private javax.swing.JPanel overViewPanel;
+    private javax.swing.JPanel pnlStatus;
     private javax.swing.JTabbedPane projectTabbedPane;
     private javax.swing.JPanel requestPanel;
     private javax.swing.JButton saveButton;
