@@ -164,9 +164,18 @@ public class RegisterPanel extends javax.swing.JPanel {
         Matcher matcher = emailRegex .matcher(emailTextField.getText());
         if(!matcher.find())
             {
-            JOptionPane.showMessageDialog(this, "The email is not in the right format.",
+            JOptionPane.showMessageDialog(this, "The email is not in the right format",
                 "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        for(User user:DAOs.users.getAll())
+        {
+            if(user.getEmail().toLowerCase().equals(emailTextField.getText().toLowerCase()))
+            {
+              JOptionPane.showMessageDialog(this, "This email already exists",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;   
+            }
         }
         User u = new User(DAOs.users.getNextValidId());
         
