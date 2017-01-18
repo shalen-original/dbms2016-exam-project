@@ -20,6 +20,7 @@ import mpm.data.dao.DAOs;
 import mpm.data.entities.Participation;
 import mpm.data.entities.ProjectRole;
 import mpm.data.entities.ProjectStatus;
+import mpm.data.entities.User;
 
 /**
  *
@@ -586,14 +587,12 @@ public class ProjectPanel extends javax.swing.JPanel {
         
         for(Participation p : participationList){
             Object[] o = new Object[5];
+            User u = DAOs.users.findByID(p.getUserId());
             o[0] = p.getUserId();
-            o[1] = DAOs.users.findByID(p.getUserId()).getName();
-            o[2] = DAOs.users.findByID(p.getUserId()).getEmail();
+            o[1] = u.getName();
+            o[2] = u.getEmail();
             o[3] = p.getRole().toString();
-            // Ok, this one is really ugly, sorry. I got carried away.
-            o[4] = DAOs.roles.findByID(
-                    DAOs.users.findByID(p.getUserId())
-                            .getGeneralRoleId()).getName();
+            o[4] = DAOs.roles.findByID(u.getGeneralRoleId()).getName();
                        
             userTableModel.addRow(o);
 
