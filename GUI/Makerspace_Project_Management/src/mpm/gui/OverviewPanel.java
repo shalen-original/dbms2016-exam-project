@@ -121,7 +121,7 @@ public class OverviewPanel extends javax.swing.JPanel {
 
         setMaximumSize(new java.awt.Dimension(5000, 5000));
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setPreferredSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(640, 480));
 
         overviewTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         overviewTabbedPane.setMaximumSize(new java.awt.Dimension(635, 400));
@@ -197,7 +197,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                         .addComponent(newEmailLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(newEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         settingsTabLayout.setVerticalGroup(
             settingsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class OverviewPanel extends javax.swing.JPanel {
                     .addComponent(newEmailLabel))
                 .addGap(18, 18, 18)
                 .addComponent(updateInformationButton)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         overviewTabbedPane.addTab("Profile", settingsTab);

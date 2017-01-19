@@ -9,7 +9,7 @@
       <Dimension value="[640, 480]"/>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[0, 0]"/>
+      <Dimension value="[640, 480]"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -121,7 +121,7 @@
                               <Component id="newEmailTextField" min="-2" pref="265" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="92" max="32767" attributes="0"/>
+                      <EmptySpace pref="147" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -158,7 +158,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="updateInformationButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
