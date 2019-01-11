@@ -1,7 +1,7 @@
 # Makerspace Project Manager - MPM
 
 ## Description
-The Makerspace Project Manager (MPM) is a simple application database that allows to easily manage a small-medium sized Makerspace laboratory.
+The Makerspace Project Manager (MPM) is a simple application database that allows to easily manage a small-medium sized Makerspace laboratory. It has been implemented for the 2016 Database Management Systems course.
 
 
 ## Key implementations
